@@ -56,7 +56,6 @@ class _AdminHomeState extends State<AdminHome> {
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   '/admin-signup',
-                  arguments: token,
                 );
               },
             ),
