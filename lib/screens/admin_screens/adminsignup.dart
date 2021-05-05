@@ -1,4 +1,4 @@
-import 'package:Deco_store_app/services/adminauthservice.dart';
+import 'package:Deco_store_app/services/authservice.dart';
 import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +10,17 @@ class AdminSignup extends StatefulWidget {
 }
 
 class _AdminSignupState extends State<AdminSignup> {
-  var prenom, nom, numtel, email, password, token;
+  GlobalKey<FormState> _key = new GlobalKey();
+  bool _validate = false;
+  var prenom, nom, numtel, email, password, confirm_password, token;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Add an Admin'),
+        title: Text('Create Account'),
         backgroundColor: Colors.red,
       ),
       backgroundColor: Color(0xFFFAFBFD),
@@ -58,184 +61,10 @@ class _AdminSignupState extends State<AdminSignup> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 35.0, right: 35.0, top: 20.0),
-
-/*
- child: CustomTextField(
-                                hintText: 'First Name',
-                                icon: Icon(
-                                  CupertinoIcons.profile_circled,
-                                  color: Colors.red,
-                                ),
-                              ),
-
-*/
-
-                              child: TextField(
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    CupertinoIcons.profile_circled,
-                                    color: Colors.red,
-                                  ),
-                                  hintText: 'Nom',
-                                ),
-                                onChanged: (val) {
-                                  nom = val;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 35.0, right: 35.0, top: 20.0),
-
-/*
-
-     child: CustomTextField(
-                                hintText: 'Last Name',
-                                icon: Icon(
-                                  CupertinoIcons.profile_circled,
-                                  color: Colors.red,
-                                ),
-                              ),
-
-*/
-
-                              child: TextField(
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    CupertinoIcons.profile_circled,
-                                    color: Colors.red,
-                                  ),
-                                  hintText: 'Prenom',
-                                ),
-                                onChanged: (val) {
-                                  prenom = val;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 35.0, right: 35.0, top: 20.0),
-
-                              /*  child: CustomTextField(
-                                hintText: '+213 55 24 97 02 1',
-                                icon: Icon(
-                                  Icons.phone_android,
-                                  color: Colors.red,
-                                ),
-                              ),*/
-
-                              child: TextField(
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    Icons.phone_android,
-                                    color: Colors.red,
-                                  ),
-                                  hintText: '+213 55 24 97 02 1',
-                                ),
-                                onChanged: (val) {
-                                  numtel = val;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 35.0, right: 35.0, top: 20.0),
-
-/*
-             child: CustomTextField(
-                                hintText: 'Email',
-                                icon: Icon(
-                                  Icons.mail,
-                                  color: Colors.red,
-                                ),
-                              ),
-
-*/
-
-                              child: TextField(
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    Icons.mail,
-                                    color: Colors.red,
-                                  ),
-                                  hintText: 'Email',
-                                ),
-                                onChanged: (val) {
-                                  email = val;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 35.0, right: 35.0, top: 20.0),
-
-/*  child: CustomTextField(
-                                hintText: 'Password',
-                                icon: Icon(
-                                  Icons.vpn_key,
-                                  color: Colors.red,
-                                ),
-                              ),*/
-
-                              child: TextField(
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    Icons.vpn_key,
-                                    color: Colors.red,
-                                  ),
-                                  hintText: 'Password',
-                                ),
-                                onChanged: (val) {
-                                  password = val;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: 35.0,
-                                right: 35.0,
-                                top: 30.0,
-                              ),
-                              child: CustomButton(
-                                label: 'Register Now',
-                                labelColour: Colors.white,
-                                backgroundColour: Colors.red,
-                                shadowColour:
-                                    Color(0xff866DC9).withOpacity(0.16),
-                                onPressed: () {
-                                  AdminAuthService()
-                                      .addAdmin(
-                                          nom, prenom, numtel, email, password)
-                                      .then((val) {
-                                    Fluttertoast.showToast(
-                                        msg: val.data['msg'],
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.green,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-
-                                    /*     if (val.data['success']) {
-                                      Navigator.of(context)
-                                          .pushNamed('/admin-screen');
-                                    }*/
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
+                        child: new Form(
+                          key: _key,
+                          autovalidate: _validate,
+                          child: FormUI(),
                         ),
                       ),
                     ],
@@ -244,30 +73,230 @@ class _AdminSignupState extends State<AdminSignup> {
               ],
             ),
           ),
-          Column(
-            children: [
-              SizedBox(
-                //  height: SizeConfig.height(40.8),
-                child: Divider(height: 10),
-              ),
-              Text(
-                'You are completely safe',
-                style: TextStyle(
-                  fontSize: 15.0,
-                ),
-              ),
-              Text(
-                'Read our Terms & Conditions.',
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
+  }
+
+  Widget FormUI() {
+    return new Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+            obscureText: false,
+            decoration: InputDecoration(
+              icon: Icon(
+                CupertinoIcons.profile_circled,
+                color: Colors.red,
+              ),
+              hintText: 'Nom',
+            ),
+            //  maxLength: 32,
+            validator: validateNom,
+            onSaved: (String val) {
+              nom = val;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+            obscureText: false,
+            decoration: InputDecoration(
+              icon: Icon(
+                CupertinoIcons.profile_circled,
+                color: Colors.red,
+              ),
+              hintText: 'Prenom',
+            ),
+            validator: validatePrenom,
+            onSaved: (String val) {
+              prenom = val;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+              obscureText: false,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                icon: Icon(
+                  Icons.phone_android,
+                  color: Colors.red,
+                ),
+                hintText: '+213 55 24 97 02 1',
+              ),
+              maxLength: 10,
+              validator: validateMobile,
+              onSaved: (String val) {
+                numtel = val;
+              }),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+              obscureText: false,
+              decoration: InputDecoration(
+                icon: Icon(
+                  Icons.mail,
+                  color: Colors.red,
+                ),
+                hintText: 'Email',
+              ),
+              keyboardType: TextInputType.emailAddress,
+              //    maxLength: 32,
+              validator: validateEmail,
+              onSaved: (String val) {
+                email = val;
+              }),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+            obscureText: true,
+            validator: validatePassword,
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.vpn_key,
+                color: Colors.red,
+              ),
+              hintText: 'Password',
+            ),
+            onSaved: (val) {
+              password = val;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+            obscureText: true,
+            validator: validateConfirmPassword,
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.vpn_key,
+                color: Colors.red,
+              ),
+              hintText: 'Confirm Password',
+            ),
+            onSaved: (val) {
+              confirm_password = val;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: CustomButton(
+            label: 'Register Now',
+            labelColour: Colors.white,
+            backgroundColour: Colors.red,
+            shadowColour: Color(0xff866DC9).withOpacity(0.16),
+            onPressed: _sendToServer,
+          ),
+        ),
+        SizedBox(height: 30),
+      ],
+    );
+  }
+
+  String validateNom(String value) {
+    String patttern = r'(^[a-zA-Z ]*$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return "Name is Required";
+    } else if (!regExp.hasMatch(value)) {
+      return "Name must be a-z and A-Z";
+    }
+    return null;
+  }
+
+  String validatePrenom(String value) {
+    String patttern = r'(^[a-zA-Z ]*$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return "Prenom is Required";
+    } else if (!regExp.hasMatch(value)) {
+      return "Prenom must be a-z and A-Z";
+    }
+    return null;
+  }
+
+  String validateMobile(String value) {
+    String patttern = r'(^[0-9]*$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return "Mobile is Required";
+    } else if (value.length != 10) {
+      return "Mobile number must 10 digits";
+    } else if (!regExp.hasMatch(value)) {
+      return "Mobile Number must be digits";
+    }
+    return null;
+  }
+
+  String validateEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return "Email est Obligatoire";
+    } else if (!regExp.hasMatch(value)) {
+      return " Email n'est pas valide";
+    } else {
+      return null;
+    }
+  }
+
+  var conf;
+  String validatePassword(String value) {
+    if (value.length < 8) {
+      conf = value;
+      return "Password must be atleast 8 characters long";
+    }
+    conf = value;
+
+    return null;
+  }
+
+  String validateConfirmPassword(String value) {
+    if (value.length == 0) {
+      return "Password is Required";
+    } else if (value != conf) {
+      return "Password is wrong";
+    }
+    return null;
+  }
+
+  _sendToServer() {
+    if (_key.currentState.validate()) {
+      // No any error in validation
+      _key.currentState.save();
+
+      AuthService()
+          .addAdmin(
+        nom,
+        prenom,
+        numtel,
+        email,
+        password,
+      )
+          .then((val) {
+        Fluttertoast.showToast(
+            msg: val.data['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    } else {
+      // validation error
+      setState(() {
+        _validate = true;
+      });
+    }
   }
 }

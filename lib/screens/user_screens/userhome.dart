@@ -1,4 +1,4 @@
-import 'package:Deco_store_app/services/userauthservice.dart';
+import 'package:Deco_store_app/services/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -8,10 +8,11 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  var token;
+  // var token;
+  var data;
   @override
   Widget build(BuildContext context) {
-    token = ModalRoute.of(context).settings.arguments;
+    data = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         body: Center(
@@ -19,6 +20,17 @@ class _UserHomeState extends State<UserHome> {
                 child: Text('Get Info'),
                 color: Colors.green,
                 onPressed: () {
+                  Fluttertoast.showToast(
+                      msg: data['nom'] + data['prenom'] + data['roles'],
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+
+/*
+
                   UserAuthService().getinfo(token).then((val) {
                     Fluttertoast.showToast(
                         msg: val.data['msg'],
@@ -29,6 +41,7 @@ class _UserHomeState extends State<UserHome> {
                         textColor: Colors.white,
                         fontSize: 16.0);
                   });
+             */
                 })));
   }
 }
