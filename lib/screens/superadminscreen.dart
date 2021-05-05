@@ -2,23 +2,24 @@ import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AdminHome extends StatefulWidget {
+class SuperAdminScreen extends StatefulWidget {
   @override
-  _AdminHomeState createState() => _AdminHomeState();
+  _SuperAdminScreenState createState() => _SuperAdminScreenState();
 }
 
-class _AdminHomeState extends State<AdminHome> {
+class _SuperAdminScreenState extends State<SuperAdminScreen> {
+  @override
+
   // var token;
   var data;
 
-  @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Admin Screen'),
+        title: Text('Super Admin Screen'),
         backgroundColor: Colors.red,
       ),
       body: Center(
@@ -49,8 +50,7 @@ class _AdminHomeState extends State<AdminHome> {
             SizedBox(
               height: 40,
             ),
-
-            /*      CustomButton(
+            CustomButton(
               label: 'Add an Admin',
               labelColour: Colors.white,
               backgroundColour: Colors.green,
@@ -60,7 +60,7 @@ class _AdminHomeState extends State<AdminHome> {
                   '/admin-signup',
                 );
               },
-            ),*/
+            ),
           ],
         ),
       ),

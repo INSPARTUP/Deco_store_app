@@ -1,8 +1,7 @@
 import 'package:Deco_store_app/screens/admin_screens/adminhome.dart';
-import 'package:Deco_store_app/screens/admin_screens/adminlogin.dart';
 import 'package:Deco_store_app/screens/admin_screens/adminsignup.dart';
-import 'package:Deco_store_app/screens/choicescreen.dart';
-import 'package:Deco_store_app/screens/user_screens/userlogin.dart';
+import 'package:Deco_store_app/screens/login.dart';
+import 'package:Deco_store_app/screens/superadminscreen.dart';
 import 'package:Deco_store_app/screens/user_screens/usersingup.dart';
 import 'package:Deco_store_app/screens/user_screens/userhome.dart';
 
@@ -23,14 +22,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChoiceScreen(),
+      home: LoginScreen(),
       routes: {
         '/user-screen': (ctx) => UserHome(),
         '/admin-screen': (ctx) => AdminHome(),
+        '/superadmin-screen': (ctx) => SuperAdminScreen(),
         '/user-signup': (ctx) => SingupScreen(),
-        '/user-login': (ctx) => LoginScreen(),
+        '/login': (ctx) => LoginScreen(),
         '/admin-signup': (ctx) => AdminSignup(),
-        '/admin-login': (ctx) => AdminLogin(),
       },
     );
   }
