@@ -22,7 +22,7 @@ class _SingupScreenState extends State<SingupScreen> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Create Account'),
+        title: Text('Créer un compte'),
         backgroundColor: Colors.red,
       ),
       backgroundColor: Color(0xFFFAFBFD),
@@ -38,7 +38,7 @@ class _SingupScreenState extends State<SingupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'DecoStore',
+                    'Kagu',
                     style: TextStyle(
                       fontSize: 40,
                       color: Colors.red,
@@ -122,24 +122,6 @@ class _SingupScreenState extends State<SingupScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
               obscureText: false,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.phone_android,
-                  color: Colors.red,
-                ),
-                hintText: '+213 55 24 97 02 1',
-              ),
-              maxLength: 10,
-              validator: validateMobile,
-              onSaved: (String val) {
-                numtel = val;
-              }),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
-          child: TextFormField(
-              obscureText: false,
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.mail,
@@ -157,6 +139,24 @@ class _SingupScreenState extends State<SingupScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
+              obscureText: false,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                icon: Icon(
+                  Icons.phone_android,
+                  color: Colors.red,
+                ),
+                hintText: '+213 55 24 97 02 1',
+              ),
+              maxLength: 10,
+              validator: validateMobile,
+              onSaved: (String val) {
+                numtel = val;
+              }),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
             obscureText: true,
             validator: validatePassword,
             decoration: InputDecoration(
@@ -164,7 +164,7 @@ class _SingupScreenState extends State<SingupScreen> {
                 Icons.vpn_key,
                 color: Colors.red,
               ),
-              hintText: 'Password',
+              hintText: 'Mot de passe',
             ),
             onSaved: (val) {
               password = val;
@@ -181,7 +181,7 @@ class _SingupScreenState extends State<SingupScreen> {
                 Icons.vpn_key,
                 color: Colors.red,
               ),
-              hintText: 'Confirm Password',
+              hintText: 'Confirmez le mot de passe',
             ),
             onSaved: (val) {
               confirm_password = val;
@@ -191,7 +191,7 @@ class _SingupScreenState extends State<SingupScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: CustomButton(
-            label: 'Register Now',
+            label: 'Inscrivez-Vous',
             labelColour: Colors.white,
             backgroundColour: Colors.red,
             shadowColour: Color(0xff866DC9).withOpacity(0.16),
@@ -209,9 +209,9 @@ class _SingupScreenState extends State<SingupScreen> {
     String patttern = r'(^[a-zA-Z ]*$)';
     RegExp regExp = new RegExp(patttern);
     if (value.length == 0) {
-      return "Name is Required";
+      return "Le nom est obligatoire";
     } else if (!regExp.hasMatch(value)) {
-      return "Name must be a-z and A-Z";
+      return "Le nom doit être a-z et A-Z";
     }
     return null;
   }
@@ -220,9 +220,9 @@ class _SingupScreenState extends State<SingupScreen> {
     String patttern = r'(^[a-zA-Z ]*$)';
     RegExp regExp = new RegExp(patttern);
     if (value.length == 0) {
-      return "Prenom is Required";
+      return "Le prenom est obligatoire";
     } else if (!regExp.hasMatch(value)) {
-      return "Prenom must be a-z and A-Z";
+      return "Le prenom doit être a-z et A-Z";
     }
     return null;
   }
@@ -231,11 +231,11 @@ class _SingupScreenState extends State<SingupScreen> {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);
     if (value.length == 0) {
-      return "Mobile is Required";
+      return "Le numero Telephone est obligatoire";
     } else if (value.length != 10) {
-      return "Mobile number must 10 digits";
+      return "Le numéro de telephone doit être composé de 10 chiffres";
     } else if (!regExp.hasMatch(value)) {
-      return "Mobile Number must be digits";
+      return "Le numéro de telephone doit être composé de chiffres";
     }
     return null;
   }
@@ -257,7 +257,7 @@ class _SingupScreenState extends State<SingupScreen> {
   String validatePassword(String value) {
     if (value.length < 8) {
       conf = value;
-      return "Password must be atleast 8 characters long";
+      return "Le mot de passe doit contenir au moins 8 caractères";
     }
     conf = value;
 
@@ -266,9 +266,9 @@ class _SingupScreenState extends State<SingupScreen> {
 
   String validateConfirmPassword(String value) {
     if (value.length == 0) {
-      return "Password is Required";
+      return "Le mot de passe est obligatoire";
     } else if (value != conf) {
-      return "Password is wrong";
+      return "Le mot de passe est incorrect";
     }
     return null;
   }
