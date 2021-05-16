@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'DecoStore',
+                        'Kagu',
                         style: TextStyle(
                           fontSize: 40,
                           color: Colors.white,
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.vpn_key,
                 color: Colors.red,
               ),
-              hintText: 'Password',
+              hintText: 'Mot de passe',
             ),
             onSaved: (val) {
               password = val;
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: CustomButton(
-            label: 'Login',
+            label: 'Connectez-vous',
             labelColour: Colors.white,
             backgroundColour: Colors.red,
             shadowColour: Color(0xff866DC9).withOpacity(0.16),
@@ -143,9 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(
           height: 10.0,
         ),
-        RaisedButton(
-          child: Text('Create Account'),
-          color: Colors.green,
+        TextButton(
+          child: Text('Inscrivez-vous'),
           onPressed: () {
             Navigator.of(context).pushNamed(
               '/user-signup',
@@ -154,19 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
     );
-  }
-
-  String validateMobile(String value) {
-    String patttern = r'(^[0-9]*$)';
-    RegExp regExp = new RegExp(patttern);
-    if (value.length == 0) {
-      return "Mobile is Required";
-    } else if (value.length != 10) {
-      return "Mobile number must 10 digits";
-    } else if (!regExp.hasMatch(value)) {
-      return "Mobile Number must be digits";
-    }
-    return null;
   }
 
   String validateEmail(String value) {
@@ -184,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String validatePassword(String value) {
     if (value.length < 8) {
-      return "Password must be atleast 8 characters long";
+      return "Le mot de passe doit contenir au moins 8 caractères";
     }
     return null;
   }

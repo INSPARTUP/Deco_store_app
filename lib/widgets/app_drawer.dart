@@ -1,0 +1,64 @@
+import 'package:Deco_store_app/screens/manage_products_screen.dart';
+import 'package:Deco_store_app/screens/products_overview_screen.dart';
+import 'package:flutter/material.dart';
+
+class AppDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(height: 30),
+          const SizedBox(height: 5),
+          Align(
+            child: Column(
+              children: [
+                Text("Bonjour,"),
+                Text(
+                  "Zaki merabet ",
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: 140,
+            height: 2,
+            color: Colors.grey[200],
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text('Produits'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(ProductsOverwiewScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Gestion des Produits'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(ManageProductsScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Logout'),
+            onTap: () {
+              Navigator.of(context).pop();
+              //  Navigator.of(context).pushReplacementNamed('/');
+
+              Navigator.of(context).pushReplacementNamed('/login');
+              //   Provider.of<Auth>(context, listen: false).logout();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
