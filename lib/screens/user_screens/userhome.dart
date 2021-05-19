@@ -21,7 +21,11 @@ class _UserHomeState extends State<UserHome> {
                 color: Colors.green,
                 onPressed: () {
                   Fluttertoast.showToast(
-                      msg: data['nom'] + data['prenom'] + data['roles'],
+                      msg: data['nom'] +
+                          ' ' +
+                          data['prenom'] +
+                          ' ' +
+                          data['roles'],
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,
