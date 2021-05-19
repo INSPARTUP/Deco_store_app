@@ -40,7 +40,13 @@ class Products with ChangeNotifier {
     if (rech != null)
       url = Uri.parse(
           'https://productsapi1.herokuapp.com/api/produits/?nom=$rech');
-    http.Response response = await http.get(url);
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        "Content-Type": "application/json"
+      },
+    );
 
     if (response.statusCode == 200) {
       List<dynamic> productsJsonData = json.decode(response.body);
