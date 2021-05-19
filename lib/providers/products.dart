@@ -35,9 +35,11 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts([String rech]) async {
     var url = Uri.parse('https://productsapi1.herokuapp.com/api/produits');
-
+    if (rech != null)
+      url = Uri.parse(
+          'https://productsapi1.herokuapp.com/api/produits/?nom=$rech');
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -46,6 +48,7 @@ class Products with ChangeNotifier {
     } else {
       _items = [];
     }
+    notifyListeners();
   }
 
   static Future<Product> fetchProduct(String id) async {

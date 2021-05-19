@@ -19,7 +19,7 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Super Admin Screen'),
+        title: Text('Super Admin '),
         backgroundColor: Colors.red,
       ),
       body: Center(
@@ -51,7 +51,7 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
               height: 40,
             ),
             CustomButton(
-              label: 'Add an Admin',
+              label: 'Ajouter un Admin',
               labelColour: Colors.white,
               backgroundColour: Colors.green,
               shadowColour: Color(0xff866DC9).withOpacity(0.16),

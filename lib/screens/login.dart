@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:Deco_store_app/screens/products_overview_screen.dart';
 import 'package:Deco_store_app/services/authservice.dart';
 import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Login'),
+        title: Text('Connexion'),
         backgroundColor: Colors.red,
       ),
       backgroundColor: Color(0xFFFAFBFD),
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (val.statusCode == 200) {
           //    token = val.data['roles'];
           Fluttertoast.showToast(
-              msg: 'Authenticated',
+              msg: 'Connecté',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -195,8 +196,11 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.of(context)
                 .pushNamed('/user-screen', arguments: val.data);
           } else if (val.data['roles'] == 'ROLE_ADMIN') {
-            Navigator.of(context)
-                .pushNamed('/admin-screen', arguments: val.data);
+            /*  Navigator.of(context)
+                .pushNamed('/admin-screen', arguments: val.data);*/
+
+            Navigator.of(context).pushNamed(ProductsOverwiewScreen.routeName,
+                arguments: val.data);
           } else if (val.data['roles'] == 'ROLE_SUPER-ADMIN') {
             Navigator.of(context)
                 .pushNamed('/superadmin-screen', arguments: val.data);
