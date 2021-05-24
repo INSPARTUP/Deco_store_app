@@ -1,6 +1,8 @@
+import 'package:Deco_store_app/providers/auth.dart';
 import 'package:Deco_store_app/screens/manage_products_screen.dart';
 import 'package:Deco_store_app/screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -51,10 +53,9 @@ class AppDrawer extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               Navigator.of(context).pop();
-              //  Navigator.of(context).pushReplacementNamed('/');
+              Provider.of<Auth>(context, listen: false).logout();
 
               Navigator.of(context).pushReplacementNamed('/login');
-              //   Provider.of<Auth>(context, listen: false).logout();
             },
           ),
         ],

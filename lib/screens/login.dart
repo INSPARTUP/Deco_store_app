@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:Deco_store_app/providers/auth.dart';
 import 'package:Deco_store_app/screens/products_overview_screen.dart';
 import 'package:Deco_store_app/services/authservice.dart';
 import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../size_config.dart';
 
@@ -176,37 +178,42 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  _sendToServer() {
+  Future<void> _sendToServer() async {
     if (_key.currentState.validate()) {
       // No any error in validation
       _key.currentState.save();
 
-      AuthService().login(email, password).then((val) {
-        if (val.statusCode == 200) {
-          //    token = val.data['roles'];
-          Fluttertoast.showToast(
-              msg: 'Connecté',
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          if (val.data['roles'] == 'ROLE_USER') {
-            Navigator.of(context)
-                .pushNamed('/user-screen', arguments: val.data);
-          } else if (val.data['roles'] == 'ROLE_ADMIN') {
-            /*  Navigator.of(context)
+      await Provider.of<Auth>(context, listen: false).login(email, password);
+
+      final connecter = Provider.of<Auth>(context, listen: false).isAuth;
+      final role = Provider.of<Auth>(context, listen: false).roles;
+      print(connecter);
+      print(role);
+      if (connecter == true) {
+        //    token = val.data['roles'];
+        Fluttertoast.showToast(
+            msg: 'Connecté',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        if (role == 'ROLE_USER') {
+          Navigator.of(context).popAndPushNamed('/user-screen');
+        } else if (role == 'ROLE_ADMIN') {
+          /*  Navigator.of(context)
                 .pushNamed('/admin-screen', arguments: val.data);*/
 
-            Navigator.of(context).pushNamed(ProductsOverwiewScreen.routeName,
-                arguments: val.data);
-          } else if (val.data['roles'] == 'ROLE_SUPER-ADMIN') {
-            Navigator.of(context)
-                .pushNamed('/superadmin-screen', arguments: val.data);
-          }
+          Navigator.of(context).pushReplacementNamed(
+            ProductsOverwiewScreen.routeName,
+          );
+        } else if (role == 'ROLE_SUPER-ADMIN') {
+          Navigator.of(context).pushReplacementNamed(
+            '/superadmin-screen',
+          );
         }
-      });
+      }
     } else {
       // validation error
       setState(() {
