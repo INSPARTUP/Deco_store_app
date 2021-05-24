@@ -1,8 +1,10 @@
+import 'package:Deco_store_app/providers/auth.dart';
 import 'package:Deco_store_app/services/authservice.dart';
 import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
 
@@ -307,34 +309,28 @@ class _SingupScreenState extends State<SingupScreen> {
 
 */
 
-  _sendToServer() {
+  Future<void> _sendToServer() async {
     if (_key.currentState.validate()) {
       // No any error in validation
       _key.currentState.save();
       print("Name $nom");
       print("Mobile $numtel");
       print("Email $prenom");
-      AuthService()
-          .addUser(
+
+      await Provider.of<Auth>(context, listen: false).addUser(
         nom,
         prenom,
         numtel,
         email,
         password,
-      )
-          .then((val) {
-        Fluttertoast.showToast(
-            msg: val.data['message'],
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        if (val.statusCode == 200) {
-          Navigator.of(context).pushNamed('/login');
-        }
-      });
+      );
+
+      final inscri = Provider.of<Auth>(context, listen: false).inscription;
+      print(inscri);
+
+      if (inscri == true) {
+        Navigator.of(context).pushNamed('/login');
+      }
     } else {
       // validation error
       setState(() {

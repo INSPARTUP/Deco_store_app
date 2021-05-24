@@ -41,8 +41,7 @@ class _ProductItemState extends State<ProductItem> {
               /// FadeInImage Creates a widget that displays a [placeholder] while an [image] is loading,
               /// then fades-out the placeholder and fades-in the image.
               child: FadeInImage(
-                placeholder:
-                    AssetImage('lib/assets/images/product-placeholder.png'),
+                placeholder: AssetImage('lib/assets/images/product_holder.jpg'),
                 image: NetworkImage(product.imageurl),
                 fit: BoxFit.fitHeight,
               ),

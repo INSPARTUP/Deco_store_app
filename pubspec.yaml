@@ -27,6 +27,7 @@ dependencies:
   fluttertoast: 
   provider: ^5.0.0
   http: ^0.13.3
+  shared_preferences: ^0.5.12+4
  
 
 
@@ -52,7 +53,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/images/product-placeholder.png
+    - lib/assets/images/product_holder.jpg
     - lib/assets/images/profile.jpg
     - lib/assets/collections/mobile.png
     - lib/assets/collections/fashion.png
