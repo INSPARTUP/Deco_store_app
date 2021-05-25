@@ -20,10 +20,10 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts([String rech]) async {
-    var url = Uri.parse('https://productsapi1.herokuapp.com/api/produits');
+    var url = Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits');
     if (rech != null)
       url = Uri.parse(
-          'https://productsapi1.herokuapp.com/api/produits/?nom=$rech');
+          'https://whispering-bastion-00988.herokuapp.com/api/produits/?nom=$rech');
     http.Response response = await http.get(
       url,
       headers: {
@@ -42,7 +42,7 @@ class Products with ChangeNotifier {
   }
 
   static Future<Product> fetchProduct(String id) async {
-    var url = Uri.parse('https://productsapi1.herokuapp.com/api/produits$id');
+    var url = Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits$id');
     http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -58,10 +58,18 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     //async means that code of the function or methode (addProduct) will return automticaly a Future because all the code is wrapped in the Future
-
-    var url = Uri.parse('https://productsapi1.herokuapp.com/api/produits');
+    String nom,type;
+    nom=product.nom;
+    type=product.type;
+    var url2 = Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits/NomType?nom=$nom&type=$type');
+    var url = Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits');
 
     try {
+      final response2 = await http.get(url2,
+          headers: {"Content-Type": "application/json"} );
+          if (response2.contentLength!=2) throw Error();
+          else {
+      ///////////////////////////////
       final response = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: json.encode(product.toJson())
@@ -96,6 +104,7 @@ class Products with ChangeNotifier {
 
       _items.add(newProduct);
       notifyListeners();
+          }
     } catch (error) {
       print(error);
       throw error;
@@ -106,7 +115,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       var url =
-          Uri.parse('https://productsapi1.herokuapp.com/api/produits/$id');
+          Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits/$id');
 
       final response = await http.put(url,
           headers: {"Content-Type": "application/json"},
@@ -138,7 +147,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    var url = Uri.parse('https://productsapi1.herokuapp.com/api/produits/$id');
+    var url = Uri.parse('https://whispering-bastion-00988.herokuapp.com/api/produits/$id');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
 
