@@ -1,20 +1,25 @@
-import 'package:Deco_store_app/models/userdata.dart';
 import 'package:Deco_store_app/providers/auth.dart';
+import 'package:Deco_store_app/providers/count.dart';
 import 'package:Deco_store_app/providers/products.dart';
+import 'package:Deco_store_app/providers/cart.dart';
 import 'package:Deco_store_app/screens/admin_screens/adminhome.dart';
 import 'package:Deco_store_app/screens/admin_screens/adminsignup.dart';
-import 'package:Deco_store_app/screens/edit_product_screen.dart';
+import 'package:Deco_store_app/screens/admin_screens/manage_products_screen.dart';
+import 'package:Deco_store_app/screens/admin_screens/products_overview_screen.dart';
+import 'package:Deco_store_app/screens/cart_screen.dart';
+import 'package:Deco_store_app/screens/details/details_screen.dart';
 import 'package:Deco_store_app/screens/login.dart';
-import 'package:Deco_store_app/screens/manage_products_screen.dart';
-import 'package:Deco_store_app/screens/products_overview_screen.dart';
 import 'package:Deco_store_app/screens/splash%20screen.dart';
 import 'package:Deco_store_app/screens/superadminscreen.dart';
+import 'package:Deco_store_app/screens/user_screens/user_products_overview_screen.dart';
 import 'package:Deco_store_app/screens/user_screens/usersingup.dart';
 import 'package:Deco_store_app/screens/user_screens/userhome.dart';
-import 'package:Deco_store_app/screens/product_detail_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/admin_screens/edit_product_screen.dart';
+import 'screens/admin_screens/product_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +39,13 @@ class MyApp extends StatelessWidget {
             create: (ctx) => Products(),
             //madarnach ta3 value psq hna radi ndiro instantiation (create) ta3 Product()
           ),
+          ChangeNotifierProvider(
+            create: (ctx) => Cart(),
+            //madarnach ta3 value psq hna radi ndiro instantiation (create) ta3 Product()
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => Count(),
+          ),
         ],
         child: Consumer<Auth>(
           builder: (ctx, auth, child
@@ -48,12 +60,12 @@ class MyApp extends StatelessWidget {
                   ),
                   home: auth.isAuth
                       ? ((auth.roles == 'ROLE_USER')
-                          ? UserHome()
+                          ? UserProductsOverviewScreen()
                           : (auth.roles == 'ROLE_ADMIN')
                               ? ProductsOverwiewScreen()
                               : (auth.roles == 'ROLE_SUPER-ADMIN')
                                   ? SuperAdminScreen()
-                                  : UserHome())
+                                  : UserProductsOverviewScreen())
                       : FutureBuilder(
                           future: auth.tryAutoLogin(),
                           builder: (ctx, authResultSnapshot) =>
@@ -69,11 +81,15 @@ class MyApp extends StatelessWidget {
                 '/user-signup': (ctx) => SingupScreen(),
                 '/login': (ctx) => LoginScreen(),
                 '/admin-signup': (ctx) => AdminSignup(),
-                ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+                //     ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+                UserProductsOverviewScreen.routeName: (ctx) =>
+                    UserProductsOverviewScreen(),
                 ManageProductsScreen.routeName: (ctx) => ManageProductsScreen(),
                 EditProductScreen.routeName: (ctx) => EditProductScreen(),
                 ProductsOverwiewScreen.routeName: (ctx) =>
                     ProductsOverwiewScreen(),
+                DetailsScreen.routeName: (ctx) => DetailsScreen(),
+                CartScreen.routeName: (ctx) => CartScreen(),
               }),
         ));
   }

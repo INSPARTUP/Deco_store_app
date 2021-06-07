@@ -1,10 +1,11 @@
+import 'package:Deco_store_app/models/userdata.dart';
 import 'package:Deco_store_app/providers/auth.dart';
 import 'package:Deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:Deco_store_app/screens/admin_screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AppDrawer extends StatelessWidget {
+class UserAppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nom = Provider.of<Auth>(context, listen: false).nom;
@@ -14,7 +15,8 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 80),
+          const SizedBox(height: 30),
+          const SizedBox(height: 5),
           Align(
             child: Column(
               children: [
@@ -43,7 +45,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.edit),
-            title: Text('Gestion des Produits'),
+            title: Text('Mes Commandes'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(ManageProductsScreen.routeName);

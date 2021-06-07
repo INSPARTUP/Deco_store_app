@@ -1,5 +1,5 @@
 import 'package:Deco_store_app/providers/products.dart';
-import 'package:Deco_store_app/screens/edit_product_screen.dart';
+import 'package:Deco_store_app/screens/admin_screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

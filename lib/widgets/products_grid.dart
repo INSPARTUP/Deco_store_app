@@ -13,6 +13,9 @@ class ProductsGrid extends StatelessWidget {
     final productData = Provider.of<Products>(
         context); //we add <>to let it know which type of data you actually want to listening to.
     final products = productData.items;
+
+    //.reversed.toList();
+
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //number of columns
@@ -21,6 +24,8 @@ class ProductsGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemCount: products.length,
+      addAutomaticKeepAlives: true,
+      cacheExtent: 100000000.0,
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         // create: (ctx) => products[i], madarnach hadi psq products[i] already existing, manas7a9och ndiro create (instantiatin) l products[i]
         //using value is the right approach you should use if you for example use a provider on something that's part of a list or a grid

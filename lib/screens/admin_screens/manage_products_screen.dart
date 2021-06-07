@@ -1,7 +1,6 @@
 import 'package:Deco_store_app/providers/products.dart';
-import 'package:Deco_store_app/screens/edit_product_screen.dart';
+import 'package:Deco_store_app/screens/admin_screens/edit_product_screen.dart';
 import 'package:Deco_store_app/widgets/app_drawer.dart';
-import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:Deco_store_app/widgets/manage_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +110,8 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                     )
                                   : ListView.builder(
                                       itemCount: productsData.items.length,
+                                      addAutomaticKeepAlives: true,
+                                      cacheExtent: 100000000.0,
                                       itemBuilder: (_, i) => Column(
                                         children: [
                                           ManageProductItem(
