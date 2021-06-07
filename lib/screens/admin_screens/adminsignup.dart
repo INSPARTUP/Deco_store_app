@@ -21,7 +21,7 @@ class _AdminSignupState extends State<AdminSignup> {
         elevation: 0,
         centerTitle: true,
         title: Text('Créer un compte'),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue[800],
       ),
       backgroundColor: Color(0xFFFAFBFD),
       body: Column(
@@ -39,12 +39,12 @@ class _AdminSignupState extends State<AdminSignup> {
                     'Kagu',
                     style: TextStyle(
                       fontSize: 40,
-                      color: Colors.red,
+                      color: Colors.blue[800],
                     ),
                   ),
                   Icon(
                     Icons.shopping_cart_outlined,
-                    color: Colors.red,
+                    color: Colors.blue[800],
                     size: 50,
                   ),
                 ],
@@ -88,7 +88,7 @@ class _AdminSignupState extends State<AdminSignup> {
             decoration: InputDecoration(
               icon: Icon(
                 CupertinoIcons.profile_circled,
-                color: Colors.red,
+                color: Colors.blue[800],
               ),
               hintText: 'Nom',
             ),
@@ -106,7 +106,7 @@ class _AdminSignupState extends State<AdminSignup> {
             decoration: InputDecoration(
               icon: Icon(
                 CupertinoIcons.profile_circled,
-                color: Colors.red,
+                color: Colors.blue[800],
               ),
               hintText: 'Prenom',
             ),
@@ -123,7 +123,7 @@ class _AdminSignupState extends State<AdminSignup> {
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.mail,
-                  color: Colors.red,
+                  color: Colors.blue[800],
                 ),
                 hintText: 'Email',
               ),
@@ -142,7 +142,7 @@ class _AdminSignupState extends State<AdminSignup> {
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.phone_android,
-                  color: Colors.red,
+                  color: Colors.blue[800],
                 ),
                 hintText: '+213 55 24 97 02 1',
               ),
@@ -160,7 +160,7 @@ class _AdminSignupState extends State<AdminSignup> {
             decoration: InputDecoration(
               icon: Icon(
                 Icons.vpn_key,
-                color: Colors.red,
+                color: Colors.blue[800],
               ),
               hintText: 'Mot de passe',
             ),
@@ -177,7 +177,7 @@ class _AdminSignupState extends State<AdminSignup> {
             decoration: InputDecoration(
               icon: Icon(
                 Icons.vpn_key,
-                color: Colors.red,
+                color: Colors.blue[800],
               ),
               hintText: 'Confirmez le mot de passe',
             ),
@@ -191,7 +191,7 @@ class _AdminSignupState extends State<AdminSignup> {
           child: CustomButton(
             label: 'Inscrivez-Vous',
             labelColour: Colors.white,
-            backgroundColour: Colors.red,
+            backgroundColour: Colors.blue[800],
             shadowColour: Color(0xff866DC9).withOpacity(0.16),
             onPressed: _sendToServer,
           ),

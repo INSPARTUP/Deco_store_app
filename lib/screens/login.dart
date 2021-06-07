@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/screens/products_overview_screen.dart';
 import 'package:Deco_store_app/services/authservice.dart';
 import 'package:Deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../size_config.dart';
+import 'admin_screens/products_overview_screen.dart';
+import 'user_screens/user_products_overview_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text('Connexion'),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue[800],
       ),
       backgroundColor: Color(0xFFFAFBFD),
       body: Column(
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: MediaQuery.of(context).size.width - 85,
               //     height: SizeConfig.height(100.9),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.blue[800],
                 borderRadius: BorderRadius.all(
                   Radius.circular(9.0),
                 ),
@@ -105,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.mail,
-                  color: Colors.red,
+                  color: Colors.blue[800],
                 ),
                 hintText: 'Email',
               ),
@@ -124,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
             decoration: InputDecoration(
               icon: Icon(
                 Icons.vpn_key,
-                color: Colors.red,
+                color: Colors.blue[800],
               ),
               hintText: 'Mot de passe',
             ),
@@ -138,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: CustomButton(
             label: 'Connectez-vous',
             labelColour: Colors.white,
-            backgroundColour: Colors.red,
+            backgroundColour: Colors.blue[800],
             shadowColour: Color(0xff866DC9).withOpacity(0.16),
             onPressed: _sendToServer,
           ),
@@ -200,11 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             fontSize: 16.0);
         if (role == 'ROLE_USER') {
-          Navigator.of(context).popAndPushNamed('/user-screen');
+          Navigator.of(context)
+              .popAndPushNamed(UserProductsOverviewScreen.routeName);
         } else if (role == 'ROLE_ADMIN') {
-          /*  Navigator.of(context)
-                .pushNamed('/admin-screen', arguments: val.data);*/
-
           Navigator.of(context).pushReplacementNamed(
             ProductsOverwiewScreen.routeName,
           );

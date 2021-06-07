@@ -1,5 +1,6 @@
+import 'package:Deco_store_app/providers/count.dart';
 import 'package:Deco_store_app/providers/product.dart';
-import 'package:Deco_store_app/Screens/product_detail_screen.dart';
+import 'package:Deco_store_app/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,8 +28,11 @@ class _ProductItemState extends State<ProductItem> {
           child: GestureDetector(
             //darna l'image dakhal gesture detector bach n9ado ndiro OnTap
             onTap: () {
+              context.read<Count>().reset();
+              Provider.of<Count>(context, listen: false).reset;
+
               Navigator.of(context).pushNamed(
-                ProductDetailScreen.routeName,
+                DetailsScreen.routeName,
                 arguments: product.id,
               );
             },

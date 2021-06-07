@@ -135,11 +135,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
           //zadnaha bach l rodo Future w moraha then t7abass hadak indicator li ydor
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text('Une erreur est produite!'),
-            content: Text('Un problème est survenu'),
+            title: Text("Une erreur s'est produite !"),
+            content:
+                Text('Peut être un produit du même nom et type existe déja !'),
             actions: <Widget>[
               TextButton(
-                child: Text('Okay'),
+                child: Text("OK"),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
