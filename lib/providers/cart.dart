@@ -112,10 +112,9 @@ class Cart with ChangeNotifier {
       total += value.prix * value.quantite;
     });
     return total;
-    //return 100;
   }
 
-  Future<Map<String, ProductFromCartItem>> fetchCart(String email) async {
+  Future<void> fetchCart(String email) async {
     // email = "azeqs@gmail.com";
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/cart?email=$email');
@@ -154,7 +153,7 @@ class Cart with ChangeNotifier {
       _items.forEach((key, value) {
         print(value.quantite);
       });*/
-      return _items;
+     // return _items;
 
       //  notifyListeners();
       // print(_products);
