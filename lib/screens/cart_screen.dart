@@ -101,7 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                 builder: (ctx) => AlertDialog(
                   title: Text('Vous etes sur ?'),
                   content:
-                      Text('Vous etes sur de vouloir retirer ce produit ?'),
+                      Text('Vous etes sur de vouloir Vider votre panier ?'),
                   actions: [
                     FlatButton(
                       child: Text('Non'),

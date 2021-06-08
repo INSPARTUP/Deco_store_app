@@ -125,7 +125,16 @@ class Cart with ChangeNotifier {
 
     if (response.statusCode == 200) {
       dynamic jsonData = json.decode(response.body);
-      List<dynamic> itemss = jsonData['items'];
+      List<dynamic> itemss;
+      try {
+        itemss = jsonData['items'];
+      } catch (e) {
+        itemss = [];
+      }
+
+      //  jsonData['items'];
+      //   print(jsonData['items']?.hashCode);
+
       itemss.forEach((element) async {
         var url = Uri.parse(
             'https://whispering-bastion-00988.herokuapp.com/api/produits/${element["product_id"]}');
@@ -153,7 +162,7 @@ class Cart with ChangeNotifier {
       _items.forEach((key, value) {
         print(value.quantite);
       });*/
-     // return _items;
+      // return _items;
 
       //  notifyListeners();
       // print(_products);
@@ -350,12 +359,10 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
-
   void removeItems(String productId) {
     _items.remove(productId);
     notifyListeners();
   }
-
   void removeSingleItem(String productId) {
     if (!_items.containsKey(productId)) {
       return;
@@ -374,7 +381,6 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
-
   void clear() {
     _items = {};
     notifyListeners();
