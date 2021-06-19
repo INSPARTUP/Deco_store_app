@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:sweetalertv2/sweetalertv2.dart';
 
 //import 'package:shop_app/models/http_exception.dart';
 import 'product.dart';
@@ -77,21 +78,7 @@ class Products with ChangeNotifier {
         ///////////////////////////////
         final response = await http.post(url,
             headers: {"Content-Type": "application/json"},
-            body: json.encode(product.toJson())
-
-            /*     json.encode({
-          ////with json.encode we can convert this map into JSON format
-          'nom': product.nom,
-          'type': product.type,
-          'prix': product.prix,
-          'description': product.description,
-          'quantite': product.quantite,
-          'imageUrl': product.imageurl,
-        }),
-*/
-
-            );
-        // had l code yakhdam 7ata tawsalna response m database (post tkamal khadmatha)
+            body: json.encode(product.toJson()));
         print(json.decode(response
             .body)); //with json.decode we can convert this from JSON into some data we can work in Dart (Map)
         final newProduct = Product(
@@ -106,6 +93,14 @@ class Products with ChangeNotifier {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
+        Fluttertoast.showToast(
+            msg: "Le produit a été ajouté avec succés",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
 
         _items.add(newProduct);
         notifyListeners();

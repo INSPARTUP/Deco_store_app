@@ -1,18 +1,21 @@
-import 'package:deco_store_app/services/authservice.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/providers/orders.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:sweetalertv2/sweetalertv2.dart';
 
-class AdminSignup extends StatefulWidget {
+class CommanderScreen extends StatefulWidget {
+  static const routeName = '/commander-screen';
   @override
-  _AdminSignupState createState() => _AdminSignupState();
+  _CommanderScreenState createState() => _CommanderScreenState();
 }
 
-class _AdminSignupState extends State<AdminSignup> {
+class _CommanderScreenState extends State<CommanderScreen> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
-  var prenom, nom, numtel, email, password, confirm_password, token;
+  var prenom, nom, numtel, email, codep, wilaya, pays, adresse;
 
   @override
   Widget build(BuildContext context) {
@@ -20,37 +23,12 @@ class _AdminSignupState extends State<AdminSignup> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Créer un compte'),
+        title: Text('Entrez vos données'),
         backgroundColor: Colors.blue[800],
       ),
       backgroundColor: Color(0xFFFAFBFD),
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
-            //  height: SizeConfig.height(53.9),
-            color: Color(0xFFFAFBFD),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Kagu',
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.blue[800],
-                    ),
-                  ),
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.blue[800],
-                    size: 50,
-                  ),
-                ],
-              ),
-            ),
-          ),
           Flexible(
             child: ListView(
               shrinkWrap: true,
@@ -108,7 +86,7 @@ class _AdminSignupState extends State<AdminSignup> {
                 CupertinoIcons.profile_circled,
                 color: Colors.blue[800],
               ),
-              hintText: 'Prenom',
+              hintText: 'Prénom',
             ),
             validator: validatePrenom,
             onSaved: (String val) {
@@ -155,41 +133,77 @@ class _AdminSignupState extends State<AdminSignup> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
-            obscureText: true,
-            validator: validatePassword,
+            obscureText: false,
             decoration: InputDecoration(
               icon: Icon(
-                Icons.vpn_key,
+                CupertinoIcons.location_fill,
                 color: Colors.blue[800],
               ),
-              hintText: 'Mot de passe',
+              hintText: 'Pays',
             ),
-            onSaved: (val) {
-              password = val;
+            validator: validateCountry,
+            onSaved: (String val) {
+              pays = val;
             },
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
-            obscureText: true,
-            validator: validateConfirmPassword,
+            obscureText: false,
             decoration: InputDecoration(
               icon: Icon(
-                Icons.vpn_key,
+                CupertinoIcons.location_circle_fill,
                 color: Colors.blue[800],
               ),
-              hintText: 'Confirmez le mot de passe',
+              hintText: 'Wilaya',
             ),
-            onSaved: (val) {
-              confirm_password = val;
+            validator: validateWilaya,
+            onSaved: (String val) {
+              wilaya = val;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+              obscureText: false,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                icon: Icon(
+                  CupertinoIcons.map,
+                  color: Colors.blue[800],
+                ),
+                hintText: 'Code Postal',
+              ),
+              maxLength: 5,
+              validator: validateCodep,
+              onSaved: (String val) {
+                codep = val;
+              }),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
+          child: TextFormField(
+            obscureText: false,
+            decoration: InputDecoration(
+              icon: Icon(
+                CupertinoIcons.map_pin_ellipse,
+                color: Colors.blue[800],
+              ),
+              hintText: 'Adresse',
+            ),
+            maxLength: 40,
+            validator: validateAdr,
+            onSaved: (String val) {
+              adresse = val;
             },
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: CustomButton(
-            label: 'Inscrivez-Vous',
+            label: 'Commander',
             labelColour: Colors.white,
             backgroundColour: Colors.blue[800],
             shadowColour: Color(0xff866DC9).withOpacity(0.16),
@@ -208,6 +222,31 @@ class _AdminSignupState extends State<AdminSignup> {
       return "Le nom est obligatoire";
     } else if (!regExp.hasMatch(value)) {
       return "Le nom doit être a-z et A-Z";
+    }
+    return null;
+  }
+
+  String validateWilaya(String value) {
+    String patttern = r'(^[a-zA-Z ]*$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return "Le nom du wilaya est obligatoire";
+    } else if (!regExp.hasMatch(value)) {
+      return "Le nom du wilaya doit être a-z et A-Z";
+    }
+    return null;
+  }
+
+  String validateCountry(String value) {
+    if (value.length == 0) {
+      return "Le nom du pays est obligatoire";
+    }
+    return null;
+  }
+
+  String validateAdr(String value) {
+    if (value.length == 0) {
+      return "L'adresse est obligatoire";
     }
     return null;
   }
@@ -236,6 +275,19 @@ class _AdminSignupState extends State<AdminSignup> {
     return null;
   }
 
+  String validateCodep(String value) {
+    String patttern = r'(^[0-9]*$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.length == 0) {
+      return "Le code postal est obligatoire";
+    } else if (value.length != 5) {
+      return "Le code postal doit être composé de 5 chiffres";
+    } else if (!regExp.hasMatch(value)) {
+      return "Le code postal doit être composé de chiffres";
+    }
+    return null;
+  }
+
   String validateEmail(String value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -249,49 +301,74 @@ class _AdminSignupState extends State<AdminSignup> {
     }
   }
 
-  var conf;
-  String validatePassword(String value) {
-    if (value.length < 8) {
-      conf = value;
-      return "Le mot de passe doit contenir au moins 8 caractères";
-    }
-    conf = value;
+  _sendToServer() async {
+    final user_fullname = Provider.of<Auth>(context, listen: false).nom +
+        ' ' +
+        Provider.of<Auth>(context, listen: false).prenom;
 
-    return null;
-  }
+    final user_email = Provider.of<Auth>(context, listen: false).email;
+    final arguments = ModalRoute.of(context).settings.arguments as Map;
 
-  String validateConfirmPassword(String value) {
-    if (value.length == 0) {
-      return "Le mot de passe est obligatoire";
-    } else if (value != conf) {
-      return "Le mot de passe est incorrect";
-    }
-    return null;
-  }
+    final productsList = arguments['cartitems'];
+    final total = arguments['total'];
+    print(total);
 
-  _sendToServer() {
+    List<Itemorder> orderitems = [];
+    productsList.forEach((k, v) => orderitems.add(Itemorder(
+        name: v.nom, price: v.prix, productId: v.productId, qty: v.quantite)));
+    print(orderitems);
+    final test = orderitems
+        .map((cp) => {
+              //execute forEach cart product
+              'productId': cp.productId,
+              'name': cp.name,
+              'qty': cp.qty,
+              'price': cp.price,
+            })
+        .toList();
+    print(test);
     if (_key.currentState.validate()) {
       // No any error in validation
       _key.currentState.save();
 
-      AuthService()
-          .addAdmin(
-        nom,
-        prenom,
-        numtel,
-        email,
-        password,
-      )
-          .then((val) {
-        Fluttertoast.showToast(
-            msg: val.data['message'],
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      });
+      try {
+        await Provider.of<Orders>(context, listen: false).addOrder(
+            User(name: user_fullname, email: user_email),
+            BillingAddress(
+                name: nom + ' ' + prenom,
+                email: email,
+                postCode: codep,
+                wilaya: wilaya,
+                deliveryAddress: adresse,
+                country: pays),
+            numtel,
+            orderitems,
+            total,
+            context);
+        SweetAlertV2.show(context,
+            title: "Félicitation",
+            subtitle: "Votre commande a été envoyée avec succés",
+            style: SweetAlertV2Style.success,
+            subtitleTextAlign: TextAlign.center);
+      } catch (error) {
+        print(error);
+        await showDialog<Null>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Erreur!'),
+            content: Text('Problemè avec votre commande'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      }
+      Navigator.of(context).pop();
     } else {
       // validation error
       setState(() {

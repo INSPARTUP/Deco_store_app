@@ -1,6 +1,6 @@
-import 'package:Deco_store_app/providers/count.dart';
-import 'package:Deco_store_app/providers/product.dart';
-import 'package:Deco_store_app/screens/details/details_screen.dart';
+import 'package:deco_store_app/providers/count.dart';
+import 'package:deco_store_app/providers/product.dart';
+import 'package:deco_store_app/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

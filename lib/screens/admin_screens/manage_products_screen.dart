@@ -1,7 +1,7 @@
-import 'package:Deco_store_app/providers/products.dart';
-import 'package:Deco_store_app/screens/admin_screens/edit_product_screen.dart';
-import 'package:Deco_store_app/widgets/app_drawer.dart';
-import 'package:Deco_store_app/widgets/manage_product_item.dart';
+import 'package:deco_store_app/providers/products.dart';
+import 'package:deco_store_app/screens/admin_screens/edit_product_screen.dart';
+import 'package:deco_store_app/widgets/app_drawer.dart';
+import 'package:deco_store_app/widgets/manage_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

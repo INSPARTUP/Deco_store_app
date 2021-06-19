@@ -1,8 +1,8 @@
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/providers/cart.dart';
-import 'package:Deco_store_app/providers/products.dart';
-import 'package:Deco_store_app/widgets/products_grid.dart';
-import 'package:Deco_store_app/widgets/user_app_drawer.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/providers/cart.dart';
+import 'package:deco_store_app/providers/products.dart';
+import 'package:deco_store_app/widgets/products_grid.dart';
+import 'package:deco_store_app/widgets/user_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';

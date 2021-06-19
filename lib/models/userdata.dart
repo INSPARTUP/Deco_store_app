@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Deco_store_app/models/role.dart';
+import 'package:deco_store_app/models/role.dart';
 
 UserData userDataFromJson(String str) => UserData.fromJson(json.decode(str));
 

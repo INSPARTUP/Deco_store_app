@@ -1,8 +1,7 @@
-import 'package:Deco_store_app/models/userdata.dart';
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/screens/admin_screens/manage_products_screen.dart';
-import 'package:Deco_store_app/screens/admin_screens/products_overview_screen.dart';
-import 'package:Deco_store_app/screens/user_screens/user_products_overview_screen.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
+import 'package:deco_store_app/screens/orders_screen.dart';
+import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +48,7 @@ class UserAppDrawer extends StatelessWidget {
             title: Text('Mes Commandes'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(ManageProductsScreen.routeName);
+                  .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
           Divider(),

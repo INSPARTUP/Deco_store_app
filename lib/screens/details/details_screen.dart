@@ -1,7 +1,7 @@
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/providers/cart.dart';
-import 'package:Deco_store_app/providers/product.dart';
-import 'package:Deco_store_app/providers/products.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/providers/cart.dart';
+import 'package:deco_store_app/providers/product.dart';
+import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';

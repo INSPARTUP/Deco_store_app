@@ -1,9 +1,10 @@
-import 'package:Deco_store_app/providers/product.dart';
-import 'package:Deco_store_app/providers/products.dart';
+import 'package:deco_store_app/providers/product.dart';
+import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sweetalertv2/sweetalertv2.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
