@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/services/authservice.dart';
-import 'package:Deco_store_app/widgets/custom_button.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/services/authservice.dart';
+import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

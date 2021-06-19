@@ -1,4 +1,4 @@
-import 'package:Deco_store_app/providers/product.dart';
+import 'package:deco_store_app/providers/product.dart';
 import 'package:flutter/material.dart';
 
 import 'add_to_cart.dart';

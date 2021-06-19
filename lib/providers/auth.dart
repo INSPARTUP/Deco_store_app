@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:async'; //to use Timer
-import 'package:Deco_store_app/models/role.dart';
+import 'package:deco_store_app/models/role.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

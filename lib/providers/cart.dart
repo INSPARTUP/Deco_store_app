@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:deco_store_app/providers/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -93,6 +94,14 @@ class Cart with ChangeNotifier {
     }; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)
   }
 
+  List<Itemorder> _itemsorder = [];
+
+  List<Itemorder> get itemsorder {
+    return [
+      ..._itemsorder
+    ]; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)
+  }
+
   List<ProductFromCartItem> _products = [];
 
   List<ProductFromCartItem> get products {
@@ -125,7 +134,16 @@ class Cart with ChangeNotifier {
 
     if (response.statusCode == 200) {
       dynamic jsonData = json.decode(response.body);
-      List<dynamic> itemss = jsonData['items'];
+      List<dynamic> itemss;
+      try {
+        itemss = jsonData['items'];
+      } catch (e) {
+        itemss = [];
+      }
+
+      //  jsonData['items'];
+      //   print(jsonData['items']?.hashCode);
+
       itemss.forEach((element) async {
         var url = Uri.parse(
             'https://whispering-bastion-00988.herokuapp.com/api/produits/${element["product_id"]}');
@@ -153,7 +171,7 @@ class Cart with ChangeNotifier {
       _items.forEach((key, value) {
         print(value.quantite);
       });*/
-     // return _items;
+      // return _items;
 
       //  notifyListeners();
       // print(_products);
@@ -258,7 +276,7 @@ class Cart with ChangeNotifier {
     }
   }
 
-  void removeSingleItem(String email, String productId) async {
+  Future<void> removeSingleItem(String email, String productId) async {
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/deleteProduit');
     http.Response response = await http.delete(
@@ -309,7 +327,7 @@ class Cart with ChangeNotifier {
     }
   }
 
-  void clear(String email) async {
+  Future<void> clear(String email) async {
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/remove?email=$email');
     http.Response response = await http.post(
@@ -326,58 +344,4 @@ class Cart with ChangeNotifier {
       throw Exception('Server Error');
     }
   }
-
-/*
-  void addItem(String productId, String title, double price) {
-    if (_items.containsKey(productId)) {
-      // change quantity
-      _items.update(
-        productId,
-        (existingCartItem) => CartItem(
-            id: existingCartItem.id,
-            prix: existingCartItem.prix,
-            quantity: existingCartItem.quantity + 1),
-      );
-    } else {
-      _items.putIfAbsent(
-          productId,
-          () => CartItem(
-              id: DateTime.now().toString(),
-              title: title,
-              price: price,
-              quantity: 1));
-      //putIfAbsent tadi function f parametre 2(value) 3labiha zadna anonymous function
-    }
-    notifyListeners();
-  }
-
-  void removeItems(String productId) {
-    _items.remove(productId);
-    notifyListeners();
-  }
-
-  void removeSingleItem(String productId) {
-    if (!_items.containsKey(productId)) {
-      return;
-    }
-    if (_items[productId].quantity > 1) {
-      _items.update(
-          productId,
-          (existingCartItem) => CartItem(
-              id: existingCartItem.id,
-              price: existingCartItem.price,
-              quantity: existingCartItem.quantity - 1,
-              title: existingCartItem.title));
-    } else {
-      //quantity == 1
-      _items.remove(productId);
-    }
-    notifyListeners();
-  }
-
-  void clear() {
-    _items = {};
-    notifyListeners();
-  }
-*/
 }

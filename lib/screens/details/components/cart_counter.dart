@@ -1,4 +1,4 @@
-import 'package:Deco_store_app/providers/count.dart';
+import 'package:deco_store_app/providers/count.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

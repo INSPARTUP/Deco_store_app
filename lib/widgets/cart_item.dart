@@ -1,7 +1,8 @@
-import 'package:Deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Deco_store_app/providers/cart.dart';
+import 'package:deco_store_app/providers/cart.dart';
+import 'package:sweetalertv2/sweetalertv2.dart';
 
 class CartItemWidget extends StatelessWidget {
   final String id;
@@ -108,7 +109,31 @@ class CartItemWidget extends StatelessWidget {
           .endToStart, //tkhalih yat7arak ghi m la droite l la gauche
       confirmDismiss: (direction) {
         // confirmDismiss khass tadi f parametre Future(True or False), w show Dialog trodalna Future ida khdamna b Navigator.of(ctx).pop(false) wala Navigator.of(ctx).pop(true)
-        return showDialog(
+
+        SweetAlertV2.show(context,
+            subtitle: 'êtes-vous sûr de vouloir supprimer ce produit ?',
+            subtitleTextAlign: TextAlign.center,
+            style: SweetAlertV2Style.confirm,
+            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Confirmer',
+            showCancelButton: true, onPress: (bool isConfirm) {
+          if (isConfirm) {
+            SweetAlertV2.show(context,
+                subtitle: "Suppression...", style: SweetAlertV2Style.loading);
+
+            Provider.of<Cart>(context, listen: false)
+                .removeSingleItem(email, productId)
+                .then((value) => SweetAlertV2.show(context,
+                    subtitle: "Succés!", style: SweetAlertV2Style.success));
+          } else {
+            SweetAlertV2.show(context,
+                subtitle: "Annulé!", style: SweetAlertV2Style.error);
+          }
+
+          // return false to keep dialog
+          return false;
+        });
+        /*  return showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('Confirmation '),
@@ -130,7 +155,7 @@ class CartItemWidget extends StatelessWidget {
               )
             ],
           ),
-        );
+        );  */
       },
       onDismissed:
           (direction) {}, //direction za3ma 3la 7ssab kol direction n7arko ndiro function ta3ha chawa hna 3adna ghi direction wa7da

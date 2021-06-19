@@ -1,8 +1,10 @@
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/widgets/cart_item.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/screens/user_screens/commander_screen.dart';
+import 'package:deco_store_app/widgets/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Deco_store_app/providers/cart.dart';
+import 'package:deco_store_app/providers/cart.dart';
+import 'package:sweetalertv2/sweetalertv2.dart';
 // we are only here interested in cart and it won't import the cart item from the cart.dart file and we avoid that name clash (name issue) car yatchabah m3a CartItem, CartItemkayan f cart w CartItem
 
 class CartScreen extends StatefulWidget {
@@ -42,43 +44,6 @@ class _CartScreenState extends State<CartScreen> {
     super.didChangeDependencies();
   }
 
-/*
-  Future<void> orderNow(cart) async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      await Provider.of<Orders>(context, listen: false).addOrder(
-          cart.items.values.toList(), //ta3tina les valeurs f liste
-          cart.totalAmount);
-      cart.clear();
-    } catch (error) {
-      print(error);
-      await showDialog<Null>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('An error occured!'),
-          content: Text('Something went wrong'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
-      //we will go back to the previous page whent we get response from database when we do Http.post()
-    }
-  }
-*/
-
   @override
   Widget build(BuildContext context) {
     final email = Provider.of<Auth>(context, listen: false).email;
@@ -96,12 +61,36 @@ class _CartScreenState extends State<CartScreen> {
               size: 40,
             ),
             onPressed: () {
-              showDialog(
+              SweetAlertV2.show(context,
+                  subtitle: 'êtes-vous sûr de vouloir Vider votre panier ?',
+                  subtitleTextAlign: TextAlign.center,
+                  style: SweetAlertV2Style.confirm,
+                  cancelButtonText: 'Annuler',
+                  confirmButtonText: 'Confirmer',
+                  showCancelButton: true, onPress: (bool isConfirm) {
+                if (isConfirm) {
+                  SweetAlertV2.show(context,
+                      subtitle: "Suppression...",
+                      style: SweetAlertV2Style.loading);
+                  Provider.of<Cart>(context, listen: false).clear(email).then(
+                      (value) => SweetAlertV2.show(context,
+                          subtitle: "Succés!",
+                          style: SweetAlertV2Style.success));
+                } else {
+                  SweetAlertV2.show(context,
+                      subtitle: "Annulé!", style: SweetAlertV2Style.error);
+                }
+
+                // return false to keep dialog
+                return false;
+              });
+
+              /*      showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
                   title: Text('Vous etes sur ?'),
                   content:
-                      Text('Vous etes sur de vouloir retirer ce produit ?'),
+                      Text('Vous etes sur de vouloir Vider votre panier ?'),
                   actions: [
                     FlatButton(
                       child: Text('Non'),
@@ -118,7 +107,7 @@ class _CartScreenState extends State<CartScreen> {
                     )
                   ],
                 ),
-              );
+              ); */
             },
           ),
           SizedBox(width: 5)
@@ -146,7 +135,7 @@ class _CartScreenState extends State<CartScreen> {
                         Spacer(), //it takes all the available space and reserves it for itself
                         Chip(
                           label: Text(
-                            '${total.toStringAsFixed(2)} DA',
+                            '\$${total.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: Theme.of(context)
                                   .primaryTextTheme
@@ -162,8 +151,13 @@ class _CartScreenState extends State<CartScreen> {
                                 child: Text('Commander'),
                                 onPressed: (total <= 0 || _isLoading)
                                     ? null //if onPressed points at null instead of a function,flutter automatically disables the button
-                                    : null,
-                                // () => orderNow(cart),
+                                    : () => Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                CommanderScreen.routeName,
+                                                arguments: {
+                                              'total': total,
+                                              'cartitems': cartitems
+                                            }),
                                 textColor: Theme.of(context).primaryColor,
                               )
                       ],

@@ -1,4 +1,4 @@
-import 'package:Deco_store_app/providers/product.dart';
+import 'package:deco_store_app/providers/product.dart';
 import 'package:flutter/material.dart';
 
 class Description extends StatelessWidget {

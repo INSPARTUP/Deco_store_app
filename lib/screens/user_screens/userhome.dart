@@ -1,5 +1,5 @@
-import 'package:Deco_store_app/providers/auth.dart';
-import 'package:Deco_store_app/services/authservice.dart';
+import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/services/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';

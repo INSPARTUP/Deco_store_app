@@ -1,5 +1,5 @@
-import 'package:Deco_store_app/providers/products.dart';
-import 'package:Deco_store_app/widgets/ProductItem.dart';
+import 'package:deco_store_app/providers/products.dart';
+import 'package:deco_store_app/widgets/ProductItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
