@@ -3,6 +3,7 @@ import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -14,7 +15,17 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 80),
+          const SizedBox(
+            height: 70,
+          ),
+          const Center(
+            child: Image(
+              width: 120,
+              image: AssetImage(
+                'lib/assets/images/Logo.png',
+              ),
+            ),
+          ),
           Align(
             child: Column(
               children: [
