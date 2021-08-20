@@ -1,9 +1,9 @@
 import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/orders_screen.dart';
 import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class UserAppDrawer extends StatelessWidget {
   @override
@@ -15,8 +15,20 @@ class UserAppDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 30),
-          const SizedBox(height: 5),
+          const SizedBox(
+            height: 70,
+          ),
+          const Center(
+            child: Image(
+              width: 120,
+              image: AssetImage(
+                'lib/assets/images/Logo.png',
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Align(
             child: Column(
               children: [
