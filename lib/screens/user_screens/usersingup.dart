@@ -16,6 +16,8 @@ class SingupScreen extends StatefulWidget {
 class _SingupScreenState extends State<SingupScreen> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
+  bool _btnpressed = false;
+
   var prenom, nom, numtel, email, password, confirm_password, token;
 
   @override
@@ -192,13 +194,17 @@ class _SingupScreenState extends State<SingupScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
-          child: CustomButton(
-            label: 'Inscrivez-Vous',
-            labelColour: Colors.white,
-            backgroundColour: Colors.blue[800],
-            shadowColour: Color(0xff866DC9).withOpacity(0.16),
-            onPressed: _sendToServer,
-          ),
+          child: _btnpressed
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]),
+                )
+              : CustomButton(
+                  label: 'Inscrivez-Vous',
+                  labelColour: Colors.white,
+                  backgroundColour: Colors.blue[800],
+                  shadowColour: Color(0xff866DC9).withOpacity(0.16),
+                  onPressed: _sendToServer,
+                ),
         ),
         SizedBox(
           height: 30,
@@ -313,6 +319,9 @@ class _SingupScreenState extends State<SingupScreen> {
     if (_key.currentState.validate()) {
       // No any error in validation
       _key.currentState.save();
+      setState(() {
+        _btnpressed = true;
+      });
       print("Name $nom");
       print("Mobile $numtel");
       print("Email $prenom");
@@ -327,7 +336,9 @@ class _SingupScreenState extends State<SingupScreen> {
 
       final inscri = Provider.of<Auth>(context, listen: false).inscription;
       print(inscri);
-
+      setState(() {
+        _btnpressed = false;
+      });
       if (inscri == true) {
         Navigator.of(context).pushNamed('/login');
       }

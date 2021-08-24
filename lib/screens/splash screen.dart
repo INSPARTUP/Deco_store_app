@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Color(0xFF83c4f6),
+                Color(0xFF0c64f6),
                 Color(0xFF0c64a7),
               ]),
         ),
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 300.0,
                 ),
                 Text(
-                  "Bienvenue dans notre magasin",
+                  "Bienvenue Dans Notre Magasin",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

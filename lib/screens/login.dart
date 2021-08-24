@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
+  bool _btnpressed = false;
   var prenom, nom, numtel, email, password, token;
   @override
   Widget build(BuildContext context) {
@@ -136,13 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
-          child: CustomButton(
-            label: 'Connectez-vous',
-            labelColour: Colors.white,
-            backgroundColour: Colors.blue[800],
-            shadowColour: Color(0xff866DC9).withOpacity(0.16),
-            onPressed: _sendToServer,
-          ),
+          child: _btnpressed
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]),
+                )
+              : CustomButton(
+                  label: 'Connectez-vous',
+                  labelColour: Colors.white,
+                  backgroundColour: Colors.blue[800],
+                  shadowColour: Color(0xFF0c64a7).withOpacity(0.20),
+                  onPressed: _sendToServer,
+                ),
         ),
         SizedBox(
           height: 10.0,
@@ -184,12 +189,18 @@ class _LoginScreenState extends State<LoginScreen> {
       // No any error in validation
       _key.currentState.save();
 
+      setState(() {
+        _btnpressed = true;
+      });
       await Provider.of<Auth>(context, listen: false).login(email, password);
 
       final connecter = Provider.of<Auth>(context, listen: false).isAuth;
       final role = Provider.of<Auth>(context, listen: false).roles;
       print(connecter);
       print(role);
+      setState(() {
+        _btnpressed = false;
+      });
       if (connecter == true) {
         //    token = val.data['roles'];
         Fluttertoast.showToast(
