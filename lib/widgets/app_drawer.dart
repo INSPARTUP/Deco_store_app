@@ -1,9 +1,9 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -47,8 +47,12 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.shop),
             title: Text('Produits'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProductsOverwiewScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ProductsOverwiewScreen();
+                }),
+              );
             },
           ),
           Divider(),
@@ -56,8 +60,12 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Gestion des Produits'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ManageProductsScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ManageProductsScreen('');
+                }),
+              );
             },
           ),
           Divider(),

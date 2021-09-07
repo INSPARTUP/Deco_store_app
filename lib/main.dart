@@ -20,8 +20,10 @@ import 'package:deco_store_app/screens/user_screens/userhome.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/admin_screens/admin_details_screen.dart';
 import 'screens/admin_screens/edit_product_screen.dart';
+import 'screens/user_screens/navigation_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,10 +55,20 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
+          title: 'Furniture App',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            scaffoldBackgroundColor: Colors.white,
+            // Here we set DM Sans as our default fonts
+            // Now we also apply out text color to all flutter textTheme
+            textTheme: GoogleFonts.dmSansTextTheme()
+                .apply(displayColor: Color(0xFF171717)),
+            // Almost all of our app bar have this style
+            appBarTheme: AppBarTheme(
+              color: Colors.transparent,
+              elevation: 0,
+              brightness: Brightness.light,
+            ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: SplashScreen(),
@@ -67,16 +79,17 @@ class MyApp extends StatelessWidget {
             '/user-signup': (ctx) => SingupScreen(),
             '/login': (ctx) => LoginScreen(),
             '/admin-signup': (ctx) => AdminSignup(),
-            //     ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             UserProductsOverviewScreen.routeName: (ctx) =>
                 UserProductsOverviewScreen(),
-            ManageProductsScreen.routeName: (ctx) => ManageProductsScreen(),
+            ManageProductsScreen.routeName: (ctx) => ManageProductsScreen(''),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
             ProductsOverwiewScreen.routeName: (ctx) => ProductsOverwiewScreen(),
             DetailsScreen.routeName: (ctx) => DetailsScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
             CommanderScreen.routeName: (ctx) => CommanderScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            NavigationScreenUser.routeName: (ctx) => NavigationScreenUser(0),
+            AdminDetailsScreen.routeName: (ctx) => AdminDetailsScreen(),
           }),
     );
   }

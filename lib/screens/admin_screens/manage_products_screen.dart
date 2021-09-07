@@ -3,11 +3,14 @@ import 'package:deco_store_app/screens/admin_screens/edit_product_screen.dart';
 import 'package:deco_store_app/widgets/app_drawer.dart';
 import 'package:deco_store_app/widgets/manage_product_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class ManageProductsScreen extends StatefulWidget {
   static const routeName = '/manage-products';
 
+  String type;
+  ManageProductsScreen(this.type);
   @override
   _ManageProductsScreenState createState() => _ManageProductsScreenState();
 }
@@ -28,10 +31,23 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Liste des Produits'),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/menu.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
+        ),
+        title: const Text('Liste des Produits',
+            style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.black),
             onPressed: () {
               Navigator.of(context).pushNamed(EditProductScreen.routeName);
             },
@@ -101,7 +117,13 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                               height: 20,
                             ),
                             Expanded(
-                              child: productsData.items.length == 0
+                              child: productsData.items
+                                          .where((pr) => pr.nom
+                                              .toLowerCase()
+                                              .contains(widget.type))
+                                          .toList()
+                                          .length ==
+                                      0
                                   ? Center(
                                       child: Text(
                                         "il n'existe pas un produit avec ce nom ",
@@ -109,15 +131,35 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                       ),
                                     )
                                   : ListView.builder(
-                                      itemCount: productsData.items.length,
+                                      itemCount: productsData.items
+                                          .where((pr) => pr.nom
+                                              .toLowerCase()
+                                              .contains(widget.type))
+                                          .toList()
+                                          .length,
                                       addAutomaticKeepAlives: true,
                                       cacheExtent: 100000000.0,
                                       itemBuilder: (_, i) => Column(
                                         children: [
                                           ManageProductItem(
-                                            productsData.items[i].id,
-                                            productsData.items[i].nom,
-                                            productsData.items[i].imageurl,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
+                                                .id,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
+                                                .nom,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
+                                                .imageurl,
                                           ),
                                           Divider(),
                                         ],

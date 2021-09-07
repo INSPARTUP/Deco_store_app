@@ -1,7 +1,9 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/user_screens/commander_screen.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:deco_store_app/widgets/cart_item.dart';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:deco_store_app/providers/cart.dart';
 import 'package:sweetalertv2/sweetalertv2.dart';
@@ -16,7 +18,6 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   var cartitems;
-
   var _isInit = true;
   var _isLoading = false;
   /* Future<void> _refreshProducts(String email) async {
@@ -52,62 +53,54 @@ class _CartScreenState extends State<CartScreen> {
     final cartitems = Provider.of<Cart>(context).items;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Votre Panier'),
+        title: Text('Votre Panier', style: TextStyle(color: Colors.black)),
+        leading: IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.black,
+              size: 40,
+            ),
+            onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return NavigationScreenUser(0);
+                  }),
+                )),
         actions: [
           IconButton(
             icon: Icon(
               Icons.delete,
-              color: Colors.white,
+              color: Colors.black,
               size: 40,
             ),
             onPressed: () {
-              SweetAlertV2.show(context,
-                  subtitle: 'êtes-vous sûr de vouloir Vider votre panier ?',
-                  subtitleTextAlign: TextAlign.center,
-                  style: SweetAlertV2Style.confirm,
-                  cancelButtonText: 'Annuler',
-                  confirmButtonText: 'Confirmer',
-                  showCancelButton: true, onPress: (bool isConfirm) {
-                if (isConfirm) {
-                  SweetAlertV2.show(context,
-                      subtitle: "Suppression...",
-                      style: SweetAlertV2Style.loading);
-                  Provider.of<Cart>(context, listen: false).clear(email).then(
-                      (value) => SweetAlertV2.show(context,
-                          subtitle: "Succés!",
-                          style: SweetAlertV2Style.success));
-                } else {
-                  SweetAlertV2.show(context,
-                      subtitle: "Annulé!", style: SweetAlertV2Style.error);
-                }
+              cartitems.length == 0
+                  ? null
+                  : SweetAlertV2.show(context,
+                      subtitle: 'êtes-vous sûr de vouloir Vider votre panier ?',
+                      subtitleTextAlign: TextAlign.center,
+                      style: SweetAlertV2Style.confirm,
+                      cancelButtonText: 'Annuler',
+                      confirmButtonText: 'Confirmer',
+                      showCancelButton: true, onPress: (bool isConfirm) {
+                      if (isConfirm) {
+                        SweetAlertV2.show(context,
+                            subtitle: "Suppression...",
+                            style: SweetAlertV2Style.loading);
+                        Provider.of<Cart>(context, listen: false)
+                            .clear(email)
+                            .then((value) => SweetAlertV2.show(context,
+                                subtitle: "Succés!",
+                                style: SweetAlertV2Style.success));
+                      } else {
+                        SweetAlertV2.show(context,
+                            subtitle: "Annulé!",
+                            style: SweetAlertV2Style.error);
+                      }
 
-                // return false to keep dialog
-                return false;
-              });
-
-              /*      showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text('Vous etes sur ?'),
-                  content:
-                      Text('Vous etes sur de vouloir Vider votre panier ?'),
-                  actions: [
-                    FlatButton(
-                      child: Text('Non'),
-                      onPressed: () => Navigator.of(context).pop(false),
-                      // this will close the dialog and now here, we can also forward a value 'false'
-                    ),
-                    FlatButton(
-                      child: Text('Oui'),
-                      onPressed: () => {
-                        Provider.of<Cart>(context, listen: false).clear(email),
-                        Navigator.of(context).pop(true)
-                      },
-                      // this will close the dialog and now here, we can also forward a value 'true'
-                    )
-                  ],
-                ),
-              ); */
+                      // return false to keep dialog
+                      return false;
+                    });
             },
           ),
           SizedBox(width: 5)

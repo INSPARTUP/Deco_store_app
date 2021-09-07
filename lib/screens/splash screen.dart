@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:deco_store_app/providers/auth.dart';
@@ -57,8 +58,10 @@ class _SplashScreenState extends State<SplashScreen> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Color(0xFF0c64f6),
-                Color(0xFF0c64a7),
+                /*   Color(0xFF0c64f6),
+                Color(0xFF0c64a7),*/
+                Color(0xFFd9d7d7),
+                Color(0xFFFFFFFF),
               ]),
         ),
         child: Column(
@@ -76,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   "Bienvenue Dans Notre Magasin",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                   ),
@@ -84,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ],
             ),
             CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
             ),
           ],
         ),
@@ -104,7 +107,7 @@ class HomeScreen extends StatelessWidget {
               ) =>
           auth.isAuth
               ? ((auth.roles == 'ROLE_USER')
-                  ? UserProductsOverviewScreen()
+                  ? NavigationScreenUser(0)
                   : (auth.roles == 'ROLE_ADMIN')
                       ? ProductsOverwiewScreen()
                       : (auth.roles == 'ROLE_SUPER-ADMIN')

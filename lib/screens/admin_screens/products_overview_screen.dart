@@ -1,9 +1,11 @@
 import 'package:deco_store_app/providers/products.dart';
 import 'package:deco_store_app/widgets/app_drawer.dart';
-import 'package:deco_store_app/widgets/products_grid.dart';
-import 'package:deco_store_app/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
+import 'admin_details_screen.dart';
+import 'manage_products_screen.dart';
 
 enum FilterOptions { Favorites, All }
 
@@ -15,18 +17,8 @@ class ProductsOverwiewScreen extends StatefulWidget {
 }
 
 class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
-  var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = false;
-
-  @override
-  void initState() {
-    // // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
-    // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context).fetchAndSetProducts();
-    // });
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -46,117 +38,96 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //  final productsContainer = Provider.of<Products>(context, listen: false);
+    final productData = Provider.of<Products>(
+        context); //we add <>to let it know which type of data you actually want to listening to.
+
+    final List<Color> clr = [Colors.red, Colors.green, Colors.blue];
+    final names = ['Tous Les Produits', 'Armoires', 'Lits'];
+    final types = ['', 'armoire', 'lit'];
+    final icons = [
+      'lib/assets/icons/house.svg',
+      'lib/assets/icons/wardrobe.svg',
+      'lib/assets/icons/bed.svg'
+    ];
+    final productsList = [
+      productData.items,
+      productData.items
+          .where((pr) => pr.nom.toLowerCase().contains('armoire'))
+          .toList(),
+      productData.items
+          .where((pr) => pr.nom.toLowerCase().contains('lit'))
+          .toList(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nos Produits'),
-        actions: <Widget>[
-          /*  PopupMenuButton(
-            onSelected: (FilterOptions selectedValue) {
-              setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
-                  //      productsContainer.showFavoritesOnly();
-                  _showOnlyFavorites = true;
-                } else {
-                  //     productsContainer.showAll();
-                  _showOnlyFavorites = false;
-                }
-              });
-            },
-            icon: Icon(
-              Icons.more_vert,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/menu.svg",
+              color: Colors.black,
             ),
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Only Favorites'),
-                value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text('Show All'),
-                value: FilterOptions.All,
-              ),
-            ],
-          ),*/
-        ],
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
+        ),
+        title: Text(' Produits', style: TextStyle(color: Colors.black)),
       ),
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ProductsGrid(_showOnlyFavorites),
-
-      /*  Column(
-              children: [
-               SearchBar(),
-                ProductsGrid(_showOnlyFavorites),
-              ],
-            ),*/
-
-      /* ListView(
-                children: [
-                  Container(
-                    width: 300,
-                    height: 250,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(10, 10, 10, 10),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(24),
-                        bottomRight: Radius.circular(24),
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 2,
+                childAspectRatio: 1,
+              ),
+              itemCount: 3,
+              itemBuilder: (ctx, i) => GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return ManageProductsScreen(types[i]);
+                    }),
+                  );
+                },
+                child: Container(
+                  width: 300,
+                  margin: const EdgeInsets.only(left: 12),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+                  decoration: BoxDecoration(
+                    color: clr[i],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(
+                        icons[i],
+                        width: 100,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        SearchBar(),
-                        //  CollectionWidget(),
-                      ],
-                    ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        names[i],
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text('Le Nombre est: ${productsList[i].length}',
+                          style: TextStyle(color: Colors.white)),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Popular Products",
-                          //  style: medBoldStyle,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          "View All",
-
-                          //   style: smallBoldTxtStyle.copyWith(color: Colors.black54),
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                      height: 300, child: ProductsGrid(_showOnlyFavorites)),
-                  const SizedBox(height: 100),
-                ],
-              )
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              */
+                ),
+              ),
+            ),
     );
   }
 }

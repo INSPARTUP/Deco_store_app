@@ -1,6 +1,7 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/widgets/user_app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/orders.dart' show Orders;
@@ -16,7 +17,19 @@ class OrdersScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Vos Commandes'),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/menu.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
+        ),
+        title: Text('Vos Commandes', style: TextStyle(color: Colors.black)),
       ),
       drawer: UserAppDrawer(),
       body: FutureBuilder(

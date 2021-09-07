@@ -6,8 +6,10 @@ import 'package:deco_store_app/widgets/user_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 import '../cart_screen.dart';
+import 'navigation_screen.dart';
 
 class UserProductsOverviewScreen extends StatefulWidget {
   static const routeName = "/user-products-overview-screen";
@@ -23,12 +25,15 @@ class _UserProductsOverviewScreenState
   var _isInit = true;
   var _isLoading = false;
 
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     // // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
     // Future.delayed(Duration.zero).then((_) {
     //   Provider.of<Products>(context).fetchAndSetProducts();
     // });
+
     super.initState();
   }
 
@@ -55,18 +60,32 @@ class _UserProductsOverviewScreenState
 
   @override
   Widget build(BuildContext context) {
-    //  final productsContainer = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text(' Produits'),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/menu.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
+        ),
+        title: Text(' Accueil', style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
-            icon: SvgPicture.asset("lib/assets/icons/cart.svg"),
+            icon: SvgPicture.asset(
+              "lib/assets/icons/cart.svg",
+              color: Colors.black,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return CartScreen();
+                  return NavigationScreenUser(1);
                 }),
               );
             },

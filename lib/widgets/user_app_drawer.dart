@@ -1,5 +1,6 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/orders_screen.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,8 +51,12 @@ class UserAppDrawer extends StatelessWidget {
             leading: Icon(Icons.shop),
             title: Text('Produits'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(UserProductsOverviewScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(0);
+                }),
+              );
             },
           ),
           Divider(),
