@@ -63,15 +63,20 @@ class ProductsGrid extends StatelessWidget {
         const SizedBox(height: 25),
         Padding(
           padding: const EdgeInsets.only(top: 160),
-          child: Text(
-            '   Nos Produits : ',
-            style: TextStyle(
-                fontSize: 22,
-                fontFamily: 'Arial, sans-serif',
-                fontWeight: FontWeight.bold),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '   Nos Produits : ',
+                style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: 'Arial, sans-serif',
+                    fontWeight: FontWeight.bold),
+              ),
+              Divider(),
+            ],
           ),
         ),
-        Divider(),
         const SizedBox(height: 25),
         Padding(
           padding: const EdgeInsets.only(top: 185.0),

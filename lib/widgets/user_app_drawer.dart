@@ -33,10 +33,21 @@ class UserAppDrawer extends StatelessWidget {
           Align(
             child: Column(
               children: [
-                Text("Bonjour,"),
-                Text(
-                  nom + ' ' + prenom,
-                )
+                Divider(),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("      Bonjour,",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold)),
+                ),
+                Text(nom + ' ' + prenom,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontFamily: "Arial",
+                        fontWeight: FontWeight.bold))
               ],
             ),
           ),

@@ -1,7 +1,6 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
-import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,10 +28,21 @@ class AppDrawer extends StatelessWidget {
           Align(
             child: Column(
               children: [
-                Text("Bonjour,"),
-                Text(
-                  nom + ' ' + prenom,
-                )
+                Divider(),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("      Bonjour,",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold)),
+                ),
+                Text(nom + ' ' + prenom,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontFamily: "Arial",
+                        fontWeight: FontWeight.bold))
               ],
             ),
           ),

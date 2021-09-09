@@ -1,6 +1,8 @@
+import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SuperAdminScreen extends StatefulWidget {
   @override
@@ -9,12 +11,10 @@ class SuperAdminScreen extends StatefulWidget {
 
 class _SuperAdminScreenState extends State<SuperAdminScreen> {
   @override
-
-  // var token;
-  var data;
-
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    final nom = Provider.of<Auth>(context, listen: false).nom;
+    final prenom = Provider.of<Auth>(context, listen: false).prenom;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -35,11 +35,7 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
                 shadowColour: Color(0xff866DC9).withOpacity(0.16),
                 onPressed: () {
                   Fluttertoast.showToast(
-                      msg: data['nom'] +
-                          ' ' +
-                          data['prenom'] +
-                          ' ' +
-                          data['roles'],
+                      msg: nom + ' ' + prenom,
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,
@@ -59,6 +55,21 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
                 Navigator.of(context).pushNamed(
                   '/admin-signup',
                 );
+              },
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            CustomButton(
+              label: 'Gestion des Admins',
+              labelColour: Colors.white,
+              backgroundColour: Colors.green,
+              shadowColour: Color(0xff866DC9).withOpacity(0.16),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/manage-admins',
+                );
+                //  Provider.of<Auth>(context, listen: false).fetchAdmins();
               },
             ),
           ],

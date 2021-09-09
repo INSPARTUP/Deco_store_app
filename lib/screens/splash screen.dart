@@ -112,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                       ? ProductsOverwiewScreen()
                       : (auth.roles == 'ROLE_SUPER-ADMIN')
                           ? SuperAdminScreen()
-                          : UserProductsOverviewScreen())
+                          : NavigationScreenUser(0))
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, authResultSnapshot) =>

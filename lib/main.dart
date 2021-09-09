@@ -23,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/admin_screens/admin_details_screen.dart';
 import 'screens/admin_screens/edit_product_screen.dart';
+import 'screens/admin_screens/manage_admins.dart';
 import 'screens/user_screens/navigation_screen.dart';
 
 void main() {
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             NavigationScreenUser.routeName: (ctx) => NavigationScreenUser(0),
             AdminDetailsScreen.routeName: (ctx) => AdminDetailsScreen(),
+            ManageAdmins.routeName: (ctx) => ManageAdmins(),
           }),
     );
   }

@@ -117,8 +117,11 @@ class Cart with ChangeNotifier {
 
   int get totalAmount {
     int total = 0;
+
     _items.forEach((key, value) {
-      total += value.prix * value.quantite;
+      if (key != null && value != null) {
+        total += value.prix * value.quantite;
+      }
     });
     return total;
   }

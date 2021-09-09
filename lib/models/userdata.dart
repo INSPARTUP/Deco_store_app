@@ -28,7 +28,7 @@ class UserData {
   String accessToken;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
-        id: json["id"],
+        id: json["_id"],
         nom: json["nom"],
         prenom: json["prenom"],
         email: json["email"],
@@ -39,7 +39,7 @@ class UserData {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "_id": id,
         "nom": nom,
         "prenom": prenom,
         "email": email,
