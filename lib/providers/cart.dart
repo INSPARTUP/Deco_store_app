@@ -94,9 +94,9 @@ class Cart with ChangeNotifier {
     }; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)
   }
 
-  List<Itemorder> _itemsorder = [];
+  List<ItemOrder> _itemsorder = [];
 
-  List<Itemorder> get itemsorder {
+  List<ItemOrder> get itemsorder {
     return [
       ..._itemsorder
     ]; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)

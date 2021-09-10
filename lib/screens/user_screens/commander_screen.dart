@@ -313,8 +313,8 @@ class _CommanderScreenState extends State<CommanderScreen> {
     final total = arguments['total'];
     print(total);
 
-    List<Itemorder> orderitems = [];
-    productsList.forEach((k, v) => orderitems.add(Itemorder(
+    List<ItemOrder> orderitems = [];
+    productsList.forEach((k, v) => orderitems.add(ItemOrder(
         name: v.nom, price: v.prix, productId: v.productId, qty: v.quantite)));
     print(orderitems);
     final test = orderitems

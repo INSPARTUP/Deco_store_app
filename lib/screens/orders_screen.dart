@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/orders.dart' show Orders;
 // nas7a9o ghi Orders class.manas7a9och OrderItem lidiralna problem
-import '../widgets/order_item.dart';
+import '../widgets/order_item_widget.dart';
 
 class OrdersScreen extends StatelessWidget {
   static const routeName = '/orders';
@@ -54,7 +54,7 @@ class OrdersScreen extends StatelessWidget {
                 // darna Consumer psq nas7a9o ghi Listview tdir rebuilding ida sra changement f provider orders mchi ga3 orders_overview (za3ma mchi ga3 build ta3 orders_overview)
                 builder: (ctx, orderData, child) => ListView.builder(
                   itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
+                  itemBuilder: (ctx, i) => OrderItemWidget(orderData.orders[i]),
                 ),
               );
             }

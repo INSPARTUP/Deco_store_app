@@ -1,4 +1,5 @@
 import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/screens/admin_screens/manage_orders.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,19 @@ class AppDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) {
                   return ManageProductsScreen('');
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.shop),
+            title: Text('Gérer les Commandes'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ManageOrders();
                 }),
               );
             },

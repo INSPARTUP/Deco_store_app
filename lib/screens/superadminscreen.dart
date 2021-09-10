@@ -72,6 +72,21 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
                 //  Provider.of<Auth>(context, listen: false).fetchAdmins();
               },
             ),
+            SizedBox(
+              height: 40,
+            ),
+            CustomButton(
+              label: 'Gestion des Commandes',
+              labelColour: Colors.white,
+              backgroundColour: Colors.green,
+              shadowColour: Color(0xff866DC9).withOpacity(0.16),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/manage-orders',
+                );
+                //  Provider.of<Auth>(context, listen: false).fetchAdmins();
+              },
+            ),
           ],
         ),
       ),
