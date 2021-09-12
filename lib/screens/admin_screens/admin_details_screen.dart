@@ -38,6 +38,7 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
               products[i].id,
               products[i].nom,
               products[i].imageurl,
+              products[i].archived,
             ),
             Divider(),
           ],

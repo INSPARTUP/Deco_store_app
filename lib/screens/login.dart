@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/services/authservice.dart';
+import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../size_config.dart';
-import 'admin_screens/products_overview_screen.dart';
-import 'user_screens/user_products_overview_screen.dart';
+import 'user_screens/navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -26,93 +24,109 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => showDialog<bool>(
-        context: context,
-        builder: (c) => AlertDialog(
-          title: Text('Avertissement'),
-          content: Text('Voulez-vous vraiment sortir'),
-          actions: [
-            FlatButton(
-                child: Text('Oui'), onPressed: () => SystemNavigator.pop()),
-            FlatButton(
-              child: Text('Non'),
-              onPressed: () => Navigator.pop(c, false),
-            ),
-          ],
-        ),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text('Connexion', style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.blue[800],
-        ),
-        backgroundColor: Color(0xFFFAFBFD),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 85,
-                //     height: SizeConfig.height(100.9),
-                decoration: BoxDecoration(
-                  color: Colors.blue[800],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(9.0),
+        onWillPop: () => showDialog<bool>(
+              context: context,
+              builder: (c) => AlertDialog(
+                title: Text('Avertissement'),
+                content: Text('Voulez-vous vraiment sortir'),
+                actions: [
+                  TextButton(
+                      child: Text('Oui'),
+                      onPressed: () => SystemNavigator.pop()),
+                  TextButton(
+                    child: Text('Non'),
+                    onPressed: () => Navigator.pop(c, false),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Kagu',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                          size: 50,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Flexible(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    //         height: SizeConfig.height(280.3),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Center(
-                          child: new Form(
-                            key: _key,
-                            autovalidate: _validate,
-                            child: FormUI(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            centerTitle: true,
+            title: Text('Connexion', style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.blue[800],
+          ),
+          backgroundColor: Color(0xFFFAFBFD),
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                    "https://i.pinimg.com/originals/cd/5a/b4/cd5ab4c99f790dd29100193d281bc2e9.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: new BackdropFilter(
+              filter: new ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+              child: Container(
+                decoration:
+                    new BoxDecoration(color: Colors.white.withOpacity(0.1)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 130,
+                        //     height: SizeConfig.height(100.9),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[800],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(9.0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Kagu',
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Container(
+                            //         height: SizeConfig.height(280.3),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Center(
+                                  child: new Form(
+                                    key: _key,
+                                    autovalidate: _validate,
+                                    child: FormUI(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget FormUI() {
@@ -122,7 +136,16 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
               obscureText: false,
+              style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                fillColor: Colors.white,
+                filled: true,
                 icon: Icon(
                   Icons.mail,
                   color: Colors.blue[800],
@@ -139,9 +162,18 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
+            style: TextStyle(color: Colors.black),
             obscureText: true,
             validator: validatePassword,
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(
+                  style: BorderStyle.solid,
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
               icon: Icon(
                 Icons.vpn_key,
                 color: Colors.blue[800],
@@ -171,7 +203,8 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 10.0,
         ),
         TextButton(
-          child: Text('Inscrivez-vous'),
+          child: Text('Inscrivez-vous',
+              style: TextStyle(color: Colors.blue, fontSize: 18)),
           onPressed: () {
             Navigator.of(context).pushNamed(
               '/user-signup',
@@ -230,11 +263,18 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             fontSize: 16.0);
         if (role == 'ROLE_USER') {
-          Navigator.of(context)
-              .popAndPushNamed(UserProductsOverviewScreen.routeName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return NavigationScreenUser(0);
+            }),
+          );
         } else if (role == 'ROLE_ADMIN') {
-          Navigator.of(context).pushReplacementNamed(
-            ProductsOverwiewScreen.routeName,
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return AdminNavigationScreen(0);
+            }),
           );
         } else if (role == 'ROLE_SUPER-ADMIN') {
           Navigator.of(context).pushReplacementNamed(

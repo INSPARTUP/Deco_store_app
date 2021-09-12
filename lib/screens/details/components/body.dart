@@ -129,7 +129,7 @@ class Body extends StatelessWidget {
                                 children: [
                                   TextSpan(text: "Prix\n"),
                                   TextSpan(
-                                    text: "${product.prix} DA",
+                                    text: "\$${product.prix}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline4

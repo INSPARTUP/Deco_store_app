@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:deco_store_app/providers/orders.dart';
+import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 CartItem cartFromJson(String str) => CartItem.fromJson(json.decode(str));
 
@@ -126,14 +128,14 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  Future<void> fetchCart(String email) async {
-    // email = "azeqs@gmail.com";
+  Future<void> fetchCart(String email, BuildContext ctx) async {
+    // email = "za@gmail.com";
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/cart?email=$email');
     http.Response response = await http.get(
       url,
-      headers: {"Content-Type": "application/json"},
     );
+    //   print(response.statusCode == 200);
 
     if (response.statusCode == 200) {
       dynamic jsonData = json.decode(response.body);
@@ -143,12 +145,33 @@ class Cart with ChangeNotifier {
       } catch (e) {
         itemss = [];
       }
+      print(itemss);
 
-      //  jsonData['items'];
+      // print(response.body);
       //   print(jsonData['items']?.hashCode);
 
+      var products = Provider.of<Products>(ctx, listen: false).items;
+
       itemss.forEach((element) async {
-        var url = Uri.parse(
+        var index =
+            products.indexWhere((prod) => prod.id == element["product_id"]);
+        print('///////////////////////////////////////');
+        print(element['qty']);
+        print('///////////////////////////////////////');
+
+        if (!_items.containsKey(products[index].id))
+          _items.putIfAbsent(
+              products[index].id,
+              () => ProductFromCartItem(
+                    productId: products[index].id,
+                    nom: products[index].nom,
+                    prix: products[index].prix,
+                    quantite: element['qty'],
+                    imageurl: products[index].imageurl,
+                    type: products[index].type,
+                  ));
+
+        /*  var url = Uri.parse(
             'https://whispering-bastion-00988.herokuapp.com/api/produits/${element["product_id"]}');
         http.Response response = await http.get(url);
         //  print(response.body);
@@ -165,22 +188,9 @@ class Cart with ChangeNotifier {
                     imageurl: jsonData["imageurl"],
                     type: jsonData["type"],
                   ));
+
+                  */
       });
-/*
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      _items.forEach((key, value) {
-        print(value.quantite);
-      });*/
-      // return _items;
-
-      //  notifyListeners();
-      // print(_products);
-      // print(_items);
-      // return CartItem.fromJson(jsonData);
-
     } else if (response.statusCode == 404) {
       throw Exception('Not found');
     } else {

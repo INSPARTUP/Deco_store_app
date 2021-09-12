@@ -29,10 +29,7 @@ class _ChercheScreenState extends State<ChercheScreen> {
         });
       });
     }
-    final email = Provider.of<Auth>(
-      context,
-    ).email;
-    Provider.of<Cart>(context, listen: false).fetchCart(email);
+
     _isInit = false; // bach ydir hadik l khadma ghi l khatra lawla
     super.didChangeDependencies();
   }
@@ -41,11 +38,14 @@ class _ChercheScreenState extends State<ChercheScreen> {
   Widget build(BuildContext context) {
     final productData = Provider.of<Products>(
         context); //we add <>to let it know which type of data you actually want to listening to.
-    var products = productData.items;
+
+    final productsItems =
+        productData.items.where((element) => !element.archived).toList();
+
+    var products = productsItems;
 
     if (rech != null)
-      products =
-          productData.items.where((pr) => pr.nom.contains(rech)).toList();
+      products = productsItems.where((pr) => pr.nom.contains(rech)).toList();
 
     return SafeArea(
       child: Scaffold(

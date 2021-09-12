@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/services/authservice.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
@@ -30,47 +32,68 @@ class _SingupScreenState extends State<SingupScreen> {
         backgroundColor: Colors.blue[800],
       ),
       backgroundColor: Color(0xFFFAFBFD),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            //  height: SizeConfig.height(53.9),
-            color: Color(0xFFFAFBFD),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Kagu',
-                    style: TextStyle(
-                      fontSize: 40,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                "https://i.pinimg.com/originals/ed/78/4d/ed784d0ebf814477ea3987778464d75c.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+          child: Container(
+            decoration: new BoxDecoration(color: Colors.white.withOpacity(0.1)),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 130,
+                    //     height: MediaQuery.of(context).size.height - 550,
+                    height: 80,
+                    decoration: BoxDecoration(
                       color: Colors.blue[800],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(9.0),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Kagu',
+                          style: TextStyle(
+                            fontSize: 40,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                      ],
                     ),
                   ),
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.blue[800],
-                    size: 50,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Container(
-                  //     height: SizeConfig.height(377.3),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                ),
+                Flexible(
+                  child: ListView(
+                    shrinkWrap: true,
                     children: [
-                      Center(
-                        child: new Form(
-                          key: _key,
-                          autovalidate: _validate,
-                          child: FormUI(),
+                      Container(
+                        //     height: SizeConfig.height(377.3),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Center(
+                              child: new Form(
+                                key: _key,
+                                autovalidate: _validate,
+                                child: FormUI(),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -79,7 +102,7 @@ class _SingupScreenState extends State<SingupScreen> {
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -91,7 +114,16 @@ class _SingupScreenState extends State<SingupScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
             obscureText: false,
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(
+                  style: BorderStyle.solid,
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
               icon: Icon(
                 CupertinoIcons.profile_circled,
                 color: Colors.blue[800],
@@ -109,7 +141,16 @@ class _SingupScreenState extends State<SingupScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
             obscureText: false,
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(
+                  style: BorderStyle.solid,
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
               icon: Icon(
                 CupertinoIcons.profile_circled,
                 color: Colors.blue[800],
@@ -126,7 +167,16 @@ class _SingupScreenState extends State<SingupScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
               obscureText: false,
+              style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                fillColor: Colors.white,
+                filled: true,
                 icon: Icon(
                   Icons.mail,
                   color: Colors.blue[800],
@@ -145,7 +195,16 @@ class _SingupScreenState extends State<SingupScreen> {
           child: TextFormField(
               obscureText: false,
               keyboardType: TextInputType.phone,
+              style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                fillColor: Colors.white,
+                filled: true,
                 icon: Icon(
                   Icons.phone_android,
                   color: Colors.blue[800],
@@ -163,7 +222,16 @@ class _SingupScreenState extends State<SingupScreen> {
           child: TextFormField(
             obscureText: true,
             validator: validatePassword,
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(
+                  style: BorderStyle.solid,
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
               icon: Icon(
                 Icons.vpn_key,
                 color: Colors.blue[800],
@@ -180,7 +248,16 @@ class _SingupScreenState extends State<SingupScreen> {
           child: TextFormField(
             obscureText: true,
             validator: validateConfirmPassword,
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(
+                  style: BorderStyle.solid,
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
               icon: Icon(
                 Icons.vpn_key,
                 color: Colors.blue[800],

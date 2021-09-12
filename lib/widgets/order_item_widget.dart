@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:deco_store_app/providers/orders.dart';
+import 'package:deco_store_app/screens/admin_screens/edit_order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sweetalertv2/sweetalertv2.dart';
 import '../providers/orders.dart' as ord; //badalna nom ta3ha
 
 class OrderItemWidget extends StatefulWidget {
@@ -18,6 +20,15 @@ class OrderItemWidget extends StatefulWidget {
 
 class _OrderItemWidgetState extends State<OrderItemWidget> {
   bool _expanded = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    if (DateTime.now().isAfter(widget.order.deliveredAt))
+      Provider.of<Orders>(context, listen: false).arriver(widget.order.id);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,13 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
               children: <Widget>[
                 ListTile(
                   title: Text('\$ ${widget.order.grandTotal}'),
-                  onTap: () => print(widget.order.id),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => EditOrder(widget.order),
+                      ),
+                    );
+                  },
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -42,16 +59,30 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                         DateFormat('dd/MM/yyyy hh:mm aa')
                             .format(widget.order.createdAt),
                       ),
-                      Text(widget.order.accepted == true
-                          ? 'Accepté'
-                          : 'en cours de traitement'),
+                      Text(
+                        widget.order.accepted == true
+                            ? 'Accepté'
+                            : 'en cours de traitement',
+                        style: TextStyle(
+                            color: widget.order.accepted
+                                ? Colors.green
+                                : Colors.grey),
+                      ),
+                      widget.order.arrived
+                          ? Text(
+                              "La commande a été arrivée ",
+                              style:
+                                  TextStyle(color: Colors.lightBlueAccent[700]),
+                            )
+                          : SizedBox(height: 0),
                       widget.order.accepted
                           ? Text(
                               "la date d'arrivé: " +
                                   DateFormat('dd/MM/yyyy')
                                       .format(widget.order.deliveredAt),
+                              style: TextStyle(color: Colors.green),
                             )
-                          : null,
+                          : SizedBox(height: 0),
                       Text(
                         'Livraison : Gratuite',
                         style: TextStyle(fontSize: 12.5),
@@ -73,14 +104,6 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       );
                     },
                   ),
-                  /*  IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Colors.red,
-                        onPressed: () {
-                          Provider.of<Orders>(context, listen: false)
-                              .deleteOrder(widget.order.id);
-                        },
-                      ),*/
                 ),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 300),
@@ -116,8 +139,33 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                       icon: Icon(Icons.delete),
                       color: Colors.red,
                       onPressed: () {
-                        Provider.of<Orders>(context, listen: false)
-                            .deleteOrder(widget.order.id);
+                        SweetAlertV2.show(context,
+                            subtitle:
+                                'êtes-vous sûr de vouloir supprimer cette commande ?',
+                            subtitleTextAlign: TextAlign.center,
+                            style: SweetAlertV2Style.confirm,
+                            cancelButtonText: 'Annuler',
+                            confirmButtonText: 'Confirmer',
+                            showCancelButton: true, onPress: (bool isConfirm) {
+                          if (isConfirm) {
+                            SweetAlertV2.show(context,
+                                subtitle: "Suppression...",
+                                style: SweetAlertV2Style.loading);
+                            Provider.of<Orders>(context, listen: false)
+                                .deleteOrder(widget.order.id)
+                                .then((value) => SweetAlertV2.show(context,
+                                    subtitle: "Succés!",
+                                    style: SweetAlertV2Style.success));
+                          } else {
+                            SweetAlertV2.show(context,
+                                subtitle: "Annulé!",
+                                style: SweetAlertV2Style.error);
+                          }
+
+                          // return false to keep dialog
+                          return false;
+                        });
+
                         setState(
                           () {
                             _expanded = !_expanded;

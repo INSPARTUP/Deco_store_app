@@ -1,4 +1,5 @@
 import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_orders.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
@@ -56,12 +57,12 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.shop),
-            title: Text('Produits'),
+            title: Text('Accueil'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return ProductsOverwiewScreen();
+                  return AdminNavigationScreen(0);
                 }),
               );
             },
@@ -74,20 +75,20 @@ class AppDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return ManageProductsScreen('');
+                  return AdminNavigationScreen(1);
                 }),
               );
             },
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.shop),
+            leading: Icon(Icons.card_giftcard),
             title: Text('Gérer les Commandes'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return ManageOrders();
+                  return AdminNavigationScreen(3);
                 }),
               );
             },

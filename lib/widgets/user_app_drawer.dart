@@ -1,10 +1,7 @@
 import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/screens/orders_screen.dart';
 import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
-import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class UserAppDrawer extends StatelessWidget {
   @override
@@ -52,11 +49,6 @@ class UserAppDrawer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15),
-          Container(
-            width: 140,
-            height: 2,
-            color: Colors.grey[200],
-          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.shop),
@@ -72,11 +64,28 @@ class UserAppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
+            leading: Icon(Icons.card_giftcard),
             title: Text('Mes Commandes'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(3);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.search),
+            title: Text('Recherche'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(2);
+                }),
+              );
             },
           ),
           Divider(),

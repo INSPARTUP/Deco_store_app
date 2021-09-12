@@ -1,5 +1,6 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/widgets/user_app_drawer.dart';
+import 'package:deco_store_app/widgets/user_order_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class OrdersScreen extends StatelessWidget {
                 // darna Consumer psq nas7a9o ghi Listview tdir rebuilding ida sra changement f provider orders mchi ga3 orders_overview (za3ma mchi ga3 build ta3 orders_overview)
                 builder: (ctx, orderData, child) => ListView.builder(
                   itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, i) => OrderItemWidget(orderData.orders[i]),
+                  itemBuilder: (ctx, i) => UserOrderItem(orderData.orders[i]),
                 ),
               );
             }

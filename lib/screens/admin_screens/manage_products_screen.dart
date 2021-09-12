@@ -160,6 +160,12 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                                     .contains(widget.type))
                                                 .toList()[i]
                                                 .imageurl,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
+                                                .archived,
                                           ),
                                           Divider(),
                                         ],

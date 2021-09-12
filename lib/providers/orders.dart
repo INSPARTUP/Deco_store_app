@@ -255,40 +255,7 @@ class Orders with ChangeNotifier {
       return;
     }
     extractedData.forEach((orderData) {
-      loadedOrders.add(
-        OrderItem(
-          user: User(
-              name: orderData['user']['name'],
-              email: orderData['user']['email']),
-          createdAt: DateTime.parse(orderData['createdAt']),
-          grandTotal: orderData['grandTotal'],
-          phoneNumber: orderData['phoneNumber'],
-          billingAddress: BillingAddress(
-              name: orderData['billingAddress']['name'],
-              email: orderData['billingAddress']['email'],
-              postCode: orderData['billingAddress']['postCode'],
-              wilaya: orderData['billingAddress']['wilaya'],
-              deliveryAddress: orderData['billingAddress']['deliveryAddress'],
-              country: orderData['billingAddress']['country']),
-          shippingMethod: orderData['shippingMethod'],
-          paymentMethod: orderData['paymentMethod'],
-          id: orderData["_id"],
-          accepted: orderData['accepted'],
-          deliveryTime: orderData['deliveryTime'],
-          deliveredAt: orderData['deliveredAt'],
-          arrived: orderData['arrived'],
-          items: (orderData['items'] as List<dynamic>)
-              .map(
-                (item) => ItemOrder(
-                  productId: item['productId'],
-                  price: item['price'],
-                  name: item['name'],
-                  qty: item['qty'],
-                ),
-              )
-              .toList(),
-        ),
-      );
+      loadedOrders.add(OrderItem.fromJson(orderData));
     });
     _orders = loadedOrders.reversed.toList();
     //nagalbo la liste bach orders jdod ykono l foga
@@ -399,26 +366,26 @@ class Orders with ChangeNotifier {
     existingOrder = null;
   }
 
-  Future<void> updateOrder(String id, OrderItem newOrder) async {
+  Future<void> accepterOrder(String id, int deliveryTime) async {
     final orderIndex = _allOrders.indexWhere((order) => order.id == id);
+    print(deliveryTime);
     if (orderIndex >= 0) {
       var url =
           Uri.parse('https://managecartandorders.herokuapp.com/api/order/$id');
 
-      final response = await http.put(url,
-          headers: {"Content-Type": "application/json"}, body: newOrder.toJson()
+      var newDeliveredAt = DateTime.now().add(Duration(days: deliveryTime));
+      print(DateTime.now());
+      print(newDeliveredAt);
 
-          /*json.encode(
-          {
-            'nom': newProduct.nom,
-            'description': newProduct.description,
-            'imageUrl': newProduct.imageurl,
-            'prix': newProduct.prix,
-            'quantite': newProduct.quantite,
-            'type': newProduct.type,
-          },
-        ),*/
-          );
+      _allOrders[orderIndex].accepted = true;
+      _allOrders[orderIndex].deliveryTime = deliveryTime;
+      _allOrders[orderIndex].deliveredAt = newDeliveredAt;
+
+      final response = await http.put(url, body: {
+        "accepted": true.toString(),
+        "deliveryTime": deliveryTime.toString(),
+        "deliveredAt": newDeliveredAt.toIso8601String(),
+      });
 
       //darna await sama ki ykamal l code lilfoga ydir li rah lta7t sama ydir update f local memoire
       Fluttertoast.showToast(
@@ -432,7 +399,24 @@ class Orders with ChangeNotifier {
 
       print(json.decode(response.body)['message']);
 
-      _allOrders[orderIndex] = newOrder;
+      notifyListeners();
+    } else
+      print('...');
+  }
+
+  Future<void> arriver(String id) async {
+    final orderIndex = _allOrders.indexWhere((order) => order.id == id);
+    if (orderIndex >= 0) {
+      var url =
+          Uri.parse('https://managecartandorders.herokuapp.com/api/order/$id');
+
+      _allOrders[orderIndex].arrived = true;
+      final response = await http.put(url, body: {
+        "arrived": true.toString(),
+      });
+
+      print(json.decode(response.body)['message']);
+
       notifyListeners();
     } else
       print('...');

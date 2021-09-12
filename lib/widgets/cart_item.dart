@@ -40,14 +40,11 @@ class CartItemWidget extends StatelessWidget {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Veuillez entrer la quantite';
-                }
-                if (double.tryParse(value) == null) {
+                } else if (double.tryParse(value) == null) {
                   return 'Veuillez entrer un numéro valide.'; // exemple ndakhlo String sama man9adoch n convertoh l double using double.parse(value)
-                }
-                if (double.parse(value) <= 0) {
+                } else if (double.parse(value) <= 0) {
                   return 'Veuillez saisir un nombre supérieur à zéro.';
-                }
-                if (int.parse(value) > quantity) {
+                } else if (int.parse(value) > quantity) {
                   return "Cette quantite n'existe pas dans votre panier.";
                 }
               },
@@ -174,12 +171,12 @@ class CartItemWidget extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: FittedBox(
-                      child: Text('$price DA'),
+                      child: Text('\$$price'),
                     ),
                   ),
                 ),
                 title: Text(title),
-                subtitle: Text('Total : ${(price * quantity)} DA'),
+                subtitle: Text('Total : \$${(price * quantity)} '),
                 trailing: Text('$quantity'),
               ),
               Align(

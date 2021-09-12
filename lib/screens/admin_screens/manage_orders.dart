@@ -25,7 +25,7 @@ class ManageOrders extends StatelessWidget {
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           ),
         ),
-        title: Text('Vos Commandes', style: TextStyle(color: Colors.black)),
+        title: Text('Les Commandes', style: TextStyle(color: Colors.black)),
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(

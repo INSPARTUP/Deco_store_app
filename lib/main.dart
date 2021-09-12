@@ -3,7 +3,6 @@ import 'package:deco_store_app/providers/count.dart';
 import 'package:deco_store_app/providers/orders.dart';
 import 'package:deco_store_app/providers/products.dart';
 import 'package:deco_store_app/providers/cart.dart';
-import 'package:deco_store_app/screens/admin_screens/adminhome.dart';
 import 'package:deco_store_app/screens/admin_screens/adminsignup.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
@@ -22,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/admin_screens/admin_details_screen.dart';
+import 'screens/admin_screens/edit_order.dart';
 import 'screens/admin_screens/edit_product_screen.dart';
 import 'screens/admin_screens/manage_admins.dart';
 import 'screens/admin_screens/manage_orders.dart';
@@ -76,7 +76,6 @@ class MyApp extends StatelessWidget {
           home: SplashScreen(),
           routes: {
             '/user-screen': (ctx) => UserHome(),
-            '/admin-screen': (ctx) => AdminHome(),
             '/superadmin-screen': (ctx) => SuperAdminScreen(),
             '/user-signup': (ctx) => SingupScreen(),
             '/login': (ctx) => LoginScreen(),
@@ -93,7 +92,8 @@ class MyApp extends StatelessWidget {
             NavigationScreenUser.routeName: (ctx) => NavigationScreenUser(0),
             AdminDetailsScreen.routeName: (ctx) => AdminDetailsScreen(),
             ManageAdmins.routeName: (ctx) => ManageAdmins(),
-             ManageOrders.routeName: (ctx) => ManageOrders(),
+            ManageOrders.routeName: (ctx) => ManageOrders(),
+            EditOrder.routeName: (ctx) => EditOrder(null),
           }),
     );
   }

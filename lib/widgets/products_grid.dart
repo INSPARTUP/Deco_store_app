@@ -5,9 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 class ProductsGrid extends StatelessWidget {
-  final bool showFavs;
-
-  ProductsGrid(this.showFavs);
 /*
   var slideShowList = [
     "https://www.wofox.com/napi/adsn/MTY2NjU=/166651574058317971.gif",
@@ -27,9 +24,8 @@ class ProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final productData = Provider.of<Products>(
         context); //we add <>to let it know which type of data you actually want to listening to.
-    final products = productData.items;
-
-    //.reversed.toList();
+    final products =
+        productData.items.where((element) => !element.archived).toList();
 
     return Stack(
       children: <Widget>[

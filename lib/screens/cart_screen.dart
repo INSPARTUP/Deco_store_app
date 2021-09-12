@@ -20,10 +20,10 @@ class _CartScreenState extends State<CartScreen> {
   var cartitems;
   var _isInit = true;
   var _isLoading = false;
-  /* Future<void> _refreshProducts(String email) async {
-    await Provider.of<Cart>(context, listen: true).fetchCart(email);
+  Future<void> _refreshCart(String email, BuildContext ctx) async {
+    await Provider.of<Cart>(ctx, listen: false).fetchCart(email, ctx);
+    cartitems = Provider.of<Cart>(ctx, listen: false).items;
   }
-*/
 
   @override
   void didChangeDependencies() {
@@ -34,7 +34,9 @@ class _CartScreenState extends State<CartScreen> {
       final email = Provider.of<Auth>(
         context,
       ).email;
-      Provider.of<Cart>(context, listen: true).fetchCart(email).then((_) {
+      Provider.of<Cart>(context, listen: true)
+          .fetchCart(email, context)
+          .then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -48,9 +50,8 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final email = Provider.of<Auth>(context, listen: false).email;
-    final cart = Provider.of<Cart>(context, listen: false).fetchCart(email);
     final total = Provider.of<Cart>(context, listen: true).totalAmount;
-    final cartitems = Provider.of<Cart>(context).items;
+    //  final cartitems = Provider.of<Cart>(context, listen: true).items;
     return Scaffold(
       appBar: AppBar(
         title: Text('Votre Panier', style: TextStyle(color: Colors.black)),
@@ -106,74 +107,94 @@ class _CartScreenState extends State<CartScreen> {
           SizedBox(width: 5)
         ],
       ),
-      body: _isLoading
-          ? Center(
+      body: FutureBuilder(
+        future: _refreshCart(email, context),
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(
               child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: [
-                Card(
-                  margin: EdgeInsets.all(15),
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        Spacer(), //it takes all the available space and reserves it for itself
-                        Chip(
-                          label: Text(
-                            '\$${total.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .title
-                                  .color,
+            );
+          } else {
+            if (dataSnapshot.error != null) {
+              print(dataSnapshot);
+              // ...
+              // Do error handling stuff
+              return Center(
+                child: Text('An error occurred!'),
+              );
+            } else {
+              return Consumer<Cart>(
+                // darna Consumer psq nas7a9o ghi Listview tdir rebuilding ida sra changement f provider orders mchi ga3 orders_overview (za3ma mchi ga3 build ta3 orders_overview)
+                builder: (ctx, cartData, child) => Column(
+                  children: [
+                    Card(
+                      margin: EdgeInsets.all(15),
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ), //the chip widget is also a little bit like our bage,our label, an element with rounded corners which you can use to display information
-                        _isLoading
-                            ? CircularProgressIndicator()
-                            : FlatButton(
-                                child: Text('Commander'),
-                                onPressed: (total <= 0 || _isLoading)
-                                    ? null //if onPressed points at null instead of a function,flutter automatically disables the button
-                                    : () => Navigator.of(context)
-                                            .pushReplacementNamed(
-                                                CommanderScreen.routeName,
-                                                arguments: {
-                                              'total': total,
-                                              'cartitems': cartitems
-                                            }),
-                                textColor: Theme.of(context).primaryColor,
-                              )
-                      ],
+                            Spacer(), //it takes all the available space and reserves it for itself
+                            Chip(
+                              label: Text(
+                                '\$${cartData.totalAmount.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .title
+                                      .color,
+                                ),
+                              ),
+                              backgroundColor: Theme.of(context).primaryColor,
+                            ), //the chip widget is also a little bit like our bage,our label, an element with rounded corners which you can use to display information
+                            _isLoading
+                                ? CircularProgressIndicator()
+                                : FlatButton(
+                                    child: Text('Commander'),
+                                    onPressed: (cartData.totalAmount <= 0 ||
+                                            _isLoading)
+                                        ? null //if onPressed points at null instead of a function,flutter automatically disables the button
+                                        : () => Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    CommanderScreen.routeName,
+                                                    arguments: {
+                                                  'total': total,
+                                                  'cartitems': cartitems
+                                                }),
+                                    textColor: Theme.of(context).primaryColor,
+                                  )
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: cartData.items.length,
+                        itemBuilder: (ctx, i) => CartItemWidget(
+                            cartData.items.values.toList()[i].productId,
+                            //cart.items hiya Map zad .values bach nkharbo liste ta3 values w radinaha list .to List
+                            cartData.items.keys.toList()[i],
+                            cartData.items.values.toList()[i].prix,
+                            cartData.items.values.toList()[i].quantite,
+                            cartData.items.values.toList()[i].nom),
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cartitems.length,
-                    itemBuilder: (ctx, i) => CartItemWidget(
-                        cartitems.values.toList()[i].productId,
-                        //cart.items hiya Map zad .values bach nkharbo liste ta3 values w radinaha list .to List
-                        cartitems.keys.toList()[i],
-                        cartitems.values.toList()[i].prix,
-                        cartitems.values.toList()[i].quantite,
-                        cartitems.values.toList()[i].nom),
-                  ),
-                )
-              ],
-            ),
+              );
+            }
+          }
+        },
+      ),
     );
   }
 }
