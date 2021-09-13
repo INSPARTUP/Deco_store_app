@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:deco_store_app/providers/orders.dart';
+import 'package:deco_store_app/providers/product.dart';
 import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -147,10 +148,25 @@ class Cart with ChangeNotifier {
       }
       print(itemss);
 
-      // print(response.body);
-      //   print(jsonData['items']?.hashCode);
+      var products;
 
-      var products = Provider.of<Products>(ctx, listen: false).items;
+      var url = Uri.parse(
+          'https://whispering-bastion-00988.herokuapp.com/api/produits');
+
+      http.Response res = await http.get(
+        url,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json"
+        },
+      );
+
+      if (res.statusCode == 200) {
+        List<dynamic> productsJsonData = json.decode(res.body);
+        products = productsJsonData.map((e) => Product.fromJson(e)).toList();
+      } else {
+        products = [];
+      }
 
       itemss.forEach((element) async {
         var index =
@@ -158,7 +174,8 @@ class Cart with ChangeNotifier {
         print('///////////////////////////////////////');
         print(element['qty']);
         print('///////////////////////////////////////');
-
+        print("index: " + index.toString());
+        print(products[index].id);
         if (!_items.containsKey(products[index].id))
           _items.putIfAbsent(
               products[index].id,
@@ -187,9 +204,7 @@ class Cart with ChangeNotifier {
                     quantite: element["qty"],
                     imageurl: jsonData["imageurl"],
                     type: jsonData["type"],
-                  ));
-
-                  */
+                  ));  */
       });
     } else if (response.statusCode == 404) {
       throw Exception('Not found');

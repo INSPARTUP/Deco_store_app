@@ -1,5 +1,3 @@
-import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/providers/cart.dart';
 import 'package:deco_store_app/providers/products.dart';
 import 'package:deco_store_app/widgets/products_grid.dart';
 import 'package:deco_store_app/widgets/user_app_drawer.dart';
@@ -43,6 +41,15 @@ class _UserProductsOverviewScreenState
           _isLoading = false;
         });
       });
+
+      /*   final email = Provider.of<Auth>(context, listen: false).email;
+      Provider.of<Cart>(context, listen: false)
+          .fetchCart(email, context)
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });*/
     }
 
     _isInit = false; // bach ydir hadik l khadma ghi l khatra lawla

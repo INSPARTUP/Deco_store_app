@@ -35,8 +35,8 @@ class _SingupScreenState extends State<SingupScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-                "https://i.pinimg.com/originals/ed/78/4d/ed784d0ebf814477ea3987778464d75c.jpg"),
+            image: AssetImage("lib/assets/collections/background2.jpg"),
+            // "https://i.pinimg.com/originals/ed/78/4d/ed784d0ebf814477ea3987778464d75c.jpg"
             fit: BoxFit.cover,
           ),
         ),
