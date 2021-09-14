@@ -73,14 +73,12 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> login(email, password) async {
+  Future<void> login(mail, password) async {
     try {
       final response = await dio.post(
           'https://fathomless-coast-11439.herokuapp.com/api/auth/signin',
-          data: {"email": email, "password": password},
+          data: {"email": mail, "password": password},
           options: Options(contentType: Headers.formUrlEncodedContentType));
-
-      print(response.data['id']);
 
       if (response.statusCode == 200) {
         print(response.data);

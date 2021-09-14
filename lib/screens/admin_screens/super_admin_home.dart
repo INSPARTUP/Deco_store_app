@@ -1,10 +1,16 @@
-import 'package:deco_store_app/widgets/app_drawer.dart';
+import 'package:deco_store_app/screens/admin_screens/super_admin_navigation_screen.dart';
+import 'package:deco_store_app/widgets/super_admin_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'admin_navigation_screen.dart';
+import '../profile_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class SuperAdminHome extends StatefulWidget {
+  @override
+  _SuperAdminHomeState createState() => _SuperAdminHomeState();
+}
+
+class _SuperAdminHomeState extends State<SuperAdminHome> {
   @override
   Widget build(BuildContext context) {
     //we add <>to let it know which type of data you actually want to listening to.
@@ -13,15 +19,18 @@ class HomeScreen extends StatelessWidget {
       Colors.red,
       Colors.green,
       Colors.blue,
+      Colors.amberAccent
     ];
     final names = [
       'Gestion de stock',
       'Consluter les commandes',
+      'Gestion des Admins',
       'Profile',
     ];
     final icons = [
       'lib/assets/icons/warehouse.svg',
       'lib/assets/icons/list.svg',
+      'lib/assets/icons/admin.svg',
       'lib/assets/icons/profile.svg',
     ];
 
@@ -41,7 +50,7 @@ class HomeScreen extends StatelessWidget {
         ),
         title: Text(' Accueil', style: TextStyle(color: Colors.black)),
       ),
-      drawer: AppDrawer(),
+      drawer: SuperAdminDrawer(),
       body: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -55,7 +64,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return AdminNavigationScreen(1);
+                  return SuperAdminNavigation(1);
                 }),
               );
             },
@@ -92,7 +101,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return AdminNavigationScreen(2);
+                  return SuperAdminNavigation(2);
                 }),
               );
             },
@@ -129,7 +138,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return AdminNavigationScreen(3);
+                  return SuperAdminNavigation(3);
                 }),
               );
             },
@@ -152,6 +161,43 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Text(
                     names[2],
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ProfileScreen();
+                }),
+              );
+            },
+            child: Container(
+              width: 300,
+              margin: const EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+              decoration: BoxDecoration(
+                color: clr[3],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    icons[3],
+                    width: 100,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    names[3],
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

@@ -234,6 +234,21 @@ class Orders with ChangeNotifier {
               .toList(),
         ),  */
     });
+
+    loadedOrders.forEach((order) async {
+      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt)) {
+        var url = Uri.parse(
+            'https://managecartandorders.herokuapp.com/api/order/${order.id}');
+
+        order.arrived = true;
+        final response = await http.put(url, body: {
+          "arrived": true.toString(),
+        });
+
+        print(json.decode(response.body)['message']);
+      }
+    });
+
     _allOrders = loadedOrders.reversed.toList();
     //nagalbo la liste bach orders jdod ykono l foga
     notifyListeners();
@@ -257,6 +272,21 @@ class Orders with ChangeNotifier {
     extractedData.forEach((orderData) {
       loadedOrders.add(OrderItem.fromJson(orderData));
     });
+
+    loadedOrders.forEach((order) async {
+      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt)) {
+        var url = Uri.parse(
+            'https://managecartandorders.herokuapp.com/api/order/${order.id}');
+
+        order.arrived = true;
+        final response = await http.put(url, body: {
+          "arrived": true.toString(),
+        });
+
+        print(json.decode(response.body)['message']);
+      }
+    });
+
     _orders = loadedOrders.reversed.toList();
     //nagalbo la liste bach orders jdod ykono l foga
     notifyListeners();

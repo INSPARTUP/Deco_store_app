@@ -42,8 +42,8 @@ class _EditOrderState extends State<EditOrder> {
                   return 'Veuillez entrer le Délai de livraison ';
                 } else if (double.tryParse(value) == null) {
                   return 'Veuillez entrer un numéro valide.'; // exemple ndakhlo String sama man9adoch n convertoh l double using double.parse(value)
-                } else if (double.parse(value) <= 0) {
-                  return 'Veuillez saisir un nombre supérieur à zéro.';
+                } else if (double.parse(value) <= -1) {
+                  return 'Veuillez saisir un nombre supérieur à -1.';
                 }
               },
               //  onSubmitted:

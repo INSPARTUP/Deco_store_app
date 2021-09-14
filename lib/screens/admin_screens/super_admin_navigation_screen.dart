@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'home_screen.dart';
+import 'super_admin_home.dart';
 
 class SuperAdminNavigation extends StatefulWidget {
   static const routeName = '/nav-superAdmin';
@@ -18,7 +19,7 @@ class SuperAdminNavigation extends StatefulWidget {
 
 class _SuperAdminNavigationState extends State<SuperAdminNavigation> {
   final screens = [
-    HomeScreen(),
+    SuperAdminHome(),
     ProductsOverwiewScreen(),
     ManageOrders(),
     ManageAdmins()

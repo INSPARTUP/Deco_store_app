@@ -1,6 +1,4 @@
 import 'package:deco_store_app/providers/orders.dart';
-import 'package:deco_store_app/widgets/app_drawer.dart';
-import 'package:deco_store_app/widgets/super_admin_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +8,10 @@ class ManageOrders extends StatelessWidget {
   const ManageOrders({Key key}) : super(key: key);
   static const routeName = '/manage-orders';
 
+  Future<void> _refreshOrders(BuildContext ctx) async {
+    Provider.of<Orders>(ctx, listen: false).fetchAllOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +20,17 @@ class ManageOrders extends StatelessWidget {
         shadowColor: Colors.black,
         backgroundColor: Colors.white,
         title: Text('Les Commandes', style: TextStyle(color: Colors.black)),
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/arrow-long-left.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
       ),
       body: FutureBuilder(
         future: Provider.of<Orders>(context, listen: false).fetchAllOrders(),
@@ -36,12 +49,17 @@ class ManageOrders extends StatelessWidget {
                 child: Text('An error occurred!'),
               );
             } else {
-              return Consumer<Orders>(
-                // darna Consumer psq nas7a9o ghi Listview tdir rebuilding ida sra changement f provider orders mchi ga3 orders_overview (za3ma mchi ga3 build ta3 orders_overview)
-                builder: (ctx, orderData, child) => ListView.builder(
-                  itemCount: orderData.allOrders.length,
-                  itemBuilder: (ctx, i) =>
-                      OrderItemWidget(orderData.allOrders[i]),
+              return RefreshIndicator(
+                onRefresh: () => _refreshOrders(
+                  context,
+                ),
+                child: Consumer<Orders>(
+                  // darna Consumer psq nas7a9o ghi Listview tdir rebuilding ida sra changement f provider orders mchi ga3 orders_overview (za3ma mchi ga3 build ta3 orders_overview)
+                  builder: (ctx, orderData, child) => ListView.builder(
+                    itemCount: orderData.allOrders.length,
+                    itemBuilder: (ctx, i) =>
+                        OrderItemWidget(orderData.allOrders[i]),
+                  ),
                 ),
               );
             }

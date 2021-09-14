@@ -23,13 +23,9 @@ class UserAppDrawer extends StatelessWidget {
                   color: Colors.white),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
           Align(
             child: Column(
               children: [
-                Divider(),
                 SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -39,7 +35,7 @@ class UserAppDrawer extends StatelessWidget {
                         fontFamily: "Arial",
                       )),
                 ),
-                Text(nom + ' ' + prenom,
+                Text(nom + ' ' + prenom + ' ',
                     style: TextStyle(
                         fontSize: 19,
                         fontFamily: "Arial",
@@ -50,13 +46,26 @@ class UserAppDrawer extends StatelessWidget {
           const SizedBox(height: 15),
           Divider(),
           ListTile(
-            leading: Icon(Icons.shop),
+            leading: Icon(Icons.chair),
             title: Text('Produits'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return NavigationScreenUser(0);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.shopping_cart),
+            title: Text('Mon Panier'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(1);
                 }),
               );
             },

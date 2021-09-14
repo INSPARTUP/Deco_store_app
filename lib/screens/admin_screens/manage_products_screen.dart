@@ -1,6 +1,5 @@
 import 'package:deco_store_app/providers/products.dart';
 import 'package:deco_store_app/screens/admin_screens/edit_product_screen.dart';
-import 'package:deco_store_app/widgets/app_drawer.dart';
 import 'package:deco_store_app/widgets/manage_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,13 +52,12 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
         leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(
-              "lib/assets/icons/menu.svg",
+              "lib/assets/icons/arrow-long-left.svg",
               color: Colors.black,
             ),
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Navigator.of(context).pop();
             },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           ),
         ),
         title: const Text('Liste des Produits',
@@ -73,7 +71,6 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
           ),
         ],
       ),
-      drawer: AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () => _refreshProducts(),
         child: Consumer<Products>(
@@ -205,6 +202,18 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                               .toLowerCase()
                                               .contains(widget.type))
                                           .toList()[i]
+                                          .quantite,
+                                      productsData.items
+                                          .where((pr) => pr.type
+                                              .toLowerCase()
+                                              .contains(widget.type))
+                                          .toList()[i]
+                                          .prix,
+                                      productsData.items
+                                          .where((pr) => pr.type
+                                              .toLowerCase()
+                                              .contains(widget.type))
+                                          .toList()[i]
                                           .imageurl,
                                       productsData.items
                                           .where((pr) => pr.type
@@ -227,6 +236,18 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                                   .contains(widget.type))
                                               .toList()[i]
                                               .nom,
+                                          productsData.archivedItems
+                                              .where((pr) => pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type))
+                                              .toList()[i]
+                                              .quantite,
+                                          productsData.archivedItems
+                                              .where((pr) => pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type))
+                                              .toList()[i]
+                                              .prix,
                                           productsData.archivedItems
                                               .where((pr) => pr.type
                                                   .toLowerCase()
@@ -259,6 +280,18 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                                       .toLowerCase()
                                                       .contains(widget.type))
                                                   .toList()[i]
+                                                  .quantite,
+                                              productsData.disarchivedItems
+                                                  .where((pr) => pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type))
+                                                  .toList()[i]
+                                                  .prix,
+                                              productsData.disarchivedItems
+                                                  .where((pr) => pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type))
+                                                  .toList()[i]
                                                   .imageurl,
                                               productsData.disarchivedItems
                                                   .where((pr) => pr.type
@@ -280,6 +313,18 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                                       .contains(widget.type))
                                                   .toList()[i]
                                                   .nom,
+                                              productsData.items
+                                                  .where((pr) => pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type))
+                                                  .toList()[i]
+                                                  .quantite,
+                                              productsData.items
+                                                  .where((pr) => pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type))
+                                                  .toList()[i]
+                                                  .prix,
                                               productsData.items
                                                   .where((pr) => pr.type
                                                       .toLowerCase()

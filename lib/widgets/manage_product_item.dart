@@ -7,9 +7,12 @@ import 'package:sweetalertv2/sweetalertv2.dart';
 class ManageProductItem extends StatefulWidget {
   final String id;
   final String nom;
+  final int quantite;
+  final int prix;
   final String imageurl;
   bool archived;
-  ManageProductItem(this.id, this.nom, this.imageurl, this.archived);
+  ManageProductItem(this.id, this.nom, this.quantite, this.prix, this.imageurl,
+      this.archived);
 
   @override
   _ManageProductItemState createState() => _ManageProductItemState();
@@ -19,8 +22,45 @@ class _ManageProductItemState extends State<ManageProductItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: CircleAvatar(
+        //circle avatar will do the sizing and so on to size the image into itself
+        backgroundImage: NetworkImage(widget.imageurl),
+      ),
       title: Column(children: [
-        Align(alignment: Alignment.topLeft, child: Text(widget.nom)),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(widget.nom,
+                style: TextStyle(fontWeight: FontWeight.bold))),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Row(
+              children: [
+                Text('Quantite: ',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold)),
+                Text(widget.quantite.toString(),
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    )),
+              ],
+            )),
+        Align(
+            alignment: Alignment.topLeft,
+            child: Row(
+              children: [
+                Text('Prix: ',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold)),
+                Text(widget.prix.toString(),
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    )),
+              ],
+            )),
         Row(
           children: [
             IconButton(
@@ -90,10 +130,6 @@ class _ManageProductItemState extends State<ManageProductItem> {
           ],
         )
       ]),
-      leading: CircleAvatar(
-        //circle avatar will do the sizing and so on to size the image into itself
-        backgroundImage: NetworkImage(widget.imageurl),
-      ),
     );
   }
 }
