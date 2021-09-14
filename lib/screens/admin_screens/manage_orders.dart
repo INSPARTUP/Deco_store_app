@@ -46,7 +46,7 @@ class ManageOrders extends StatelessWidget {
               // ...
               // Do error handling stuff
               return Center(
-                child: Text('An error occurred!'),
+                child: Text('Erreur!'),
               );
             } else {
               return RefreshIndicator(

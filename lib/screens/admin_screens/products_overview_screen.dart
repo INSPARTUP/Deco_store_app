@@ -18,6 +18,10 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
   var _isInit = true;
   var _isLoading = false;
 
+  Future<void> _refreshProducts(BuildContext ctx) async {
+    Provider.of<Products>(context).fetchProducts();
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -96,50 +100,53 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 2,
-                childAspectRatio: 1,
-              ),
-              itemCount: 5,
-              itemBuilder: (ctx, i) => GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return ManageProductsScreen(types[i]);
-                    }),
-                  );
-                },
-                child: Container(
-                  width: 300,
-                  margin: const EdgeInsets.only(left: 12),
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                  decoration: BoxDecoration(
-                    color: clr[i],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        icons[i],
-                        width: 100,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        names[i],
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text('Le Nombre est: ${productsList[i].length}',
-                          style: TextStyle(color: Colors.white)),
-                    ],
+          : RefreshIndicator(
+              onRefresh: () => _refreshProducts(context),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 2,
+                  childAspectRatio: 1,
+                ),
+                itemCount: 5,
+                itemBuilder: (ctx, i) => GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return ManageProductsScreen(types[i]);
+                      }),
+                    );
+                  },
+                  child: Container(
+                    width: 300,
+                    margin: const EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+                    decoration: BoxDecoration(
+                      color: clr[i],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          icons[i],
+                          width: 100,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          names[i],
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text('Le Nombre est: ${productsList[i].length}',
+                            style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
                   ),
                 ),
               ),
