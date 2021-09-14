@@ -2,6 +2,7 @@ import 'package:deco_store_app/providers/product.dart';
 import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sweetalertv2/sweetalertv2.dart';
@@ -161,10 +162,23 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Votre produit'),
+        elevation: 8.5,
+        shadowColor: Colors.black,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/arrow-long-left.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        title: Text('Votre produit', style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.save),
+            icon: Icon(Icons.save, color: Colors.black),
             onPressed: _saveForm,
           ),
         ],
@@ -191,17 +205,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         //hado yakhadmo ki ndiro  _form.currentState.save();
                         _editedProduct = Product(
-                          nom: value,
-                          // had TextFiel ta3tina nom li rahi f parametre value
-                          //man9adoch ndiro direct _editedProduct.nom = value psq rana dayrin had les proprietes final
-                          prix: _editedProduct.prix,
-                          //man9adoch ndiro direct.
-                          type: _editedProduct.type,
-                          quantite: _editedProduct.quantite,
-                          description: _editedProduct.description,
-                          imageurl: _editedProduct.imageurl,
-                          id: _editedProduct.id,
-                        );
+                            nom: value,
+                            // had TextFiel ta3tina nom li rahi f parametre value
+                            //man9adoch ndiro direct _editedProduct.nom = value psq rana dayrin had les proprietes final
+                            prix: _editedProduct.prix,
+                            //man9adoch ndiro direct.
+                            type: _editedProduct.type,
+                            quantite: _editedProduct.quantite,
+                            description: _editedProduct.description,
+                            imageurl: _editedProduct.imageurl,
+                            id: _editedProduct.id,
+                            archived: _editedProduct.archived);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -230,6 +244,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -260,6 +275,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: value,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -291,6 +307,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -327,6 +344,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -389,6 +407,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 quantite: _editedProduct.quantite,
                                 imageurl: value,
                                 id: _editedProduct.id,
+                                archived: _editedProduct.archived,
                               );
                             },
                             validator: (value) {

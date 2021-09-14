@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'super_admin_navigation_screen.dart';
+
 class AdminSignup extends StatefulWidget {
   @override
   _AdminSignupState createState() => _AdminSignupState();
@@ -12,15 +14,18 @@ class AdminSignup extends StatefulWidget {
 class _AdminSignupState extends State<AdminSignup> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
+  bool _btnpressed = false;
+
   var prenom, nom, numtel, email, password, confirm_password, token;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 8.5,
+        shadowColor: Colors.black,
         centerTitle: true,
-        title: Text('Créer un compte'),
+        title: Text('Ajouter un admin'),
         backgroundColor: Colors.blue[800],
       ),
       backgroundColor: Color(0xFFFAFBFD),
@@ -188,13 +193,17 @@ class _AdminSignupState extends State<AdminSignup> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
-          child: CustomButton(
-            label: 'Inscrivez-Vous',
-            labelColour: Colors.white,
-            backgroundColour: Colors.blue[800],
-            shadowColour: Color(0xff866DC9).withOpacity(0.16),
-            onPressed: _sendToServer,
-          ),
+          child: _btnpressed
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]),
+                )
+              : CustomButton(
+                  label: 'Inscrivez-Vous',
+                  labelColour: Colors.white,
+                  backgroundColour: Colors.blue[800],
+                  shadowColour: Color(0xff866DC9).withOpacity(0.16),
+                  onPressed: _sendToServer,
+                ),
         ),
         SizedBox(height: 30),
       ],
@@ -273,7 +282,9 @@ class _AdminSignupState extends State<AdminSignup> {
     if (_key.currentState.validate()) {
       // No any error in validation
       _key.currentState.save();
-
+      setState(() {
+        _btnpressed = true;
+      });
       AuthService()
           .addAdmin(
         nom,
@@ -283,6 +294,19 @@ class _AdminSignupState extends State<AdminSignup> {
         password,
       )
           .then((val) {
+        setState(() {
+          _btnpressed = false;
+        });
+
+        if (val.data['message'].contains('succès'))
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return SuperAdminNavigation(3);
+            }),
+          );
+        ;
+        // print(val.code);
         Fluttertoast.showToast(
             msg: val.data['message'],
             toastLength: Toast.LENGTH_SHORT,

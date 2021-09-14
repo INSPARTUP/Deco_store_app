@@ -29,7 +29,6 @@ class _ProductItemState extends State<ProductItem> {
             //darna l'image dakhal gesture detector bach n9ado ndiro OnTap
             onTap: () {
               context.read<Count>().reset();
-              Provider.of<Count>(context, listen: false).reset;
 
               Navigator.of(context).pushNamed(
                 DetailsScreen.routeName,
@@ -47,31 +46,32 @@ class _ProductItemState extends State<ProductItem> {
               child: FadeInImage(
                 placeholder: AssetImage('lib/assets/images/product_holder.jpg'),
                 image: NetworkImage(product.imageurl),
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),
           footer: // footer za3ma l ta7ta.kima f HTML kayan header w footer
               GridTileBar(
             backgroundColor: Colors.black87,
-            /*    leading: Consumer<Product>(
-              //Consumer always listen to changes here.3andna ghi had iconbutton liyatbadal sama ndiro hna Consumer bach man3awdoch rebuild ga3 widget ki yatbadal isFavorite
-              builder: (ctx, product, _) => IconButton(
-                //the define a widget that should be placed in the start of this Bar
-                icon: Icon(product.isFavorite
-                    ? Icons.favorite
-                    : Icons.favorite_border),
-                iconSize: 18,
-                onPressed: () {
-                  product.toggleFavoriteStatus(authData.token, authData.userId);
-                },
-                color: Theme.of(context).accentColor,
-              ),
-            ),*/
             title: Text(
               product.nom,
-              textAlign: TextAlign.center,
-              // style: smallBoldTxtStyle.copyWith(color: Colors.white),
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 17,
+              ),
+            ),
+            subtitle: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2.5),
+                child: Text(
+                  "\$${product.prix}",
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
           ),
         ),

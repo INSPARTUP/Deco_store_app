@@ -2,6 +2,7 @@ import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/providers/cart.dart';
 import 'package:deco_store_app/providers/product.dart';
 import 'package:deco_store_app/providers/products.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,8 @@ class DetailsScreen extends StatelessWidget {
     ).email;
     return AppBar(
       backgroundColor: Colors.blue,
-      elevation: 0,
+      elevation: 8.5,
+      shadowColor: Colors.black,
       title: Text('Details'),
       actions: <Widget>[
         /*   IconButton(
@@ -52,7 +54,7 @@ class DetailsScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) {
-                return CartScreen();
+                return NavigationScreenUser(1);
               }),
             );
           },

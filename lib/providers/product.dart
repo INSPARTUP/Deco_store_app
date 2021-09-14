@@ -21,6 +21,7 @@ class Product with ChangeNotifier {
     this.createdAt,
     this.updatedAt,
     this.id,
+    this.archived,
   });
 
   String nom;
@@ -32,6 +33,7 @@ class Product with ChangeNotifier {
   DateTime createdAt;
   DateTime updatedAt;
   String id;
+  bool archived;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         nom: json["nom"],
@@ -43,6 +45,7 @@ class Product with ChangeNotifier {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
+        archived: json["archived"],
       );
 
   Map<String, dynamic> toJson() => {

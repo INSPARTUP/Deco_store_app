@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:async'; //to use Timer
+import 'package:deco_store_app/models/admindata.dart';
 import 'package:deco_store_app/models/role.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
@@ -24,6 +27,12 @@ class Auth with ChangeNotifier {
 //if we have a token, and the token didn't expire,then the user is authenticated
   bool get isAuth {
     return accessToken != null;
+  }
+
+  List<AdminData> _admins = [];
+
+  List<AdminData> get admins {
+    return [..._admins.toList()];
   }
 
   Future<void> addUser(nom, prenom, numtel, email, password) async {
@@ -72,15 +81,6 @@ class Auth with ChangeNotifier {
           options: Options(contentType: Headers.formUrlEncodedContentType));
 
       print(response.data['id']);
-
-      /*   Fluttertoast.showToast(
-        msg: response.data['message'],
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );  */
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -165,5 +165,51 @@ class Auth with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     // prefs.remove('userData');
     prefs.clear();
+  }
+
+  Future<void> fetchAdmins() async {
+    var url = Uri.parse(
+        'https://fathomless-coast-11439.herokuapp.com/api/getAllAdmin');
+
+    http.Response response = await http.get(
+      url,
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> adminsJsonData = json.decode(response.body);
+
+      _admins = adminsJsonData.map((e) => AdminData.fromJson(e)).toList();
+    } else {
+      _admins = [];
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> deleteAdmin(String id) async {
+    var url = Uri.parse(
+        'https://fathomless-coast-11439.herokuapp.com/api/deleteAdmin');
+    final existingAdminIndex = _admins.indexWhere((prod) => prod.id == id);
+    var existingAdmin = _admins[existingAdminIndex];
+
+    _admins.removeAt(existingAdminIndex);
+    notifyListeners();
+
+    final response = await http.delete(url, body: {"adminId": id});
+
+    Fluttertoast.showToast(
+        msg: json.decode(response.body)['message'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+    if (response.statusCode >= 400) {
+      _admins.insert(existingAdminIndex, existingAdmin);
+      notifyListeners();
+    }
+
+    existingAdmin = null;
   }
 }

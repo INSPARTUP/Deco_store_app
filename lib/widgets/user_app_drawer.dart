@@ -1,9 +1,9 @@
 import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/screens/orders_screen.dart';
-import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
+import 'package:deco_store_app/screens/profile_screen.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class UserAppDrawer extends StatelessWidget {
   @override
@@ -12,18 +12,15 @@ class UserAppDrawer extends StatelessWidget {
     final prenom = Provider.of<Auth>(context, listen: false).prenom;
 
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 70,
-          ),
-          const Center(
-            child: Image(
-              width: 120,
-              image: AssetImage(
-                'lib/assets/images/Logo.png',
-              ),
+          Container(
+            height: 130.0,
+            color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.all(40),
+              child: SvgPicture.asset('lib/assets/icons/Logo.svg',
+                  color: Colors.white),
             ),
           ),
           const SizedBox(
@@ -32,35 +29,75 @@ class UserAppDrawer extends StatelessWidget {
           Align(
             child: Column(
               children: [
-                Text("Bonjour,"),
-                Text(
-                  nom + ' ' + prenom,
-                )
+                Divider(),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("      Bonjour,",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "Arial",
+                      )),
+                ),
+                Text(nom + ' ' + prenom,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontFamily: "Arial",
+                        fontWeight: FontWeight.bold))
               ],
             ),
           ),
           const SizedBox(height: 15),
-          Container(
-            width: 140,
-            height: 2,
-            color: Colors.grey[200],
-          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.shop),
             title: Text('Produits'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(UserProductsOverviewScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(0);
+                }),
+              );
             },
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
+            leading: Icon(Icons.card_giftcard),
             title: Text('Mes Commandes'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(3);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.search),
+            title: Text('Recherche'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NavigationScreenUser(2);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ProfileScreen();
+                }),
+              );
             },
           ),
           Divider(),

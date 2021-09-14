@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:deco_store_app/providers/orders.dart';
+import 'package:deco_store_app/providers/product.dart';
+import 'package:deco_store_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 CartItem cartFromJson(String str) => CartItem.fromJson(json.decode(str));
 
@@ -94,9 +97,9 @@ class Cart with ChangeNotifier {
     }; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)
   }
 
-  List<Itemorder> _itemsorder = [];
+  List<ItemOrder> _itemsorder = [];
 
-  List<Itemorder> get itemsorder {
+  List<ItemOrder> get itemsorder {
     return [
       ..._itemsorder
     ]; //return a copy of _items not a reference of the list (to avoid any modification in the original Map)
@@ -117,20 +120,23 @@ class Cart with ChangeNotifier {
 
   int get totalAmount {
     int total = 0;
+
     _items.forEach((key, value) {
-      total += value.prix * value.quantite;
+      if (key != null && value != null) {
+        total += value.prix * value.quantite;
+      }
     });
     return total;
   }
 
-  Future<void> fetchCart(String email) async {
-    // email = "azeqs@gmail.com";
+  Future<void> fetchCart(String email, BuildContext ctx) async {
+    // email = "za@gmail.com";
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/cart?email=$email');
     http.Response response = await http.get(
       url,
-      headers: {"Content-Type": "application/json"},
     );
+    //   print(response.statusCode == 200);
 
     if (response.statusCode == 200) {
       dynamic jsonData = json.decode(response.body);
@@ -140,12 +146,49 @@ class Cart with ChangeNotifier {
       } catch (e) {
         itemss = [];
       }
+      print(itemss);
 
-      //  jsonData['items'];
-      //   print(jsonData['items']?.hashCode);
+      var products;
+
+      var url = Uri.parse(
+          'https://whispering-bastion-00988.herokuapp.com/api/produits');
+
+      http.Response res = await http.get(
+        url,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json"
+        },
+      );
+
+      if (res.statusCode == 200) {
+        List<dynamic> productsJsonData = json.decode(res.body);
+        products = productsJsonData.map((e) => Product.fromJson(e)).toList();
+      } else {
+        products = [];
+      }
 
       itemss.forEach((element) async {
-        var url = Uri.parse(
+        var index =
+            products.indexWhere((prod) => prod.id == element["product_id"]);
+        print('///////////////////////////////////////');
+        print(element['qty']);
+        print('///////////////////////////////////////');
+        print("index: " + index.toString());
+        print(products[index].id);
+        if (!_items.containsKey(products[index].id))
+          _items.putIfAbsent(
+              products[index].id,
+              () => ProductFromCartItem(
+                    productId: products[index].id,
+                    nom: products[index].nom,
+                    prix: products[index].prix,
+                    quantite: element['qty'],
+                    imageurl: products[index].imageurl,
+                    type: products[index].type,
+                  ));
+
+        /*  var url = Uri.parse(
             'https://whispering-bastion-00988.herokuapp.com/api/produits/${element["product_id"]}');
         http.Response response = await http.get(url);
         //  print(response.body);
@@ -161,23 +204,8 @@ class Cart with ChangeNotifier {
                     quantite: element["qty"],
                     imageurl: jsonData["imageurl"],
                     type: jsonData["type"],
-                  ));
+                  ));  */
       });
-/*
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      print('///////////////////////////////////////');
-      _items.forEach((key, value) {
-        print(value.quantite);
-      });*/
-      // return _items;
-
-      //  notifyListeners();
-      // print(_products);
-      // print(_items);
-      // return CartItem.fromJson(jsonData);
-
     } else if (response.statusCode == 404) {
       throw Exception('Not found');
     } else {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class AddToCart extends StatelessWidget {
+class AddToCart extends StatefulWidget {
   const AddToCart({
     Key key,
     @required this.product,
@@ -16,14 +16,27 @@ class AddToCart extends StatelessWidget {
   final Product product;
   final BuildContext ctx;
 
+  @override
+  _AddToCartState createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
+  bool btn_pressed = false;
+
   Future<void> addToCart(String email, int qty) async {
     try {
-      await Provider.of<Cart>(ctx, listen: false)
-          .addCartItem(product.id, email, qty);
+      setState(() {
+        btn_pressed = true;
+      });
+      await Provider.of<Cart>(widget.ctx, listen: false)
+          .addCartItem(widget.product.id, email, qty);
+      setState(() {
+        btn_pressed = false;
+      });
     } catch (error) {
       print(error);
       await showDialog<Null>(
-        context: ctx,
+        context: widget.ctx,
         builder: (ctx) => AlertDialog(
           title: Text('Erreur!'),
           content: Text('Il existe un probleme'),
@@ -63,14 +76,7 @@ class AddToCart extends StatelessWidget {
                 "lib/assets/icons/add_to_cart.svg",
                 color: Colors.white,
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    //  return CartScreen();
-                  }),
-                );
-              },
+              onPressed: () {},
             ),
           ),
           Expanded(
@@ -92,14 +98,21 @@ class AddToCart extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    Text(
-                      "Ajouter au Panier".toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    btn_pressed
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 45),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(
+                            "Ajouter au Panier".toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                   ],
                 ),
               ),

@@ -1,9 +1,9 @@
 import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
-import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
+import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
+import 'package:deco_store_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -12,27 +12,34 @@ class AppDrawer extends StatelessWidget {
     final prenom = Provider.of<Auth>(context, listen: false).prenom;
 
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 70,
-          ),
-          const Center(
-            child: Image(
-              width: 120,
-              image: AssetImage(
-                'lib/assets/images/Logo.png',
-              ),
+          Container(
+            height: 130.0,
+            color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.all(40),
+              child: SvgPicture.asset('lib/assets/icons/Logo.svg',
+                  color: Colors.white),
             ),
           ),
           Align(
             child: Column(
               children: [
-                Text("Bonjour,"),
-                Text(
-                  nom + ' ' + prenom,
-                )
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("      Bonjour,",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "Arial",
+                      )),
+                ),
+                Text(nom + ' ' + prenom,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontFamily: "Arial",
+                        fontWeight: FontWeight.bold))
               ],
             ),
           ),
@@ -45,10 +52,14 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.shop),
-            title: Text('Produits'),
+            title: Text('Accueil'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProductsOverwiewScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return AdminNavigationScreen(0);
+                }),
+              );
             },
           ),
           Divider(),
@@ -56,8 +67,38 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Gestion des Produits'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(ManageProductsScreen.routeName);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return AdminNavigationScreen(1);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.card_giftcard),
+            title: Text('Gérer les Commandes'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return AdminNavigationScreen(2);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return AdminNavigationScreen(3);
+                }),
+              );
             },
           ),
           Divider(),
