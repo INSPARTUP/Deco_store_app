@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Kagy',
+          title: 'Kagu',
           theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             // Here we set DM Sans as our default fonts
