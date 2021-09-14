@@ -236,7 +236,8 @@ class Orders with ChangeNotifier {
     });
 
     loadedOrders.forEach((order) async {
-      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt)) {
+      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt) &&
+          order.accepted) {
         var url = Uri.parse(
             'https://managecartandorders.herokuapp.com/api/order/${order.id}');
 
@@ -274,7 +275,8 @@ class Orders with ChangeNotifier {
     });
 
     loadedOrders.forEach((order) async {
-      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt)) {
+      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt) &&
+          order.accepted) {
         var url = Uri.parse(
             'https://managecartandorders.herokuapp.com/api/order/${order.id}');
 
