@@ -1,6 +1,5 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
-import 'package:deco_store_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';

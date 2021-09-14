@@ -8,17 +8,32 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final role = Provider.of<Auth>(context, listen: false).roles;
 
+    final email = Provider.of<Auth>(
+      context,
+    ).email;
+
     return Scaffold(
         appBar: AppBar(
           elevation: 8.5,
           shadowColor: Colors.black,
           title: Text(
-            "       Profile",
+            "Profile",
             style: TextStyle(
               color: Colors.black,
             ),
           ),
           backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: SvgPicture.asset(
+                "lib/assets/icons/arrow-long-left.svg",
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
         ),
         body: Container(
           child: new Column(
@@ -136,8 +151,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    Provider.of<Auth>(context, listen: false)
-                                        .email,
+                                    email.toString(),
                                     style: TextStyle(fontSize: 15.0),
                                   ),
                                 ),

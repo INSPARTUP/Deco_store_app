@@ -8,7 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/login.dart';
-import 'package:deco_store_app/screens/superadminscreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 2),
+        Duration(seconds: 3),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomeScreen())));
   }

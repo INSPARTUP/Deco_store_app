@@ -37,6 +37,8 @@ class _AdminDetailsScreenState extends State<AdminDetailsScreen> {
             ManageProductItem(
               products[i].id,
               products[i].nom,
+              products[i].quantite,
+              products[i].prix,
               products[i].imageurl,
               products[i].archived,
             ),

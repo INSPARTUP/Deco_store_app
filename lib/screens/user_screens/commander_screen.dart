@@ -1,5 +1,6 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/providers/orders.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -369,7 +370,12 @@ class _CommanderScreenState extends State<CommanderScreen> {
           ),
         );
       }
-      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return NavigationScreenUser(3);
+        }),
+      );
     } else {
       // validation error
       setState(() {

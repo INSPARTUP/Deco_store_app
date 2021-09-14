@@ -160,6 +160,18 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                                                     .toLowerCase()
                                                     .contains(widget.type))
                                                 .toList()[i]
+                                                .quantite,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
+                                                .prix,
+                                            productsData.items
+                                                .where((pr) => pr.nom
+                                                    .toLowerCase()
+                                                    .contains(widget.type))
+                                                .toList()[i]
                                                 .imageurl,
                                             productsData.items
                                                 .where((pr) => pr.nom
@@ -182,4 +194,3 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
     );
   }
 }
-

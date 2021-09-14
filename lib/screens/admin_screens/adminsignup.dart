@@ -198,7 +198,7 @@ class _AdminSignupState extends State<AdminSignup> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]),
                 )
               : CustomButton(
-                  label: 'Inscrivez-Vous',
+                  label: 'Ajouter',
                   labelColour: Colors.white,
                   backgroundColour: Colors.blue[800],
                   shadowColour: Color(0xff866DC9).withOpacity(0.16),

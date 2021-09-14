@@ -1,7 +1,9 @@
+import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/admin_screens/home_screen.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_orders.dart';
 import 'package:deco_store_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'products_overview_screen.dart';
@@ -26,6 +28,9 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('///////////////////////////////// testttttt');
+    print(Provider.of<Auth>(context).email);
+
     return Scaffold(
       body: IndexedStack(index: widget.selectedIndex, children: screens),
       bottomNavigationBar: Container(

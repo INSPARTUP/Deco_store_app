@@ -164,6 +164,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       appBar: AppBar(
         elevation: 8.5,
         shadowColor: Colors.black,
+        backgroundColor: Colors.white,
         leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(

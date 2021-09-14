@@ -85,61 +85,115 @@ class _ManageAdminsState extends State<ManageAdmins> {
                             cacheExtent: 100000000.0,
                             itemBuilder: (_, i) => Column(
                               children: [
-                                ListTile(
-                                  title: Text(
-                                      adminsData.admins[i].nom +
-                                          ' ' +
-                                          adminsData.admins[i].prenom,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Email:" +
-                                          ' ' +
-                                          adminsData.admins[i].email),
-                                      Text("Numéro de téléphone:" +
-                                          ' ' +
-                                          adminsData.admins[i].numtel),
-                                    ],
-                                  ),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      SweetAlertV2.show(context,
-                                          subtitle:
-                                              'êtes-vous sûr de vouloir supprimer ce admin ?',
-                                          subtitleTextAlign: TextAlign.center,
-                                          style: SweetAlertV2Style.confirm,
-                                          cancelButtonText: 'Annuler',
-                                          confirmButtonText: 'Confirmer',
-                                          showCancelButton: true,
-                                          onPress: (bool isConfirm) {
-                                        if (isConfirm) {
-                                          SweetAlertV2.show(context,
-                                              subtitle: "Suppression...",
-                                              style: SweetAlertV2Style.loading);
-                                          Provider.of<Auth>(context,
-                                                  listen: false)
-                                              .deleteAdmin(
-                                                  adminsData.admins[i].id)
-                                              .then((value) =>
-                                                  SweetAlertV2.show(
-                                                      context,
-                                                      subtitle: "Succés!",
-                                                      style: SweetAlertV2Style
-                                                          .success));
-                                        } else {
-                                          SweetAlertV2.show(context,
-                                              subtitle: "Annulé!",
-                                              style: SweetAlertV2Style.error);
-                                        }
-
-                                        return false;
-                                      });
-                                    },
+                                Dismissible(
+                                  key: ValueKey(adminsData.admins[i].id),
+                                  background: Container(
                                     color: Theme.of(context).errorColor,
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 40,
+                                    ),
+                                    alignment: Alignment
+                                        .centerRight, // to align it in the center vertically but on the right horizontally
+                                    padding: EdgeInsets.only(right: 20),
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 4,
+                                    ),
+                                  ),
+                                  direction: DismissDirection.endToStart,
+                                  confirmDismiss: (direction) {
+                                    SweetAlertV2.show(context,
+                                        subtitle:
+                                            'êtes-vous sûr de vouloir supprimer ce admin ?',
+                                        subtitleTextAlign: TextAlign.center,
+                                        style: SweetAlertV2Style.confirm,
+                                        cancelButtonText: 'Annuler',
+                                        confirmButtonText: 'Confirmer',
+                                        showCancelButton: true,
+                                        onPress: (bool isConfirm) {
+                                      if (isConfirm) {
+                                        SweetAlertV2.show(context,
+                                            subtitle: "Suppression...",
+                                            style: SweetAlertV2Style.loading);
+                                        Provider.of<Auth>(context,
+                                                listen: false)
+                                            .deleteAdmin(
+                                                adminsData.admins[i].id)
+                                            .then((value) => SweetAlertV2.show(
+                                                context,
+                                                subtitle: "Succés!",
+                                                style:
+                                                    SweetAlertV2Style.success));
+                                      } else {
+                                        SweetAlertV2.show(context,
+                                            subtitle: "Annulé!",
+                                            style: SweetAlertV2Style.error);
+                                      }
+
+                                      return false;
+                                    });
+                                  },
+                                  onDismissed:
+                                      (direction) {}, //direction za3ma 3la 7ssab kol direction n7arko ndiro function ta3ha chawa hna 3adna ghi direction wa7da
+
+                                  child: ListTile(
+                                    title: Text(
+                                        adminsData.admins[i].nom +
+                                            ' ' +
+                                            adminsData.admins[i].prenom,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Email:" +
+                                            ' ' +
+                                            adminsData.admins[i].email),
+                                        Text("Numéro de téléphone:" +
+                                            ' ' +
+                                            adminsData.admins[i].numtel),
+                                      ],
+                                    ),
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.delete),
+                                      onPressed: () {
+                                        SweetAlertV2.show(context,
+                                            subtitle:
+                                                'êtes-vous sûr de vouloir supprimer ce admin ?',
+                                            subtitleTextAlign: TextAlign.center,
+                                            style: SweetAlertV2Style.confirm,
+                                            cancelButtonText: 'Annuler',
+                                            confirmButtonText: 'Confirmer',
+                                            showCancelButton: true,
+                                            onPress: (bool isConfirm) {
+                                          if (isConfirm) {
+                                            SweetAlertV2.show(context,
+                                                subtitle: "Suppression...",
+                                                style:
+                                                    SweetAlertV2Style.loading);
+                                            Provider.of<Auth>(context,
+                                                    listen: false)
+                                                .deleteAdmin(
+                                                    adminsData.admins[i].id)
+                                                .then((value) =>
+                                                    SweetAlertV2.show(context,
+                                                        subtitle: "Succés!",
+                                                        style: SweetAlertV2Style
+                                                            .success));
+                                          } else {
+                                            SweetAlertV2.show(context,
+                                                subtitle: "Annulé!",
+                                                style: SweetAlertV2Style.error);
+                                          }
+
+                                          return false;
+                                        });
+                                      },
+                                      color: Theme.of(context).errorColor,
+                                    ),
                                   ),
                                 ),
                                 Divider(),
