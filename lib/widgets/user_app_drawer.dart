@@ -1,6 +1,8 @@
 import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/screens/profile_screen.dart';
 import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class UserAppDrawer extends StatelessWidget {
@@ -10,18 +12,15 @@ class UserAppDrawer extends StatelessWidget {
     final prenom = Provider.of<Auth>(context, listen: false).prenom;
 
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 70,
-          ),
-          const Center(
-            child: Image(
-              width: 120,
-              image: AssetImage(
-                'lib/assets/images/Logo.png',
-              ),
+          Container(
+            height: 130.0,
+            color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.all(40),
+              child: SvgPicture.asset('lib/assets/icons/Logo.svg',
+                  color: Colors.white),
             ),
           ),
           const SizedBox(
@@ -36,9 +35,9 @@ class UserAppDrawer extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text("      Bonjour,",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "Arial",
-                          fontWeight: FontWeight.bold)),
+                        fontSize: 20,
+                        fontFamily: "Arial",
+                      )),
                 ),
                 Text(nom + ' ' + prenom,
                     style: TextStyle(
@@ -84,6 +83,19 @@ class UserAppDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) {
                   return NavigationScreenUser(2);
+                }),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ProfileScreen();
                 }),
               );
             },

@@ -40,7 +40,8 @@ class DetailsScreen extends StatelessWidget {
     ).email;
     return AppBar(
       backgroundColor: Colors.blue,
-      elevation: 0,
+      elevation: 8.5,
+      shadowColor: Colors.black,
       title: Text('Details'),
       actions: <Widget>[
         /*   IconButton(

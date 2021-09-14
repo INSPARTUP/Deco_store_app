@@ -1,9 +1,12 @@
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/widgets/app_drawer.dart';
+import 'package:deco_store_app/widgets/super_admin_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sweetalertv2/sweetalertv2.dart';
+
+import 'adminsignup.dart';
 
 class ManageAdmins extends StatefulWidget {
   static const routeName = '/manage-admins';
@@ -14,7 +17,7 @@ class ManageAdmins extends StatefulWidget {
 }
 
 class _ManageAdminsState extends State<ManageAdmins> {
-  Future<void> _refreshProducts() async {
+  Future<void> _refreshAdmins() async {
     await Provider.of<Auth>(context, listen: false).fetchAdmins();
     // the ovewall methode will only be doneonce this is done and only when this Future which is automatically returned will yield (resolve)
   }
@@ -23,6 +26,9 @@ class _ManageAdminsState extends State<ManageAdmins> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 8.5,
+        shadowColor: Colors.black,
+        backgroundColor: Colors.white,
         leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(
@@ -37,11 +43,24 @@ class _ManageAdminsState extends State<ManageAdmins> {
         ),
         title: const Text('Liste des Admins',
             style: TextStyle(color: Colors.black)),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return AdminSignup();
+                }),
+              );
+            },
+          ),
+        ],
       ),
-      drawer: AppDrawer(),
+      drawer: SuperAdminDrawer(),
       body: FutureBuilder(
         //with the FutureBuilder,we will fetch data when (future: _refreshProducts(context),) load
-        future: _refreshProducts(),
+        future: _refreshAdmins(),
         builder: (ctx, snapshot /*like response */) => snapshot
                     .connectionState ==
                 ConnectionState.waiting
@@ -49,7 +68,7 @@ class _ManageAdminsState extends State<ManageAdmins> {
                 child: CircularProgressIndicator(),
               )
             : RefreshIndicator(
-                onRefresh: () => _refreshProducts(),
+                onRefresh: () => _refreshAdmins(),
                 child: Consumer<Auth>(
                   builder: (ctx, adminsData, _) => Padding(
                     padding: EdgeInsets.all(8),

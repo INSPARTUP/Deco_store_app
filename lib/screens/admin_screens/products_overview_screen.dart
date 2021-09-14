@@ -1,10 +1,8 @@
 import 'package:deco_store_app/providers/products.dart';
-import 'package:deco_store_app/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import 'admin_details_screen.dart';
 import 'manage_products_screen.dart';
 
 enum FilterOptions { Favorites, All }
@@ -41,21 +39,41 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
     final productData = Provider.of<Products>(
         context); //we add <>to let it know which type of data you actually want to listening to.
 
-    final List<Color> clr = [Colors.red, Colors.green, Colors.blue];
-    final names = ['Tous Les Produits', 'Armoires', 'Lits'];
-    final types = ['', 'armoire', 'lit'];
+    final List<Color> clr = [
+      Colors.red,
+      Colors.green,
+      Colors.pinkAccent,
+      Colors.blue,
+      Colors.amberAccent
+    ];
+    final names = [
+      'Tous Les Produits',
+      'Armoires',
+      'Lits',
+      'Tables',
+      'Fauteuil'
+    ];
+    final types = ['', 'armoire', 'lit', 'teble', 'fauteuil'];
     final icons = [
       'lib/assets/icons/house.svg',
       'lib/assets/icons/wardrobe.svg',
-      'lib/assets/icons/bed.svg'
+      'lib/assets/icons/bed.svg',
+      'lib/assets/icons/table.svg',
+      'lib/assets/icons/armchair.svg',
     ];
     final productsList = [
       productData.items,
       productData.items
-          .where((pr) => pr.nom.toLowerCase().contains('armoire'))
+          .where((pr) => pr.type.toLowerCase().contains('armoire'))
           .toList(),
       productData.items
-          .where((pr) => pr.nom.toLowerCase().contains('lit'))
+          .where((pr) => pr.type.toLowerCase().contains('lit'))
+          .toList(),
+      productData.items
+          .where((pr) => pr.type.toLowerCase().contains('table'))
+          .toList(),
+      productData.items
+          .where((pr) => pr.type.toLowerCase().contains('fauteuil'))
           .toList(),
     ];
 
@@ -64,18 +82,16 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
         leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(
-              "lib/assets/icons/menu.svg",
+              "lib/assets/icons/arrow-long-left.svg",
               color: Colors.black,
             ),
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Navigator.of(context).pop();
             },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           ),
         ),
         title: Text(' Produits', style: TextStyle(color: Colors.black)),
       ),
-      drawer: AppDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -87,7 +103,7 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
                 crossAxisSpacing: 2,
                 childAspectRatio: 1,
               ),
-              itemCount: 3,
+              itemCount: 5,
               itemBuilder: (ctx, i) => GestureDetector(
                 onTap: () {
                   Navigator.push(

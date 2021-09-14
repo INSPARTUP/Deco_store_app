@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
+import 'package:deco_store_app/screens/admin_screens/super_admin_navigation_screen.dart';
 import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -90,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                   : (auth.roles == 'ROLE_ADMIN')
                       ? AdminNavigationScreen(0)
                       : (auth.roles == 'ROLE_SUPER-ADMIN')
-                          ? SuperAdminScreen()
+                          ? SuperAdminNavigation(0)
                           : NavigationScreenUser(0))
               : FutureBuilder(
                   future: auth.tryAutoLogin(),

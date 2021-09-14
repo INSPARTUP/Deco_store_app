@@ -52,6 +52,9 @@ class _CartScreenState extends State<CartScreen> {
     final cartitems = Provider.of<Cart>(context, listen: true).items;
     return Scaffold(
         appBar: AppBar(
+          elevation: 8.5,
+          shadowColor: Colors.black,
+          backgroundColor: Colors.white,
           title: Text('Votre Panier', style: TextStyle(color: Colors.black)),
           leading: IconButton(
               icon: Icon(

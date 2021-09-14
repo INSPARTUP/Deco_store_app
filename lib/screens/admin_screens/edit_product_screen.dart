@@ -162,6 +162,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 8.5,
+        shadowColor: Colors.black,
         leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(
@@ -203,17 +205,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         //hado yakhadmo ki ndiro  _form.currentState.save();
                         _editedProduct = Product(
-                          nom: value,
-                          // had TextFiel ta3tina nom li rahi f parametre value
-                          //man9adoch ndiro direct _editedProduct.nom = value psq rana dayrin had les proprietes final
-                          prix: _editedProduct.prix,
-                          //man9adoch ndiro direct.
-                          type: _editedProduct.type,
-                          quantite: _editedProduct.quantite,
-                          description: _editedProduct.description,
-                          imageurl: _editedProduct.imageurl,
-                          id: _editedProduct.id,
-                        );
+                            nom: value,
+                            // had TextFiel ta3tina nom li rahi f parametre value
+                            //man9adoch ndiro direct _editedProduct.nom = value psq rana dayrin had les proprietes final
+                            prix: _editedProduct.prix,
+                            //man9adoch ndiro direct.
+                            type: _editedProduct.type,
+                            quantite: _editedProduct.quantite,
+                            description: _editedProduct.description,
+                            imageurl: _editedProduct.imageurl,
+                            id: _editedProduct.id,
+                            archived: _editedProduct.archived);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -242,6 +244,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -272,6 +275,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: value,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -303,6 +307,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -339,6 +344,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageurl: _editedProduct.imageurl,
                           id: _editedProduct.id,
+                          archived: _editedProduct.archived,
                         );
                       },
                       validator: (value) {
@@ -401,6 +407,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 quantite: _editedProduct.quantite,
                                 imageurl: value,
                                 id: _editedProduct.id,
+                                archived: _editedProduct.archived,
                               );
                             },
                             validator: (value) {

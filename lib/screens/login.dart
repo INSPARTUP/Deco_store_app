@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/screens/admin_screens/admin_navigation_screen.dart';
+import 'package:deco_store_app/screens/admin_screens/super_admin_navigation_screen.dart';
 import 'package:deco_store_app/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
         child: Scaffold(
           appBar: AppBar(
-            elevation: 0,
+            elevation: 8.5,
+            shadowColor: Colors.black,
             centerTitle: true,
             title: Text('Connexion', style: TextStyle(color: Colors.white)),
             backgroundColor: Colors.blue[800],
@@ -278,8 +280,11 @@ class _LoginScreenState extends State<LoginScreen> {
             }),
           );
         } else if (role == 'ROLE_SUPER-ADMIN') {
-          Navigator.of(context).pushReplacementNamed(
-            '/superadmin-screen',
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return SuperAdminNavigation(0);
+            }),
           );
         }
       }

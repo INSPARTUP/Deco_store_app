@@ -1,24 +1,23 @@
-import 'package:deco_store_app/providers/auth.dart';
-import 'package:deco_store_app/providers/count.dart';
-import 'package:deco_store_app/providers/orders.dart';
-import 'package:deco_store_app/providers/products.dart';
-import 'package:deco_store_app/providers/cart.dart';
-import 'package:deco_store_app/screens/admin_screens/adminsignup.dart';
-import 'package:deco_store_app/screens/admin_screens/manage_products_screen.dart';
-import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
-import 'package:deco_store_app/screens/cart_screen.dart';
-import 'package:deco_store_app/screens/details/details_screen.dart';
-import 'package:deco_store_app/screens/login.dart';
-import 'package:deco_store_app/screens/orders_screen.dart';
-import 'package:deco_store_app/screens/splash%20screen.dart';
-import 'package:deco_store_app/screens/superadminscreen.dart';
-import 'package:deco_store_app/screens/user_screens/commander_screen.dart';
-import 'package:deco_store_app/screens/user_screens/user_products_overview_screen.dart';
-import 'package:deco_store_app/screens/user_screens/usersingup.dart';
-import 'package:deco_store_app/screens/user_screens/userhome.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'providers/auth.dart';
+import 'providers/count.dart';
+import 'providers/orders.dart';
+import 'providers/products.dart';
+import 'providers/cart.dart';
+import 'screens/admin_screens/adminsignup.dart';
+import 'screens/admin_screens/manage_products_screen.dart';
+import 'screens/admin_screens/products_overview_screen.dart';
+import 'screens/cart_screen.dart';
+import 'screens/details/details_screen.dart';
+import 'screens/login.dart';
+import 'screens/orders_screen.dart';
+import 'screens/splash%20screen.dart';
+import 'screens/superadminscreen.dart';
+import 'screens/user_screens/commander_screen.dart';
+import 'screens/user_screens/user_products_overview_screen.dart';
+import 'screens/user_screens/usersingup.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/admin_screens/admin_details_screen.dart';
 import 'screens/admin_screens/edit_order.dart';
@@ -75,7 +74,6 @@ class MyApp extends StatelessWidget {
           ),
           home: SplashScreen(),
           routes: {
-            '/user-screen': (ctx) => UserHome(),
             '/superadmin-screen': (ctx) => SuperAdminScreen(),
             '/user-signup': (ctx) => SingupScreen(),
             '/login': (ctx) => LoginScreen(),

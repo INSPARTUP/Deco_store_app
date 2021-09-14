@@ -1,27 +1,27 @@
-import 'package:deco_store_app/screens/admin_screens/home_screen.dart';
+import 'package:deco_store_app/screens/admin_screens/manage_admins.dart';
 import 'package:deco_store_app/screens/admin_screens/manage_orders.dart';
-import 'package:deco_store_app/screens/profile_screen.dart';
+import 'package:deco_store_app/screens/admin_screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import 'products_overview_screen.dart';
+import 'home_screen.dart';
 
-class AdminNavigationScreen extends StatefulWidget {
-  static const routeName = '/nav-admin';
+class SuperAdminNavigation extends StatefulWidget {
+  static const routeName = '/nav-superAdmin';
   int selectedIndex;
 
-  AdminNavigationScreen(this.selectedIndex);
+  SuperAdminNavigation(this.selectedIndex);
 
   @override
-  _AdminNavigationScreenState createState() => _AdminNavigationScreenState();
+  _SuperAdminNavigationState createState() => _SuperAdminNavigationState();
 }
 
-class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
+class _SuperAdminNavigationState extends State<SuperAdminNavigation> {
   final screens = [
     HomeScreen(),
     ProductsOverwiewScreen(),
     ManageOrders(),
-    ProfileScreen(),
+    ManageAdmins()
   ];
 
   @override
@@ -73,7 +73,7 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen> {
 
             SalomonBottomBarItem(
               icon: Icon(Icons.person),
-              title: Text("Profile"),
+              title: Text("Admins"),
               selectedColor: Colors.white,
             ),
           ],

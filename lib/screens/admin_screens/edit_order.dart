@@ -81,6 +81,8 @@ class _EditOrderState extends State<EditOrder> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 8.5,
+        shadowColor: Colors.black,
         title: Text(
           "Consulter la commande",
           style: TextStyle(

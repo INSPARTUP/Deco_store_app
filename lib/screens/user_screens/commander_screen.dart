@@ -21,7 +21,8 @@ class _CommanderScreenState extends State<CommanderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 8.5,
+        shadowColor: Colors.black,
         centerTitle: true,
         title: Text('Entrez vos données'),
         backgroundColor: Colors.blue[800],

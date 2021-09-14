@@ -20,7 +20,7 @@ class _ManageProductItemState extends State<ManageProductItem> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Column(children: [
-        Text(widget.nom),
+        Align(alignment: Alignment.topLeft, child: Text(widget.nom)),
         Row(
           children: [
             IconButton(
@@ -94,52 +94,6 @@ class _ManageProductItemState extends State<ManageProductItem> {
         //circle avatar will do the sizing and so on to size the image into itself
         backgroundImage: NetworkImage(widget.imageurl),
       ),
-      /*  trailing: Container(
-        width: 60,
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                Navigator.of(context).pushNamed(EditProductScreen.routeName,
-                    arguments: widget.id);
-              },
-              color: Theme.of(context).primaryColor,
-            ),
-           
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                SweetAlertV2.show(context,
-                    subtitle: 'êtes-vous sûr de vouloir supprimer ce produit ?',
-                    subtitleTextAlign: TextAlign.center,
-                    style: SweetAlertV2Style.confirm,
-                    cancelButtonText: 'Annuler',
-                    confirmButtonText: 'Confirmer',
-                    showCancelButton: true, onPress: (bool isConfirm) {
-                  if (isConfirm) {
-                    SweetAlertV2.show(context,
-                        subtitle: "Suppression...",
-                        style: SweetAlertV2Style.loading);
-                    Provider.of<Products>(context, listen: false)
-                        .deleteProduct(widget.id)
-                        .then((value) => SweetAlertV2.show(context,
-                            subtitle: "Succés!",
-                            style: SweetAlertV2Style.success));
-                  } else {
-                    SweetAlertV2.show(context,
-                        subtitle: "Annulé!", style: SweetAlertV2Style.error);
-                  }
-
-                  // return false to keep dialog
-                  return false;
-                });
-              },
-              color: Theme.of(context).errorColor,
-            ),
-          ],
-        ),
-      ),*/
     );
   }
 }

@@ -17,7 +17,8 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 8.5,
+        shadowColor: Colors.black,
         centerTitle: true,
         title: Text('Super Admin '),
         backgroundColor: Colors.red,

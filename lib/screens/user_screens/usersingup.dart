@@ -26,7 +26,8 @@ class _SingupScreenState extends State<SingupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 8.5,
+        shadowColor: Colors.black,
         centerTitle: true,
         title: Text('Créer un compte'),
         backgroundColor: Colors.blue[800],
