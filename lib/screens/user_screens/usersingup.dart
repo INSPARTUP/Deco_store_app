@@ -41,69 +41,71 @@ class _SingupScreenState extends State<SingupScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: BackdropFilter(
+        child:
+            /*BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
           child: Container(
-            decoration: new BoxDecoration(color: Colors.white.withOpacity(0.1)),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 130,
-                    //     height: MediaQuery.of(context).size.height - 550,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.blue[800],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(9.0),
+           decoration: new BoxDecoration(color: Colors.white.withOpacity(0.1)),
+          child: */
+            Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width - 130,
+                //     height: MediaQuery.of(context).size.height - 550,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.blue[800],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(9.0),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Kagu',
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Flexible(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    //     height: SizeConfig.height(377.3),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          'Kagu',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
+                        Center(
+                          child: new Form(
+                            key: _key,
+                            autovalidate: _validate,
+                            child: FormUI(),
                           ),
-                        ),
-                        Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
-                          size: 50,
                         ),
                       ],
                     ),
                   ),
-                ),
-                Flexible(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      Container(
-                        //     height: SizeConfig.height(377.3),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Center(
-                              child: new Form(
-                                key: _key,
-                                autovalidate: _validate,
-                                child: FormUI(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ),
+        /* ),
+        ),*/
       ),
     );
   }

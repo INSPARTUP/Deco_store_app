@@ -52,7 +52,7 @@ class SuperAdminDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.shop),
+            leading: Icon(Icons.home),
             title: Text('Accueil'),
             onTap: () {
               Navigator.push(
@@ -91,7 +91,7 @@ class SuperAdminDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.card_giftcard),
+            leading: Icon(Icons.person_add),
             title: Text('Gérer les Administrateurs'),
             onTap: () {
               Navigator.push(
@@ -118,10 +118,10 @@ class SuperAdminDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
+            title: Text('Déconnecter'),
             onTap: () {
               Navigator.of(context).pop();
-              Provider.of<Auth>(context, listen: false).logout();
+              Provider.of<Auth>(context, listen: false).logout(context);
 
               Navigator.of(context).pushReplacementNamed('/login');
             },

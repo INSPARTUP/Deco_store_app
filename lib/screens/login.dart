@@ -17,11 +17,20 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+bool _passwordVisible = false;
+
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
   bool _btnpressed = false;
   var prenom, nom, numtel, email, password, token;
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -59,75 +68,77 @@ class _LoginScreenState extends State<LoginScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: new BackdropFilter(
+            child:
+                /* new BackdropFilter(
               filter: new ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
               child: Container(
                 decoration:
                     new BoxDecoration(color: Colors.white.withOpacity(0.1)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 130,
-                        //     height: SizeConfig.height(100.9),
-                        decoration: BoxDecoration(
-                          color: Colors.blue[800],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(9.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30.0),
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Kagu',
-                                  style: TextStyle(
-                                    fontSize: 40,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.shopping_cart_outlined,
-                                  color: Colors.white,
-                                  size: 50,
-                                ),
-                              ],
+                child:*/
+                Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width - 130,
+                    //     height: SizeConfig.height(100.9),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[800],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(9.0),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Kagu',
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.white,
+                              size: 50,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Flexible(
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: [
-                          Container(
-                            //         height: SizeConfig.height(280.3),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Center(
-                                  child: new Form(
-                                    key: _key,
-                                    autovalidate: _validate,
-                                    child: FormUI(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
+                Flexible(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        //         height: SizeConfig.height(280.3),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Center(
+                              child: new Form(
+                                key: _key,
+                                autovalidate: _validate,
+                                child: FormUI(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
+            /*  ),
+            ),*/
           ),
         ));
   }
@@ -166,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
           child: TextFormField(
             style: TextStyle(color: Colors.black),
-            obscureText: true,
+            obscureText: !_passwordVisible,
             validator: validatePassword,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -182,6 +193,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.blue[800],
               ),
               hintText: 'Mot de passe',
+              suffixIcon: IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
             ),
             onSaved: (val) {
               password = val;

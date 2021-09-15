@@ -16,6 +16,13 @@ class _ProductsGridState extends State<ProductsGrid> {
     "lib/assets/collections/image_3.gif",
     "lib/assets/collections/image_4.jpg",
   ];
+/*
+  var slideShowList = [
+    "https://www.wofox.com/napi/adsn/MTY2NjU=/166651574058317971.gif",
+    "http://cdn.home-designing.com/wp-content/uploads/2019/09/storage-bench.jpg",
+    "https://miro.medium.com/max/1400/1*8nadcE96L1YlNce-mX1K9Q.gif",
+    "https://menuiserie-erhard.fr/wp-content/uploads/2019/07/DRESSING-SLIDER2.jpg"
+  ];*/
   var type;
   var typeSelected = 0;
 
@@ -155,12 +162,12 @@ class _ProductsGridState extends State<ProductsGrid> {
                     TextButton(
                       onPressed: () {
                         setState(() {
-                          type = 'chaise';
+                          type = 'fauteuil';
                           typeSelected = 4;
                         });
                       },
                       child: Text(
-                        "Chaises",
+                        "Fauteuils",
                         style: TextStyle(
                             color:
                                 typeSelected == 4 ? Colors.blue : Colors.black,

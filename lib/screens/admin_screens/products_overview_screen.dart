@@ -1,4 +1,7 @@
+import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/providers/products.dart';
+import 'package:deco_store_app/widgets/app_drawer.dart';
+import 'package:deco_store_app/widgets/super_admin_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +22,7 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
   var _isLoading = false;
 
   Future<void> _refreshProducts(BuildContext ctx) async {
-    Provider.of<Products>(context).fetchProducts();
+    Provider.of<Products>(context, listen: false).fetchProducts();
   }
 
   @override
@@ -42,6 +45,7 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
   Widget build(BuildContext context) {
     final productData = Provider.of<Products>(
         context); //we add <>to let it know which type of data you actually want to listening to.
+    final role = Provider.of<Auth>(context, listen: false).roles;
 
     final List<Color> clr = [
       Colors.red,
@@ -55,9 +59,9 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
       'Armoires',
       'Lits',
       'Tables',
-      'Fauteuil'
+      'Fauteuils'
     ];
-    final types = ['', 'armoire', 'lit', 'teble', 'fauteuil'];
+    final types = ['', 'armoire', 'lit', 'table', 'fauteuil'];
     final icons = [
       'lib/assets/icons/house.svg',
       'lib/assets/icons/wardrobe.svg',
@@ -83,7 +87,7 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
+        /*  leading: Builder(
           builder: (context) => IconButton(
             icon: SvgPicture.asset(
               "lib/assets/icons/arrow-long-left.svg",
@@ -93,9 +97,26 @@ class _ProductsOverwiewScreenState extends State<ProductsOverwiewScreen> {
               Navigator.of(context).pop();
             },
           ),
+        ),  */
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: SvgPicture.asset(
+              "lib/assets/icons/menu.svg",
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
         ),
         title: Text(' Produits', style: TextStyle(color: Colors.black)),
       ),
+      drawer: role == 'ROLE_ADMIN'
+          ? AppDrawer()
+          : role == 'ROLE_SUPER-ADMIN'
+              ? SuperAdminDrawer()
+              : SuperAdminDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),

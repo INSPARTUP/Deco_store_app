@@ -25,8 +25,13 @@ class _CommanderScreenState extends State<CommanderScreen> {
         elevation: 8.5,
         shadowColor: Colors.black,
         centerTitle: true,
-        title: Text('Entrez vos données'),
-        backgroundColor: Colors.blue[800],
+        title:
+            Text('Entrez vos données', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       backgroundColor: Color(0xFFFAFBFD),
       body: Column(

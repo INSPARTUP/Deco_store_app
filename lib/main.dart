@@ -19,7 +19,6 @@ import 'screens/user_screens/user_products_overview_screen.dart';
 import 'screens/user_screens/usersingup.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/admin_screens/admin_details_screen.dart';
 import 'screens/admin_screens/edit_order.dart';
 import 'screens/admin_screens/edit_product_screen.dart';
 import 'screens/admin_screens/manage_admins.dart';
@@ -88,7 +87,6 @@ class MyApp extends StatelessWidget {
             CommanderScreen.routeName: (ctx) => CommanderScreen(),
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             NavigationScreenUser.routeName: (ctx) => NavigationScreenUser(0),
-            AdminDetailsScreen.routeName: (ctx) => AdminDetailsScreen(),
             ManageAdmins.routeName: (ctx) => ManageAdmins(),
             ManageOrders.routeName: (ctx) => ManageOrders(),
             EditOrder.routeName: (ctx) => EditOrder(null),

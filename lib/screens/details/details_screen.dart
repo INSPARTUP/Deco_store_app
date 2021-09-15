@@ -39,17 +39,24 @@ class DetailsScreen extends StatelessWidget {
       context,
     ).email;
     return AppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       elevation: 8.5,
       shadowColor: Colors.black,
-      title: Text('Details'),
+      title: Text('Details', style: TextStyle(color: Colors.black)),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+        onPressed: () => Navigator.pop(context),
+      ),
       actions: <Widget>[
         /*   IconButton(
           icon: Image.asset("assets/icons/search.svg"),
           onPressed: () {},
         ),*/
         IconButton(
-          icon: SvgPicture.asset("lib/assets/icons/cart.svg"),
+          icon: SvgPicture.asset(
+            "lib/assets/icons/cart.svg",
+            color: Colors.black,
+          ),
           onPressed: () {
             Navigator.push(
               context,

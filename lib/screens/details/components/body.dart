@@ -2,7 +2,6 @@ import 'package:deco_store_app/providers/product.dart';
 import 'package:flutter/material.dart';
 
 import 'add_to_cart.dart';
-import 'color_and_size.dart';
 import 'counter_with_fav_btn.dart';
 import 'description.dart';
 import 'product_title_with_image.dart';
@@ -37,7 +36,9 @@ class Body extends StatelessWidget {
               overflow: Overflow.visible,
               children: <Widget>[
                 Container(
-                  height: 800,
+                  height: product.description.length == 0
+                      ? 800
+                      : product.description.length * 0.25 + 800.0,
                   width: double.infinity,
                 ),
                 Positioned(
@@ -61,7 +62,10 @@ class Body extends StatelessWidget {
                   left: 0.0,
                   child: Container(
                     //   margin: EdgeInsets.only(top: size.height * 0.3),
-                    height: 520,
+                    // height: 900,
+                    height: product.description.length == 0
+                        ? 520
+                        : product.description.length * 10000 + 120.0,
                     padding: EdgeInsets.only(
                       top: 20,
                       left: 10,
@@ -107,13 +111,15 @@ class Body extends StatelessWidget {
                             SizedBox(
                               height: 15,
                             ),
-                            Text(
-                              "Description:",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                            FittedBox(
+                              child: Text(
+                                "Description:",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
                             ),
                             Description(product: product),
                           ],
@@ -145,7 +151,7 @@ class Body extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 10 / 2),
-                        AddToCart(product: product, ctx: context)
+                        AddToCart(product: product, ctx: context),
                       ],
                     ),
                   ),
