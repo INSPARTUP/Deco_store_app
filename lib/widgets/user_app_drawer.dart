@@ -1,4 +1,5 @@
 import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/providers/cart.dart';
 import 'package:deco_store_app/screens/profile_screen.dart';
 import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
@@ -112,10 +113,11 @@ class UserAppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
+            title: Text('Déconnecter'),
             onTap: () {
               Navigator.of(context).pop();
-              Provider.of<Auth>(context, listen: false).logout();
+              Provider.of<Cart>(context, listen: false).vider = '';
+              Provider.of<Auth>(context, listen: false).logout(context);
 
               Navigator.of(context).pushReplacementNamed('/login');
             },

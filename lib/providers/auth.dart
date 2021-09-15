@@ -7,8 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'cart.dart';
+import 'orders.dart';
 
 class Auth with ChangeNotifier {
   Dio dio = new Dio();
@@ -155,9 +159,12 @@ class Auth with ChangeNotifier {
     return true;
   }
 
-  void logout() async {
+  void logout(BuildContext ctx) async {
     accessToken = null;
     id = null;
+
+    Provider.of<Cart>(ctx, listen: false).vider = '';
+    Provider.of<Orders>(ctx, listen: false).vider = '';
 
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();

@@ -73,7 +73,7 @@ class _SuperAdminNavigationState extends State<SuperAdminNavigation> {
             /// Profile
 
             SalomonBottomBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person_add),
               title: Text("Admins"),
               selectedColor: Colors.white,
             ),

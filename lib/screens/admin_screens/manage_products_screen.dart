@@ -27,12 +27,18 @@ class ManageProductsScreen extends StatefulWidget {
 }
 
 class _ManageProductsScreenState extends State<ManageProductsScreen> {
-  String rech;
+  String rech = '';
 
   List<String> labels = ["Tous", "Archivés", "Non Archivés"];
   int currentIndex = 0;
   var ch = Choice.all;
+
   Future<void> _refreshProducts() async {
+    await Provider.of<Products>(context, listen: false).fetchProducts();
+    // the ovewall methode will only be doneonce this is done and only when this Future which is automatically returned will yield (resolve)
+  }
+
+  /* Future<void> _refreshProducts() async {
     await Provider.of<Products>(context, listen: false).fetchProducts(rech);
     // the ovewall methode will only be doneonce this is done and only when this Future which is automatically returned will yield (resolve)
   }
@@ -40,10 +46,12 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
   Function _recherche() {
     _refreshProducts();
     return null;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    String re = '';
+  
     return Scaffold(
       appBar: AppBar(
         elevation: 8.5,
@@ -103,7 +111,7 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                             hintText: 'Recherche',
                           ),
                           onChanged: (val) {
-                            rech = val;
+                            re = val;
                           },
                           //  onSubmitted:
                           // _recherche(), //  hadi ida bghit ydir recherche directement
@@ -130,7 +138,11 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                             ),
                           ),
                         ),
-                        onPressed: _recherche,
+                        onPressed: () => setState(() {
+                          rech = re;
+                        }),
+
+                        // _recherche,
                       ),
                     ],
                   ),
@@ -140,8 +152,10 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                 ),
                 Expanded(
                   child: productsData.items
-                              .where((pr) =>
-                                  pr.type.toLowerCase().contains(widget.type))
+                              .where((pr) => (pr.nom
+                                      .toLowerCase()
+                                      .contains(rech.toLowerCase()) &&
+                                  pr.type.toLowerCase().contains(widget.type)))
                               .toList()
                               .length ==
                           0
@@ -154,29 +168,35 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                       : ListView.builder(
                           itemCount: ch == Choice.all
                               ? productsData.items
-                                  .where((pr) => pr.type
-                                      .toLowerCase()
-                                      .contains(widget.type))
+                                  .where((pr) => (pr.nom
+                                          .toLowerCase()
+                                          .contains(rech.toLowerCase()) &&
+                                      pr.type
+                                          .toLowerCase()
+                                          .contains(widget.type)))
                                   .toList()
                                   .length
                               : ch == Choice.archived
                                   ? productsData.archivedItems
-                                      .where((pr) => pr.type
-                                          .toLowerCase()
-                                          .contains(widget.type))
+                                      .where((pr) => (pr.nom
+                                              .toLowerCase()
+                                              .contains(rech.toLowerCase()) &&
+                                          pr.type
+                                              .toLowerCase()
+                                              .contains(widget.type)))
                                       .toList()
                                       .length
                                   : ch == Choice.disarchived
                                       ? productsData.disarchivedItems
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom.toLowerCase().contains(
+                                                  rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()
                                           .length
                                       : productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom.toLowerCase().contains(rech.toLowerCase()) && pr.type.toLowerCase().contains(widget.type)))
                                           .toList()
                                           .length,
                           addAutomaticKeepAlives: true,
@@ -186,155 +206,263 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                               ch == Choice.all
                                   ? ManageProductItem(
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .id,
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .nom,
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .quantite,
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .prix,
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .imageurl,
                                       productsData.items
-                                          .where((pr) => pr.type
-                                              .toLowerCase()
-                                              .contains(widget.type))
+                                          .where((pr) => (pr.nom
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      rech.toLowerCase()) &&
+                                              pr.type
+                                                  .toLowerCase()
+                                                  .contains(widget.type)))
                                           .toList()[i]
                                           .archived,
                                     )
                                   : ch == Choice.archived
                                       ? ManageProductItem(
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .id,
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .nom,
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .quantite,
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .prix,
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .imageurl,
                                           productsData.archivedItems
-                                              .where((pr) => pr.type
-                                                  .toLowerCase()
-                                                  .contains(widget.type))
+                                              .where((pr) => (pr.nom
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          rech.toLowerCase()) &&
+                                                  pr.type
+                                                      .toLowerCase()
+                                                      .contains(widget.type)))
                                               .toList()[i]
                                               .archived,
                                         )
                                       : ch == Choice.disarchived
                                           ? ManageProductItem(
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .id,
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .nom,
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .quantite,
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .prix,
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .imageurl,
                                               productsData.disarchivedItems
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .archived,
                                             )
                                           : ManageProductItem(
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .id,
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .nom,
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .quantite,
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .prix,
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .imageurl,
                                               productsData.items
-                                                  .where((pr) => pr.type
-                                                      .toLowerCase()
-                                                      .contains(widget.type))
+                                                  .where((pr) => (pr.nom
+                                                          .toLowerCase()
+                                                          .contains(rech
+                                                              .toLowerCase()) &&
+                                                      pr.type
+                                                          .toLowerCase()
+                                                          .contains(
+                                                              widget.type)))
                                                   .toList()[i]
                                                   .archived,
                                             ),

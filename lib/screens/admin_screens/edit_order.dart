@@ -109,46 +109,48 @@ class _EditOrderState extends State<EditOrder> {
                   shadowColor: Colors.grey,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Column(
-                      children: <Widget>[
-                        ...widget.order.items
-                            .map((prod) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          prod.name,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          ...widget.order.items
+                              .map((prod) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            prod.name,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        '${prod.qty}x \$${prod.price}',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                            .toList(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "Total:",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text("\$" + widget.order.grandTotal.toString()),
-                            ],
+                                        Text(
+                                          '${prod.qty}x \$${prod.price}',
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                              .toList(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Total:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text("\$" + widget.order.grandTotal.toString()),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -173,17 +175,15 @@ class _EditOrderState extends State<EditOrder> {
                         )
                       : SizedBox(height: 0)),
               Padding(
-                padding: EdgeInsets.only(
-                    top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
-                child: Expanded(
-                    child: CustomButton(
-                  label: 'Accepter',
-                  labelColour: Colors.white,
-                  backgroundColour: Colors.green[300],
-                  shadowColour: Color(0xFF08f55b).withOpacity(0.20),
-                  onPressed: !widget.order.accepted ? _accepter : null,
-                )),
-              ),
+                  padding: EdgeInsets.only(
+                      top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
+                  child: CustomButton(
+                    label: 'Accepter',
+                    labelColour: Colors.white,
+                    backgroundColour: Colors.green[300],
+                    shadowColour: Color(0xFF08f55b).withOpacity(0.20),
+                    onPressed: !widget.order.accepted ? _accepter : null,
+                  )),
             ],
           ),
         ),
@@ -238,6 +238,8 @@ class _EditOrderState extends State<EditOrder> {
                 Text(
                   '     ' +
                       widget.order.billingAddress.deliveryAddress +
+                      ',' +
+                      widget.order.billingAddress.wilaya +
                       ',' +
                       widget.order.billingAddress.postCode +
                       ',' +

@@ -177,6 +177,12 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  set vider(String a) {
+    _orders = [];
+    _allOrders = [];
+    notifyListeners();
+  }
+
   List<OrderItem> _allOrders = [];
   List<OrderItem> get allOrders {
     return [..._allOrders];

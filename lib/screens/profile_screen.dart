@@ -1,4 +1,7 @@
 import 'package:deco_store_app/providers/auth.dart';
+import 'package:deco_store_app/widgets/app_drawer.dart';
+import 'package:deco_store_app/widgets/super_admin_app_drawer.dart';
+import 'package:deco_store_app/widgets/user_app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -26,15 +29,23 @@ class ProfileScreen extends StatelessWidget {
           leading: Builder(
             builder: (context) => IconButton(
               icon: SvgPicture.asset(
-                "lib/assets/icons/arrow-long-left.svg",
+                "lib/assets/icons/menu.svg",
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Scaffold.of(context).openDrawer();
               },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             ),
           ),
         ),
+        drawer: role == 'ROLE_USER'
+            ? UserAppDrawer()
+            : role == 'ROLE_ADMIN'
+                ? AppDrawer()
+                : role == 'ROLE_SUPER-ADMIN'
+                    ? SuperAdminDrawer()
+                    : UserAppDrawer(),
         body: Container(
           child: new Column(
             children: <Widget>[

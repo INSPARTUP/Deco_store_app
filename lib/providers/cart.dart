@@ -99,6 +99,11 @@ class Cart with ChangeNotifier {
 
   List<ItemOrder> _itemsorder = [];
 
+  set vider(String a) {
+    _items = {};
+    notifyListeners();
+  }
+
   List<ItemOrder> get itemsorder {
     return [
       ..._itemsorder

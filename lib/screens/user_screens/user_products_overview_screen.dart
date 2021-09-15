@@ -19,6 +19,10 @@ class _UserProductsOverviewScreenState
   var _isInit = true;
   var _isLoading = false;
 
+  Future<void> _refreshProducts(BuildContext ctx) async {
+    Provider.of<Products>(context, listen: false).fetchProducts();
+  }
+
   @override
   void initState() {
     // // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
@@ -96,7 +100,9 @@ class _UserProductsOverviewScreenState
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ProductsGrid(),
+          : RefreshIndicator(
+              onRefresh: () => _refreshProducts(context),
+              child: ProductsGrid()),
     );
   }
 }
