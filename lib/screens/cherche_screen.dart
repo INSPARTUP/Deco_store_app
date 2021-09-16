@@ -48,7 +48,9 @@ class _ChercheScreenState extends State<ChercheScreen> {
     var products = productsItems;
 
     if (rech != null)
-      products = productsItems.where((pr) => pr.nom.contains(rech)).toList();
+      products = productsItems
+          .where((pr) => pr.nom.toLowerCase().contains(rech.toLowerCase()))
+          .toList();
 
     return RefreshIndicator(
       onRefresh: () => _refreshProducts(context),
