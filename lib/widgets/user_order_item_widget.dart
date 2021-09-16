@@ -48,8 +48,8 @@ class _UserOrderItemState extends State<UserOrderItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('dd/MM/yyyy hh:mm aa')
-                                .format(widget.order.createdAt),
+                            DateFormat('dd/MM/yyyy hh:mm aa').format(
+                                widget.order.createdAt.add(Duration(hours: 1))),
                           ),
                           Text(
                             widget.order.accepted
@@ -67,7 +67,7 @@ class _UserOrderItemState extends State<UserOrderItem> {
                                       color: Colors.lightBlueAccent[700]),
                                 )
                               : SizedBox(height: 0),
-                          widget.order.arrived
+                          widget.order.accepted
                               ? Text(
                                   "la date d'arrivé: " +
                                       DateFormat('dd/MM/yyyy')

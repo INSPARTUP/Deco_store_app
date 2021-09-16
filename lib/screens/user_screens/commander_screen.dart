@@ -16,6 +16,7 @@ class CommanderScreen extends StatefulWidget {
 class _CommanderScreenState extends State<CommanderScreen> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
+  bool _btnpressed = false;
   var prenom, nom, numtel, email, codep, wilaya, pays, adresse;
 
   @override
@@ -209,13 +210,17 @@ class _CommanderScreenState extends State<CommanderScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 20.0),
-          child: CustomButton(
-            label: 'Commander',
-            labelColour: Colors.white,
-            backgroundColour: Colors.blue[800],
-            shadowColour: Color(0xff866DC9).withOpacity(0.16),
-            onPressed: _sendToServer,
-          ),
+          child: _btnpressed
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]),
+                )
+              : CustomButton(
+                  label: 'Commander',
+                  labelColour: Colors.white,
+                  backgroundColour: Colors.blue[800],
+                  shadowColour: Color(0xff866DC9).withOpacity(0.16),
+                  onPressed: _sendToServer,
+                ),
         ),
         SizedBox(height: 30),
       ],
@@ -338,6 +343,9 @@ class _CommanderScreenState extends State<CommanderScreen> {
       // No any error in validation
       _key.currentState.save();
 
+      setState(() {
+        _btnpressed = true;
+      });
       try {
         await Provider.of<Orders>(context, listen: false).addOrder(
             User(name: user_fullname, email: user_email),
@@ -352,13 +360,20 @@ class _CommanderScreenState extends State<CommanderScreen> {
             orderitems,
             total,
             context);
-        SweetAlertV2.show(context,
+
+        /*    SweetAlertV2.show(context,
             title: "Félicitation",
             subtitle: "Votre commande a été envoyée avec succés",
             style: SweetAlertV2Style.success,
-            subtitleTextAlign: TextAlign.center);
+            subtitleTextAlign: TextAlign.center);  */
+        setState(() {
+          _btnpressed = false;
+        });
       } catch (error) {
         print(error);
+        setState(() {
+          _btnpressed = false;
+        });
         await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(

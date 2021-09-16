@@ -113,8 +113,8 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('dd/MM/yyyy hh:mm aa')
-                                .format(widget.order.createdAt),
+                            DateFormat('dd/MM/yyyy hh:mm aa').format(
+                                widget.order.createdAt.add(Duration(hours: 1))),
                           ),
                           Text(
                             widget.order.accepted == true

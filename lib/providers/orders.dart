@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:deco_store_app/providers/auth.dart';
 import 'package:deco_store_app/providers/cart.dart';
+import 'package:deco_store_app/screens/user_screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -242,7 +243,7 @@ class Orders with ChangeNotifier {
     });
 
     loadedOrders.forEach((order) async {
-      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt) &&
+      if (DateTime.now().add(Duration(hours: 1)).isAfter(order.deliveredAt) &&
           order.accepted) {
         var url = Uri.parse(
             'https://managecartandorders.herokuapp.com/api/order/${order.id}');
@@ -281,7 +282,7 @@ class Orders with ChangeNotifier {
     });
 
     loadedOrders.forEach((order) async {
-      if (DateTime.now().add(Duration(hours: 12)).isAfter(order.deliveredAt) &&
+      if (DateTime.now().add(Duration(hours: 1)).isAfter(order.deliveredAt) &&
           order.accepted) {
         var url = Uri.parse(
             'https://managecartandorders.herokuapp.com/api/order/${order.id}');
@@ -357,14 +358,20 @@ class Orders with ChangeNotifier {
           backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0);
-      SweetAlertV2.show(context,
+      /*  SweetAlertV2.show(context,
           title: "Félicitation",
           subtitle: "Votre commande a été envoyée avec succés",
           style: SweetAlertV2Style.success,
           subtitleTextAlign: TextAlign.center, onPress: (x) {
         Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return NavigationScreenUser(3);
+          }),
+        );
         return true;
-      });
+      }); */
       print(json.decode(response
           .body)); //with json.decode we can convert this from JSON into some data we can work in Dart (Map)
       final user_email = Provider.of<Auth>(context, listen: false).email;
