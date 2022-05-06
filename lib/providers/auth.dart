@@ -43,7 +43,7 @@ class Auth with ChangeNotifier {
     try {
       inscription = false;
       final response = await dio.post(
-          'https://fathomless-coast-11439.herokuapp.com/api/auth/signup',
+          'API KEY',
           data: {
             "nom": nom,
             "prenom": prenom,
@@ -80,7 +80,7 @@ class Auth with ChangeNotifier {
   Future<void> login(mail, password) async {
     try {
       final response = await dio.post(
-          'https://fathomless-coast-11439.herokuapp.com/api/auth/signin',
+          'API KEY',
           data: {"email": mail, "password": password},
           options: Options(contentType: Headers.formUrlEncodedContentType));
 
@@ -174,7 +174,7 @@ class Auth with ChangeNotifier {
 
   Future<void> fetchAdmins() async {
     var url = Uri.parse(
-        'https://fathomless-coast-11439.herokuapp.com/api/getAllAdmin');
+        'API KEY');
 
     http.Response response = await http.get(
       url,
@@ -192,7 +192,7 @@ class Auth with ChangeNotifier {
 
   Future<void> deleteAdmin(String id) async {
     var url = Uri.parse(
-        'https://fathomless-coast-11439.herokuapp.com/api/deleteAdmin');
+        'API KEY');
     final existingAdminIndex = _admins.indexWhere((prod) => prod.id == id);
     var existingAdmin = _admins[existingAdminIndex];
 
