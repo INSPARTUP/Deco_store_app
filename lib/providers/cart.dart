@@ -135,7 +135,7 @@ class Cart with ChangeNotifier {
   }
 
   Future<void> fetchCart(String email, BuildContext ctx) async {
-    // email = "za@gmail.com";
+
     var url = Uri.parse(
         'https://managecartandorders.herokuapp.com/api/cart/cart?email=$email');
     http.Response response = await http.get(
